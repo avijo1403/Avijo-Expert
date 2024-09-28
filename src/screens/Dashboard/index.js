@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchItem from "../../components/SearchItem";
 import VideoNotification from "../../components/VideoNotification";
 import uuid from 'react-native-uuid';
-import LoginInput from "../../components/LoginInput";
 
 export default function Dashboard({ navigation }) {
 
@@ -22,17 +21,7 @@ export default function Dashboard({ navigation }) {
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const fetchData = async () => {
-        try {
-            const response = await fetch(`${BaseUrl2}/doctor/doctorAppointment`);
-            const json = await response.json();
-            setDocData(json.data.appointments[0]);
-            console.log('json:', json.data.appointments[0]);
-        } catch (e) {
-            console.log('error fetching...', e);
-        }
-    }
-
+    
     const getData = async (key) => {
         try {
             const value = await AsyncStorage.getItem(key);
@@ -45,6 +34,24 @@ export default function Dashboard({ navigation }) {
         return null;
     };
 
+    const fetchData = async () => {
+
+        const id = await getData('id');
+        try {
+            const response = await fetch(`${BaseUrl2}/doctor/doctorAppointment`);
+            const response1 = await fetch(`${BaseUrl2}/user/appointments`);           
+            const json = await response.json();
+            const json1 = await response1.json();
+            const appoints = await json1?.appointments?.filter((item)=>item?.doctorId);
+            console.log('json1:', appoints, id);
+            setDocData(json.data.appointments[0]);
+            console.log('json:', json.data.appointments[0]);
+        } catch (e) {
+            console.log('error fetching...', e);
+        }
+    }
+
+
     const handleSelect = (no) => {
         setSelect(no);
     };
@@ -52,7 +59,6 @@ export default function Dashboard({ navigation }) {
     useEffect(() => {
         fetchData();
         console.log('uid:', uniqueId);
-        // getData('token').then(token=>console.log('token:',token));
     }, [])
 
     const Dashboard = () => {

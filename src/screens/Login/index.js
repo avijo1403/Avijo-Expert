@@ -10,7 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
 
-  const email = 'ur.ajayk@gmail.com';
+  const email = 'usmanzulfiqar14@gmail.com';
   const pass = '123456789';
 
   const [emailId, setEmailId] = useState(email);

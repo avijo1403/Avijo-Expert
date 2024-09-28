@@ -315,7 +315,7 @@ const profileOption=[
 ]
 
 const BaseUrl1 = 'https://avijobackend-production.up.railway.app';
-const BaseUrl2 = "https://avijobackend-production-2eae.up.railway.app";
+const BaseUrl2 = "https://avijobackend-production.up.railway.app";
 
 export {
     BaseUrl1,
