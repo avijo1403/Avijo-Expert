@@ -6,7 +6,7 @@ import { colors } from '../../Theme/GlobalTheme';
 import HeaderItem3 from '../../components/HeaderItem3';
 import { hp, wp } from '../../assets/Data';
 
-const Chat = ({navigation}) => {
+const Chat = ({ navigation }) => {
     const [messages, setMessages] = useState([
         { id: 1, sender: 'You', text: 'Hello Emilli I hope you remember about your appoinment today with us.', time: '12:15 pm' },
         { id: 2, sender: 'Jane', text: 'Hello Doctor, Yes i remember. I will be there right on time', time: '12:15 pm' },
@@ -29,25 +29,28 @@ const Chat = ({navigation}) => {
 
     return (
         <View style={styles.Container}>
-            <HeaderItem3 
-            text="Appointment Chat" 
-            onPress={()=>navigation.goBack()} 
-            right={<Image source={require('../../assets/images/whiteVideo.png')} style={{height:28, width:25, marginRight:'5%'}}/>} 
-            right2={<Image source={require('../../assets/images/whitePhone.png')} style={{height:28, width:28}}/>}
-            onRightPress={()=>navigation.navigate('VideoChat')}/>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%', width: '90%' }}>
+                <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: '3%', marginLeft: '5%', borderRadius: 8 }}>
+                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white }}>Dr. Wilson</Text>
+                    <Image source={require('../../assets/images/star2.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} />
+                </View>
+                <TouchableOpacity>
+                    <Image source={require('../../assets/images/dotBlue.png')} style={{ height: 20, width: 4.5 }} />
+                </TouchableOpacity>
+            </View>
             <ScrollView
                 contentContainerStyle={styles.messageContainer}
                 showsVerticalScrollIndicator={false}
                 ref={scrollView => scrollView?.scrollToEnd({ animated: true })}
             >
-               <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', marginTop: '10%' }}>
+                {/* <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', marginTop: '10%' }}>
                     <Image source={require('../../assets/images/profile4.png')} style={{ height: 100, width: 100, borderRadius: 100 }} />
                     <TouchableOpacity style={{ alignItems: 'center', marginLeft: '5%' }}>
                         <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: wp('80%'), textAlign: 'left', marginTop: '4%' }}>Micheal</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>example@gmail.com</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>+1 459883886</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 {messages.map(message => (
                     <View
                         key={message.id}
@@ -63,18 +66,23 @@ const Chat = ({navigation}) => {
             </ScrollView>
             <View style={styles.inputContainer}>
                 <TouchableOpacity>
-                    <Image source={require('../../assets/images/add3.png')} style={{height:24, width:24}}/>
+                    <Image source={require('../../assets/images/add4.png')} style={{ height: 46, width: 46 }} />
                 </TouchableOpacity>
-                <TextInput
-                    ref={textInputRef}
-                    style={styles.input}
-                    placeholder="Write your message"
-                    value={newMessage}
-                    placeholderTextColor={'black'}
-                    onChangeText={setNewMessage}
-                />
-                <TouchableOpacity style={{margin:5}} onPress={sendMessage}>
-                    <Image source={require('../../assets/images/send.png')} style={{height:24, width:24}}/>
+                <View style={{ width: '60%', backgroundColor: colors.blue, borderRadius: 100, flexDirection:'row', alignItems:'center', justifyContent:'space-between' }}>
+                    <TextInput
+                        ref={textInputRef}
+                        placeholder="Message"
+                        value={newMessage}
+                        placeholderTextColor={colors.white}
+                        style={{ paddingLeft: 20, fontSize: 20, }}
+                        onChangeText={setNewMessage}
+                    />
+                    <TouchableOpacity style={{ margin: 5 }} onPress={sendMessage}>
+                        <Image source={require('../../assets/images/micWhite.png')} style={{ height: 32, width: 32 }} />
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={{ margin: 5 }} onPress={sendMessage}>
+                    <Image source={require('../../assets/images/stereo.png')} style={{ height: 32, width: 32 }} />
                 </TouchableOpacity>
             </View>
         </View>

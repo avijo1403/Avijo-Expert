@@ -66,11 +66,11 @@ const medicineData = [
 ]
 
 const appData = [
-    {
-        id: 0,
-        image: require('../assets/images/dashboard3.png'),
-        title: 'Dashboard'
-    },
+    // {
+    //     id: 0,
+    //     image: require('../assets/images/dashboard3.png'),
+    //     title: 'Dashboard'
+    // },
     {
         id: 1,
         image: require('../assets/images/patient3.png'),
@@ -101,30 +101,30 @@ const appData = [
         title: 'Services',
         to: 'Services',
     },
-    {
-        id: 6,
-        image: require('../assets/images/medicine2.png'),
-        title: 'Medicines',
-        to: 'Medicines',
-    },
-    {
-        id: 7,
-        image: require('../assets/images/campaign2.png'),
-        title: 'Campaigns',
-        to: 'Campaigns'
-    },
+    // {
+    //     id: 6,
+    //     image: require('../assets/images/medicine2.png'),
+    //     title: 'Medicines',
+    //     to: 'Medicines',
+    // },
+    // {
+    //     id: 7,
+    //     image: require('../assets/images/campaign2.png'),
+    //     title: 'Campaigns',
+    //     to: 'Campaigns'
+    // },
     {
         id: 8,
         image: require('../assets/images/doCare.png'),
         title: 'doCare',
-        to: 'AddQuestion',
+        to: 'DoCare',
     },
-    {
-        id: 9,
-        image: require('../assets/images/setting3.png'),
-        title: 'Settings',
-        to: 'Settings',
-    }
+    // {
+    //     id: 9,
+    //     image: require('../assets/images/setting3.png'),
+    //     title: 'Settings',
+    //     to: 'Settings',
+    // }
 ]
 
 const docList = [
@@ -310,9 +310,64 @@ const profileOption=[
     },
     {
         id:4,
+        text:'0 Followers'
+    },
+    {
+        id:5,
+        text:'1 Spaces'
+    },
+    {
+        id:6,
         text:'1 Post'
     }
 ]
+
+
+const emailList = [
+    {
+        id:0,
+        text:'General questions & answers',
+    },
+    {
+        id:1,
+        text:'Messages, comments & mentions',
+    },
+    {
+        id:2,
+        text:'Messages, comments & mentions',
+    },
+    {
+        id:3,
+        text:'You & your network',
+    }
+    ]
+
+    
+const activityList = [
+    {
+        id:0,
+        text:'Upvotes',
+    },
+    {
+        id:1,
+        text:'Shares',
+    },
+    {
+        id:2,
+        text:'Moderation',
+    }
+    ]
+    
+const doCareList = [
+    {
+        id:0,
+        text:'Docare Digest',
+    },
+    {
+        id:1,
+        text:'Things you might like',
+    }
+    ]
 
 const BaseUrl1 = 'https://avijobackend-production.up.railway.app';
 const BaseUrl2 = "https://avijobackend-production.up.railway.app";
@@ -331,5 +386,8 @@ export {
     previewPayment,
     medicine,
     PatientCategoryData,
-    profileOption
+    profileOption,
+    emailList,
+    activityList,
+    doCareList,
 };

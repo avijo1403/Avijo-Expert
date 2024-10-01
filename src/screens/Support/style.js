@@ -19,18 +19,24 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     sentMessage: {
-        alignSelf: 'flex-end',
         backgroundColor: '#EAEAEA',
-        borderBottomRightRadius:0,
+        borderBottomLeftRadius:0,
         borderRadius:22
     },
     receivedMessage: {
+        alignSelf: 'flex-end',
         backgroundColor: colors.blue,
-        borderBottomLeftRadius:0,
+        borderBottomRightRadius:0,
         borderRadius:22
     },
     messageText: {
         fontSize: 14,
+        fontFamily:'Gilroy-Medium',
+        padding:10,
+        paddingBottom:0
+    },
+    messageText2: {
+        fontSize: 10,
         fontFamily:'Gilroy-Medium',
         padding:10,
         paddingBottom:0
@@ -44,7 +50,6 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'space-between',
         paddingHorizontal: 10,
         paddingVertical: 5,
         marginBottom: '5%'

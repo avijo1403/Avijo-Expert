@@ -67,6 +67,17 @@ import Chat from './src/screens/Chat';
 import Main from './src/screens/Main';
 import DrProfile from './src/screens/DrProfile';
 import EditMedicalRecord from './src/screens/EditMedicalRecord';
+import DoCare from './src/screens/DoCare';
+import Support from './src/screens/Support';
+import Language from './src/screens/Language';
+import Bookmark from './src/screens/Bookmark';
+import SettingList from './src/screens/SettingList';
+import AccSetting from './src/screens/AccSetting';
+import EmailAndNotiSettings from './src/screens/EmailAndNotiSettings';
+import Subscription from './src/screens/Subscription';
+import DisplaySetting from './src/screens/DisplaySetting';
+import Privacy from './src/screens/Privacy';
+import ProfileSetting from './src/screens/ProfileSetting';
 
 const Stack = createNativeStackNavigator();
 
@@ -139,6 +150,17 @@ const App = () => {
         <Stack.Screen name='Chat' component={Chat} options={{headerShown:false}}/>
         <Stack.Screen name='DrProfile' component={DrProfile} options={{headerShown:false}}/>
         <Stack.Screen name='EditMedicalRecord' component={EditMedicalRecord} options={{headerShown:false}}/>
+        <Stack.Screen name='DoCare' component={DoCare} options={{headerShown:false}}/>
+        <Stack.Screen name='Support' component={Support} options={{headerShown:false}}/>
+        <Stack.Screen name='Language' component={Language} options={{headerShown:false}}/>
+        <Stack.Screen name='Bookmark' component={Bookmark} options={{headerShown:false}}/>
+        <Stack.Screen name='SettingList' component={SettingList} options={{headerShown:false}}/>
+        <Stack.Screen name='AccSetting' component={AccSetting} options={{headerShown:false}}/>
+        <Stack.Screen name='EmailAndNotiSettings' component={EmailAndNotiSettings} options={{headerShown:false}}/>
+        <Stack.Screen name='Subscription' component={Subscription} options={{headerShown:false}}/>
+        <Stack.Screen name='DisplaySetting' component={DisplaySetting} options={{headerShown:false}}/>
+        <Stack.Screen name='Privacy' component={Privacy} options={{headerShown:false}}/>
+        <Stack.Screen name='ProfileSetting' component={ProfileSetting} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
