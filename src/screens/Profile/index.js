@@ -8,14 +8,19 @@ import Button1 from "../../components/Button1";
 import LoginInput from "../../components/LoginInput";
 import { BaseUrl2 } from "../../assets/Data";
 import { colors } from "../../Theme/GlobalTheme";
+import { useRoute } from "@react-navigation/native";
 
 export default function Profile({ navigation }) {
+    const route = useRoute();
+
+    const name = route?.params?.name;
+    const email = route?.params?.email;
 
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "Dr.",
-        name: "",
+        name: name,
         specialization: "",
         gender: "",
         city: "",
@@ -64,17 +69,17 @@ export default function Profile({ navigation }) {
         }
 
         try {
-            const response = await axios.post(`${BaseUrl2}/doctor/doctorProfile`, formData);
-            console.log('Response:', response);
-            if (response.status === 200) {
-                Alert.alert("Profile Created", "Your profile has been created successfully!");
-                // const {id} = response.data;
-                // console.log('id', id);
-                navigation.navigate("CreateProfile", { formData }); // Adjust navigation as needed
-            } else {
-                console.log('Non-200 response:', response);
-                Alert.alert("Submission Failed", "An unexpected error occurred.");
-            }
+            // const response = await axios.post(`${BaseUrl2}/doctor/doctorProfile`, formData);
+            // console.log('Response:', response);
+            // if (response.status === 200) {
+            //     Alert.alert("Profile Created", "Your profile has been created successfully!");
+            //     // const {id} = response.data;
+            //     // console.log('id', id);
+                navigation.navigate("CreateProfile", { formData, email:email }); // Adjust navigation as needed
+            // } else {
+            //     console.log('Non-200 response:', response);
+            //     Alert.alert("Submission Failed", "An unexpected error occurred.");
+            // }
         } catch (error) {
             console.error("Error response:", error.response);
             Alert.alert(

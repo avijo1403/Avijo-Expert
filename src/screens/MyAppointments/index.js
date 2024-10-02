@@ -11,7 +11,8 @@ export default function MyAppointments({navigation}) {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
+            <ScrollView
+             style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <HeaderItem2 text="My Appointments" onPress={()=>navigation.goBack()} right={<Image source={require('../../assets/images/dotBlue.png')} style={{ width: 4, height: 18 }} />} />
                 <SearchItem />
                 <View style={{ width: '100%', alignItems: 'center' }}>

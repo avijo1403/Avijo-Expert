@@ -4,7 +4,7 @@ import { View } from "react-native";
 import styles from "./style";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
-import { notiData } from "../../assets/Data";
+import { notiData, wp } from "../../assets/Data";
 import { TouchableOpacity } from "react-native";
 import SearchItem from "../../components/SearchItem";
 
@@ -77,17 +77,17 @@ export default function Notification({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderItem3 onPress={() => navigation.goBack()} text="Notifications" right={<Text style={{color:colors.white, width:80, fontSize:14, fontFamily:'Gilroy-SemiBold'}}>New Chat</Text>} />
+      <HeaderItem3 onPress={() => navigation.goBack()} text="Notifications" right={<Text style={{color:colors.white, fontSize:14, fontFamily:'Gilroy-SemiBold', width:100, paddingRight:wp(10)}}>New Chat</Text>} />
       <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
         <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
           <SearchItem />
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginTop: '5%' }}>
           <TouchableOpacity onPress={() => setSelect(1)} style={{ borderBottomWidth: select === 1 ? 3 : 0, borderColor: colors.black, width: '49%', alignItems: 'center' }}>
-            <Text style={{ color: colors.black, fontSize: 20, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0, }}>Chats</Text>
+            <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', padding: 5, paddingTop: 0, }}>Chats</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setSelect(2)} style={{ borderBottomWidth: select === 2 ? 3 : 0, borderColor: colors.black, width: '49%', alignItems: 'center' }}>
-            <Text style={{ color: colors.black, fontSize: 20, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0 }}>Notifications</Text>
+            <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', padding: 5, paddingTop: 0 }}>Notifications</Text>
           </TouchableOpacity>
         </View>
         {select === 1 && <Chats />}

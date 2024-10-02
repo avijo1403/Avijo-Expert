@@ -7,6 +7,8 @@ import Collapsible3 from "../../components/Collapsible3";
 import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import HTMLView from "react-native-htmlview";
 import { debounce } from "lodash";
+import { launchImageLibrary } from "react-native-image-picker";
+import RNFS from 'react-native-fs';
 
 export default function AddQuestion({ navigation }) {
 
@@ -58,10 +60,32 @@ export default function AddQuestion({ navigation }) {
     }
 
     function onPressAddImage() {
-        // you can easily add images from your gallery
-        RichText.current?.insertImage(
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/100px-React-icon.svg.png"
-        );
+        const options = {
+            mediaType: 'photo',
+            quality: 1,
+        };
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.errorCode) {
+                console.log('Image Picker Error: ', response.errorMessage);
+            } else if (response.assets && response.assets.length > 0) {
+                const imageUri = response.assets[0].uri;
+    
+                // Convert image to base64 format
+                RNFS.readFile(imageUri, 'base64')
+                    .then(base64Data => {
+                        const imageBase64 = `data:image/jpeg;base64,${base64Data}`;
+                        
+                        // Insert base64 image into the RichEditor
+                        const imageHtml = `<img src="${imageBase64}" style="width: 90%; height: 150px;" />`;
+                        RichText.current?.insertHTML(imageHtml);
+                    })
+                    .catch(err => {
+                        console.log('Error converting image to base64:', err);
+                    });
+            }
+        });
     }
 
     function insertVideo() {
@@ -110,7 +134,9 @@ export default function AddQuestion({ navigation }) {
                 {showEditor && <KeyboardAvoidingView style={{ justifyContent: 'space-between', width: '100%', alignItems: 'center', flex: 1, marginTop: '5%' }}>
                     <RichEditor
                         ref={RichText}
+                        showsVerticalScrollIndicator={false}
                         style={{ width: '90%' }}
+                        containerStyle={{alignItems:'center'}}
                         placeholder="Start Writing Here"
                         // onChange={(text) => setArticle(text)}
                         onChange={onChangeContent}

@@ -12,6 +12,7 @@ import uuid from 'react-native-uuid';
 export default function CreateProfile({ navigation, route }) {
 
     const initialFormData = route.params?.formData || {};
+    const email = route.params?.email || '';
     const [selectedImage, setSelectedImage] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [loading, setLoading] = useState(false);
@@ -42,6 +43,7 @@ export default function CreateProfile({ navigation, route }) {
         doctorId: uniqueId,
         fullName: initialFormData.name || "",
         title: initialFormData.title || "",
+        emailId: email || "",
         specialization: initialFormData.specialization || "",
         experience: initialFormData.experience || "",
         gender: initialFormData.gender || "",

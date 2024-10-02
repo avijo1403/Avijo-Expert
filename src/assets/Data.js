@@ -369,8 +369,49 @@ const doCareList = [
     }
     ]
 
+   export const getTimeDifference = (timestamp) => {
+        // Convert timestamp to a Date object
+        const date = new Date(timestamp);
+        
+        // Get the current date
+        const now = new Date();
+      
+        // Calculate the difference in milliseconds
+        const diff = now - date;
+      
+        // Calculate the difference in seconds, minutes, hours, and days
+        const diffInSeconds = Math.floor(diff / 1000);
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+      
+        // Return the appropriate time difference
+        if (diffInDays > 0) {
+          return `${diffInDays} days ago`;
+        } else if (diffInHours > 0) {
+          return `${diffInHours} hours ago`;
+        } else if (diffInMinutes > 0) {
+          return `${diffInMinutes} minutes ago`;
+        } else {
+          return `${diffInSeconds} seconds ago`;
+        }
+      };
+
+    export  const formatDate = (timestamp) => {
+        const date = new Date(timestamp);
+      
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns 0-11
+        const year = date.getFullYear();
+      
+        return `${day}-${month}-${year}`;
+      };
+
 const BaseUrl1 = 'https://avijobackend-production.up.railway.app';
 const BaseUrl2 = "https://avijobackend-production.up.railway.app";
+
+
+
 
 export {
     BaseUrl1,

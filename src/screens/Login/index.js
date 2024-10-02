@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import axios from "axios";
 import styles from "./style";
@@ -10,11 +10,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login({ navigation }) {
 
-  const email = 'usmanzulfiqar14@gmail.com';
-  const pass = '123456789';
+  // const email = 'usmanzulfiqar14@gmail.com';
+  // const pass = '123456789';
 
-  const [emailId, setEmailId] = useState(email);
-  const [password, setPassword] = useState(pass);
+  const [emailId, setEmailId] = useState('');
+  const [password, setPassword] = useState('');
   const [loginWithOtp, setLoginWithOtp] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,8 +50,9 @@ export default function Login({ navigation }) {
         Alert.alert("Success", "You have logged in successfully!");
 
         await saveData('token',response.data.token);
-        await saveData('id',response.data._id);
-        console.log('id:', response.data.data, 'token:', response.data.token );
+        await saveData('id',response.data.data._id);
+        await saveData('email',response.data.data.email);
+        console.log('id:', response.data.data, 'email:', response.data.data.emailId ,'token:', response.data.token );
         navigation.replace("Dashboard");
       } else {
         Alert.alert("User not found", "Please check your credentials and try again.");
@@ -70,6 +71,17 @@ export default function Login({ navigation }) {
       setLoading(false);
     }
   };
+
+  const handleNavigation = async()=>{
+    const id = await AsyncStorage.getItem('id');
+    if(id){
+      navigation.replace('Dashboard');
+    }
+  }
+
+  useEffect(()=>{
+    handleNavigation();
+  },[])
 
   return (
     <View style={styles.container}>

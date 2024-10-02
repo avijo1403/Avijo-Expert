@@ -49,7 +49,7 @@ export default function Verification(){
         const response = await axios.post(`${BaseUrl2}/doctor/doctorVerify`, payload);
         if (response.status === 200) {
           Alert.alert("Success", "Verification successful!");
-          navigation.navigate("Profile",{name: fullName});
+          navigation.navigate("Profile",{name: fullName, email: emailId});
         } else {
           Alert.alert("Error", response.data.message || "Verification failed.");
         }

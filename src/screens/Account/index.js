@@ -19,7 +19,7 @@ export default function Account({ navigation }) {
                     </View>
                 </TouchableOpacity>
                 <View style={{ width: '90%', alignItems: 'flex-start', flexDirection: 'column', marginTop: '10%' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', borderWidth: 1, borderColor: colors.lightgrey, backgroundColor: colors.white }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Notification')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', borderWidth: 1, borderColor: colors.lightgrey, backgroundColor: colors.white }}>
                         <Image source={require('../../assets/images/chat6.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Chats</Text>
@@ -55,7 +55,7 @@ export default function Account({ navigation }) {
                             <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Drafts</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', borderWidth: 1, borderColor: colors.lightgrey, backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DoCare')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', borderWidth: 1, borderColor: colors.lightgrey, backgroundColor: colors.white, marginTop: '5%' }}>
                         <Image source={require('../../assets/images/doCare.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Try Docare +</Text>
@@ -63,7 +63,7 @@ export default function Account({ navigation }) {
                     </TouchableOpacity>
                 </View>
                 <View style={{ height: 2, width: '80%', backgroundColor: colors.grey, marginTop: '5%', alignSelf: 'flex-start', marginLeft: '5%' }} />
-                <TouchableOpacity style={{ alignSelf: 'flex-start', marginLeft: '5%', marginTop: '3%' }}>
+                <TouchableOpacity onPress={()=>navigation.navigate('DoCare')} style={{ alignSelf: 'flex-start', marginLeft: '5%', marginTop: '3%' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Try Docare +</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>navigation.navigate('SettingList')} style={{ alignSelf: 'flex-start', marginLeft: '5%', marginTop: '3%' }}>

@@ -226,8 +226,8 @@ export default function DrProfile({ navigation }) {
                                     <Image source={require('../../assets/images/review.png')} style={{ width: 56, height: 56, borderRadius: 73, alignSelf: 'center' }} />
                                     <View style={{ marginLeft: '5%', width: '80%' }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                                            <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: 24, color: colors.black }}>Sebastian</Text>
-                                            <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 16, color: colors.darkGrey }}>{formatDate(item.createdAt)}</Text>
+                                            <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: 20, color: colors.black }}>Sebastian</Text>
+                                            <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 12, color: colors.darkGrey }}>{formatDate(item.createdAt)}</Text>
                                         </View>
                                         <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 14, color: colors.darkGrey, paddingTop: '3%' }}>Visited For <Text style={{ color: colors.black }}>Food Poisining</Text></Text>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '1%' }}>
@@ -323,7 +323,7 @@ export default function DrProfile({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 text="Dr. Sunil Puraswani" onPress={() => navigation.goBack()} />
+            <HeaderItem3 text="Profile" onPress={() => navigation.goBack()} />
             <ScrollView
                 style={{ width: '100%' }}
                 contentContainerStyle={{ alignItems: 'center' }}

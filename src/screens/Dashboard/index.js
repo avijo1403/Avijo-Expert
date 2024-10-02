@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, Text, TouchableOpacity } from "react-native";
+import { FlatList, RefreshControl, ScrollView, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
 import styles from "./style";
 import HeaderItem from "../../components/HeaderItem";
 import { Image } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
-import { appData, BaseUrl2, dashboardData, hp, wp } from "../../assets/Data";
+import { appData, BaseUrl2, dashboardData, getTimeDifference, hp, wp } from "../../assets/Data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchItem from "../../components/SearchItem";
 import VideoNotification from "../../components/VideoNotification";
@@ -16,12 +16,14 @@ export default function Dashboard({ navigation }) {
     const [select, setSelect] = useState(1);
     const [column, setColumn] = useState(3);
     const [docData, setDocData] = useState([]);
+    const [appointData, setAppointData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     const uniqueId = uuid.v4();
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    
+
     const getData = async (key) => {
         try {
             const value = await AsyncStorage.getItem(key);
@@ -35,25 +37,45 @@ export default function Dashboard({ navigation }) {
     };
 
     const fetchData = async () => {
-
+        setRefreshing(true);
         const id = await getData('id');
+        const email = await getData('email');
         try {
+
+            const getProfileId = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
+            const profileJson = await getProfileId.json();
+            const profileId = await profileJson?.data?.find((item) => item?.emailId === email);
+            // console.log('profileId:', profileId?._id);
+
             const response = await fetch(`${BaseUrl2}/doctor/doctorAppointment`);
-            const response1 = await fetch(`${BaseUrl2}/user/appointments`);           
+            const response1 = await fetch(`${BaseUrl2}/user/appointments`);
+
             const json = await response.json();
             const json1 = await response1.json();
-            const appoints = await json1?.appointments?.filter((item)=>item?.doctorId);
-            console.log('json1:', appoints, id);
+            const appoints = await json1?.appointments?.filter((item) => item?.doctorId?._id === profileId?._id);
+            console.log('json1:', appoints, profileId?._id);
+            setAppointData(appoints);
             setDocData(json.data.appointments[0]);
             console.log('json:', json.data.appointments[0]);
         } catch (e) {
             console.log('error fetching...', e);
         }
+        setRefreshing(false);
     }
 
 
     const handleSelect = (no) => {
         setSelect(no);
+    };
+
+    const onRefresh = () => {
+        setRefreshing(true);
+
+        fetchData();
+
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000); 
     };
 
     useEffect(() => {
@@ -71,15 +93,15 @@ export default function Dashboard({ navigation }) {
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
                         <Image source={require('../../assets/images/total.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Total Patients</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingTop: '3%', lineHeight: 10 }}>24.08% {docData.totalPatients}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Total Patients</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.totalPatients}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
                         <Image source={require('../../assets/images/appointment.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Appointments</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingTop: '3%', lineHeight: 10 }}>21.06% {docData.appointments}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Appointments</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.appointments}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -87,15 +109,15 @@ export default function Dashboard({ navigation }) {
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
                         <Image source={require('../../assets/images/prescription.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Prescriptions</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingTop: '3%', lineHeight: 10 }}>45.06% {docData.prescriptions}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '100%' }}>Prescriptions</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.prescriptions}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
                         <Image source={require('../../assets/images/earning.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Total Earnings</Text>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingTop: '3%', lineHeight: 10 }}>15.06% {docData.totalEarnings}</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '100%' }}>Total Earnings</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.totalEarnings}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -104,18 +126,18 @@ export default function Dashboard({ navigation }) {
                     <FlatList
                         style={{ width: '100%' }}
                         contentContainerStyle={{ alignItems: 'center' }}
-                        data={dashboardData}
+                        data={appointData}
                         renderItem={({ item }) => (
                             <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', borderWidth: 1, padding: "5%", borderRadius: 8, borderColor: colors.lightgrey, backgroundColor: colors.white, elevation: 5, marginTop: '5%' }}>
-                                <Image source={item.image} style={{ height: 56, width: 56, borderRadius: 100 }} />
+                                <Image source={require('../../assets/images/profile3.png')} style={{ height: 56, width: 56, borderRadius: 100 }} />
                                 <View style={{ marginLeft: '5%', width: '60%', }}>
-                                    <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', paddingLeft: '2%' }}>{item.name}</Text>
+                                    <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', paddingLeft: '2%' }}>{item?.userId?.fullName}</Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                         <Image source={item.status === 'pending' ? require('../../assets/images/clock.png') : item.status === 'cancel' ? require('../../assets/images/cross.png') : require('../../assets/images/tick.png')} style={{ height: 24, width: 24 }} />
-                                        <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, paddingLeft: '3%' }}>{item.duartion}</Text>
+                                        <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, paddingLeft: '3%' }}>{item?.time}</Text>
                                     </View>
                                 </View>
-                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, }}>{item.time}</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, }}>{getTimeDifference(item?.createdAt)}</Text>
                             </View>
                         )} />
                 </View>
@@ -155,7 +177,18 @@ export default function Dashboard({ navigation }) {
                     <Text style={{ color: colors.black, fontSize: 20, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0 }}>Apps</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                style={{ width: '100%' }}
+                contentContainerStyle={{ alignItems: 'center' }}
+                showsVerticalScrollIndicator={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={[colors.blue]} 
+                        tintColor={colors.blue}
+                    />}
+            >
                 {select === 1 && <Dashboard />}
                 {select === 2 && <Apps />}
             </ScrollView>

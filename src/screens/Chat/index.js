@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Image } from 'react-native';
 import styles from './style';
 import HeaderItem2 from '../../components/HeaderItem2';
@@ -6,7 +6,12 @@ import { colors } from '../../Theme/GlobalTheme';
 import HeaderItem3 from '../../components/HeaderItem3';
 import { hp, wp } from '../../assets/Data';
 
-const Chat = ({ navigation }) => {
+const Chat = ({ navigation, route }) => {
+
+    const userId = route?.params?.userId;
+    const name = route?.params?.name;
+    const doctorId = route?.params?.doctorId;
+
     const [messages, setMessages] = useState([
         { id: 1, sender: 'You', text: 'Hello Emilli I hope you remember about your appoinment today with us.', time: '12:15 pm' },
         { id: 2, sender: 'Jane', text: 'Hello Doctor, Yes i remember. I will be there right on time', time: '12:15 pm' },
@@ -27,11 +32,15 @@ const Chat = ({ navigation }) => {
         }
     };
 
+    useEffect(()=>{
+        console.log('data:', doctorId, userId, name);
+    },[])
+
     return (
         <View style={styles.Container}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%', width: '90%' }}>
                 <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: '3%', marginLeft: '5%', borderRadius: 8 }}>
-                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white }}>Dr. Wilson</Text>
+                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white }}>{name}</Text>
                     <Image source={require('../../assets/images/star2.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} />
                 </View>
                 <TouchableOpacity>
@@ -50,7 +59,9 @@ const Chat = ({ navigation }) => {
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>example@gmail.com</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>+1 459883886</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
+                
+                */}
                 {messages.map(message => (
                     <View
                         key={message.id}

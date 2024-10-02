@@ -86,7 +86,11 @@ export default function Register({navigation}){
             <Text style={styles.numberHeading}>Mobile Number</Text>
             <View style={styles.phoneContainer}>
             <CodePicker onValueChange={(code) => handleCountryCodeChange(code)} defaultValue={formData.countryCode}/>
-            <TextInput style={styles.phoneInput} placeholder="Mobile Number" onChangeText={(value) => handleInputChange("mobile", value)}/>
+            <TextInput 
+            style={styles.phoneInput} 
+            placeholder="Mobile Number" 
+            onChangeText={(value) => handleInputChange("mobile", value)}
+            keyboardType="numeric"/>
             </View>
             <View style={{alignSelf:'flex-start', width:'100%' ,alignItems:'flex-start', marginLeft:'5%', marginTop:'5%'}}>
             <Text style={{fontSize:12, fontFamily: 'Poppins-Medium', color:colors.grey, padding:'2%', paddingTop:0}}>Receive relevent offers and promotional communication from avijo</Text>
