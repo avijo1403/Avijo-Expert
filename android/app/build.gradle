@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.firstcli"
+    namespace "com.mycompany.avijoexpert"
     defaultConfig {
-        applicationId "com.firstcli"
+        applicationId "com.mycompany.avijoexpert"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

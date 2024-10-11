@@ -128,7 +128,7 @@ export default function Dashboard({ navigation }) {
                         contentContainerStyle={{ alignItems: 'center' }}
                         data={appointData}
                         renderItem={({ item }) => (
-                            <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', borderWidth: 1, padding: "5%", borderRadius: 8, borderColor: colors.lightgrey, backgroundColor: colors.white, elevation: 5, marginTop: '5%' }}>
+                            <TouchableOpacity onPress={()=>setModalVisible(true)} style={{ flexDirection: 'row', width: '90%', alignItems: 'center', borderWidth: 1, padding: "5%", borderRadius: 8, borderColor: colors.lightgrey, backgroundColor: colors.white, elevation: 5, marginTop: '5%' }}>
                                 <Image source={require('../../assets/images/profile3.png')} style={{ height: 56, width: 56, borderRadius: 100 }} />
                                 <View style={{ marginLeft: '5%', width: '60%', }}>
                                     <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', paddingLeft: '2%' }}>{item?.userId?.fullName}</Text>
@@ -138,7 +138,7 @@ export default function Dashboard({ navigation }) {
                                     </View>
                                 </View>
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, }}>{getTimeDifference(item?.createdAt)}</Text>
-                            </View>
+                            </TouchableOpacity>
                         )} />
                 </View>
             </View>

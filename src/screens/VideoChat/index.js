@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, TouchableOpacity, View } from 'react-native';
 import { colors } from '../../Theme/GlobalTheme';
 import AgoraUIKit from 'agora-rn-uikit';
-import { wp } from '../../assets/Data';
+import { BaseUrl2, wp } from '../../assets/Data';
 
 const dimensions = {
     width: Dimensions.get('window').width,
@@ -12,11 +12,41 @@ const dimensions = {
 const VideoChat = ({ navigation }) => {
 
     const [videoCall, setVideoCall] = useState(true);
+    const [token, setToken] = useState('');
+    const [uid, setUid] = useState(Math.floor(Math.random() * 1000));
+
+
+    const fetchToken = async () => {
+        const data = {
+            "channelName": "test",
+            "uid": uid,
+        }
+        try {
+            const response = await fetch(`${BaseUrl2}/user/agoraToken`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            const json = await response.json();
+            console.log('response', json.token);
+            console.log('uid:', uid);
+            setToken(json.token);
+        } catch (e) {
+            console.log('error fetch token...', e);
+        }
+    }
+
+    useEffect(() => {
+        fetchToken();
+    }, []);
 
     const connectionData = {
         appId: 'd19a9bdbb20e41dc8fad2ff7fe7f3d34',
         channel: 'test',
-        token: '007eJxTYKgsNu9c1M/h7vtmkmtZfFbyTKHFKo+L06tTWeL03nP23lJgSDG0TLRMSklKMjJINTFMSbZIS0wxSkszT0s1TzNOMTbRatiS1hDIyCD40o2FkQECQXwWhpLU4hIGBgDlSx50',
+        token: token,
+        uid: uid,
     };
 
 

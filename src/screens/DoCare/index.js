@@ -9,12 +9,21 @@ export default function DoCare({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem notiPress={() => navigation.navigate('Notification')} text="avijo" onRightPress={() => navigation.navigate('Account')} image={<Image source={require('../../assets/images/profile3.png')} style={{ height: 36, width: 36 }} showSearch={true} />} />
-            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
+            <View style={{ width: '100%', padding: '5%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.background, paddingTop: '10%' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'start' }}>
                     <Image source={require('../../assets/images/appDoc.png')} style={{ height: 44, width: 44, borderRadius: 100 }} />
+                    <Text style={{ fontSize: 28, fontWeight: '500', color: colors.black, paddingLeft: '5%', borderRadius: 50, marginLeft: '5%' }}>Docare</Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'start' }}>
+                    <Image source={require('../../assets/images/blackSearch.png')} style={{ height: 24, width: 24, marginRight: 8 }} />
+                    <Image source={require('../../assets/images/blackAdd.png')} style={{ height: 24, width: 24 }} />
+                </View>
+            </View>
+            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'start', backgroundColor: colors.white, width: "100%", padding: '5%' }}>
+                    <Image source={require('../../assets/images/appDoc.png')} style={{ height: 44, width: 44, borderRadius: 100 }} />
                     <View style={{ width: '80%' }}>
-                        <TouchableOpacity onPress={()=>navigation.navigate('AddQuestion')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('AddQuestion')}>
                             <Text style={{ fontSize: 12, fontWeight: '500', color: colors.darkGrey, paddingLeft: '5%', borderWidth: 1, borderColor: colors.lightgrey, padding: 5, width: '90%', borderRadius: 50, marginLeft: '5%' }}>What do you want to ask or share?</Text>
                         </TouchableOpacity>
                         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginLeft: '5%', marginTop: '2%' }}>
@@ -42,7 +51,7 @@ export default function DoCare({ navigation }) {
                             <Image source={require('../../assets/images/downGrey.png')} style={{ height: 16, width: 16 }} />
                         </View>
                     </View>
-                    <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', elevation: 5, backgroundColor: colors.white }}>
+                    <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', backgroundColor: colors.background }}>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'start', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/appDoc.png')} style={{ height: 44, width: 44, borderRadius: 100 }} />
                             <View style={{ width: '80%', alignItems: 'center', paddingLeft: '5%' }}>
@@ -59,7 +68,7 @@ export default function DoCare({ navigation }) {
                         <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '3%', paddingLeft: '2%' }}>How do I build a social media app: A Comprehensive Guide? There are so many freelancer who can help you with that</Text>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '2%', }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', padding: '2%' }}>
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 7, borderWidth: 1, borderColor: colors.grey }}>
+                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 7, borderWidth: 1, borderColor: colors.grey, backgroundColor: colors.white }}>
                                     <Image source={require('../../assets/images/blueUp.png')} style={{ height: 16, width: 16, marginRight: '5%' }} />
                                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.darkGrey }}>Upvote</Text>
                                     <Image source={require('../../assets/images/greyDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
@@ -77,7 +86,7 @@ export default function DoCare({ navigation }) {
                         </View>
                     </View>
 
-                    <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', elevation: 5, backgroundColor: colors.white }}>
+                    <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', backgroundColor: colors.white }}>
                         <View style={{ width: '100%', flexDirection: 'row', alignItems: 'start', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/available3.png')} style={{ height: 44, width: 44, borderRadius: 100 }} />
                             <View style={{ width: '80%', alignItems: 'center', paddingLeft: '5%' }}>
@@ -113,56 +122,58 @@ export default function DoCare({ navigation }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', marginTop: '5%', borderBottomWidth: 1, paddingBottom: '5%', borderColor: colors.grey }}>
-                        <Image source={require('../../assets/images/question2.png')} style={{ height: 20, width: 20 }} />
-                        <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginLeft: '5%' }}>Questions for you</Text>
-                    </View>
-                    <View style={{ width: '90%', alignItems: 'center', borderBottomWidth: 1, borderColor: colors.grey, marginTop: '5%', padding: '3%', backgroundColor: colors.white, marginBottom: '5%' }}>
-                        <View style={{ width: '95%', alignItems: 'center', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "95%" }}>How has the spread of tick-borne viruses in Japan evolved over the X years, and what new infectious diseases have been detected recently?</Text>
-                            <TouchableOpacity>
-                                <Image source={require('../../assets/images/cross2.png')} style={{ height: 10, width: 10 }} />
-                            </TouchableOpacity>
+                    <View style={{width:'90%', alignSelf:'center', backgroundColor:colors.white, marginTop:'5%', borderRadius:8, marginBottom:'5%'}}>
+                        <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', marginTop: '5%', borderBottomWidth: 1, paddingBottom: '5%', borderColor: colors.grey }}>
+                            <Image source={require('../../assets/images/question2.png')} style={{ height: 20, width: 20 }} />
+                            <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginLeft: '5%' }}>Questions for you</Text>
                         </View>
-                        <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '5%' }}>No answer yet . Last followed 14m</Text>
-                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '3%', }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%', justifyContent: 'space-between', }}>
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
-                                    <Image source={require('../../assets/images/question.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
-                                    <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Ask</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
-                                    <Image source={require('../../assets/images/ask.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
-                                    <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Answer</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
-                                    <Image source={require('../../assets/images/post2.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
-                                    <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Post</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', width: '15%', justifyContent: 'space-between', marginTop: '4%' }}>
-                                <TouchableOpacity>
-                                    <Image source={require('../../assets/images/greyDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
-                                </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Image source={require('../../assets/images/horizontalDots.png')} style={{ height: 20, width: 20 }} />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: colors.grey, marginTop: '5%', padding: '3%', backgroundColor: colors.white, marginBottom: '5%', justifyContent: 'space-between' }}>
-                        <View style={{ width: '70%', alignItems: 'center' }}>
+                        <View style={{ width: '100%', alignItems: 'center', borderBottomWidth: 1, borderColor: colors.grey, marginTop: '5%', padding: '3%', backgroundColor: colors.white, marginBottom: '5%' }}>
                             <View style={{ width: '95%', alignItems: 'center', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "95%" }}>Add 5 topics you know about</Text>
-                            </View>
-                            <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "95%", marginTop: '5%' }}>You ‘ll get better questions if you add more specific topics.</Text>
-                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '3%', }}>
-                                <TouchableOpacity style={{ alignItems: 'center', marginTop: '5%', width: '30%', backgroundColor: colors.white, padding: '2%', borderWidth: 1, borderColor: colors.blue, borderRadius: 50, alignItems: 'center' }}>
-                                    <Text style={{ fontSize: 12, fontWeight: '500', color: colors.blue }}>Create</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "95%" }}>How has the spread of tick-borne viruses in Japan evolved over the X years, and what new infectious diseases have been detected recently?</Text>
+                                <TouchableOpacity>
+                                    <Image source={require('../../assets/images/cross2.png')} style={{ height: 10, width: 10 }} />
                                 </TouchableOpacity>
                             </View>
+                            <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '5%' }}>No answer yet . Last followed 14m</Text>
+                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '3%', }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%', justifyContent: 'space-between', }}>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
+                                        <Image source={require('../../assets/images/question.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
+                                        <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Ask</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
+                                        <Image source={require('../../assets/images/ask.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
+                                        <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Answer</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%', width: '28%', backgroundColor: colors.lightgrey, padding: '2%' }}>
+                                        <Image source={require('../../assets/images/post2.png')} style={{ height: 12, width: 12, marginLeft: '5%' }} />
+                                        <Text style={{ marginLeft: '5%', fontSize: 12, fontWeight: '500', color: colors.darkGrey }}>Post</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', width: '15%', justifyContent: 'space-between', marginTop: '4%' }}>
+                                    <TouchableOpacity>
+                                        <Image source={require('../../assets/images/greyDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity>
+                                        <Image source={require('../../assets/images/horizontalDots.png')} style={{ height: 20, width: 20 }} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
-                        <Image source={require('../../assets/images/notebook.png')} style={{ height: 72, width: 72 }} />
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: colors.grey, marginTop: '5%', padding: '3%', backgroundColor: colors.white, marginBottom: '5%', justifyContent: 'space-between' }}>
+                            <View style={{ width: '70%', alignItems: 'center' }}>
+                                <View style={{ width: '95%', alignItems: 'center', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "95%" }}>Add 5 topics you know about</Text>
+                                </View>
+                                <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "95%", marginTop: '5%' }}>You ‘ll get better questions if you add more specific topics.</Text>
+                                <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '3%', }}>
+                                    <TouchableOpacity style={{ alignItems: 'center', marginTop: '5%', width: '30%', backgroundColor: colors.white, padding: '2%', borderWidth: 1, borderColor: colors.blue, borderRadius: 50, alignItems: 'center' }}>
+                                        <Text style={{ fontSize: 12, fontWeight: '500', color: colors.blue }}>Create</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <Image source={require('../../assets/images/notebook.png')} style={{ height: 72, width: 72 }} />
+                        </View>
                     </View>
                 </View>
             </ScrollView>

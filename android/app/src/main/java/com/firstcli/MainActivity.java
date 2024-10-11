@@ -1,4 +1,4 @@
-package com.firstcli;
+package  com.mycompany.avijoexpert;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

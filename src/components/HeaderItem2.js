@@ -6,7 +6,7 @@ export default function HeaderItem2(props) {
 
     return (
         <View style={styles.headerContainer}>
-            <View style={{ flexDirection: 'row', alignItems:'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity onPress={props.onPress}>
                     <Image source={require('../assets/images/blackLeft.png')} style={{ height: 14, width: 15 }} />
                 </TouchableOpacity>
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         padding: '5%',
         paddingTop: '10%',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor:colors.white,
     },
     headerText: {
         fontSize: 20,

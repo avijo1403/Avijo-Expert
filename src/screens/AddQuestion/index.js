@@ -8,7 +8,8 @@ import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-p
 import HTMLView from "react-native-htmlview";
 import { debounce } from "lodash";
 import { launchImageLibrary } from "react-native-image-picker";
-import RNFS from 'react-native-fs';
+
+
 
 export default function AddQuestion({ navigation }) {
 

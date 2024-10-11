@@ -1,4 +1,4 @@
-package com.firstcli;
+package  com.mycompany.avijoexpert;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

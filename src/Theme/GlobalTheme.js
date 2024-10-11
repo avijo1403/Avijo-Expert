@@ -2,7 +2,7 @@
 const colors = {
         black:'black',
         grey: 'rgba(164, 164, 164, 1)',
-        background:'rgba(255, 243, 218, 1)',
+        background:'#FBFBFB',
         white:'white',
         blue:'#0095D9',
         lightgrey:'rgba(0.9529, 0.9490, 0.9686, 0.05)',
@@ -29,6 +29,7 @@ const colors = {
         brown:'rgba(63,63,63,1)',
         maroon:'#B15675',
         orange:'#F0A031',
+        torquish:'#39D2C0',
 }
 
 export {colors};

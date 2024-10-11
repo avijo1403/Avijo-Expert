@@ -78,6 +78,9 @@ import Subscription from './src/screens/Subscription';
 import DisplaySetting from './src/screens/DisplaySetting';
 import Privacy from './src/screens/Privacy';
 import ProfileSetting from './src/screens/ProfileSetting';
+import PrescriptionForm from './src/screens/PrescriptionForm';
+import PrescriptionSave from './src/screens/PrescriptionSave';
+import PrescriptionDetail from './src/screens/PrescriptionDetail.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -161,6 +164,9 @@ const App = () => {
         <Stack.Screen name='DisplaySetting' component={DisplaySetting} options={{headerShown:false}}/>
         <Stack.Screen name='Privacy' component={Privacy} options={{headerShown:false}}/>
         <Stack.Screen name='ProfileSetting' component={ProfileSetting} options={{headerShown:false}}/>
+        <Stack.Screen name='PrescriptionForm' component={PrescriptionForm} options={{headerShown:false}}/>
+        <Stack.Screen name='PrescriptionSave' component={PrescriptionSave} options={{headerShown:false}}/>
+        <Stack.Screen name='PrescriptionDetail' component={PrescriptionDetail} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
