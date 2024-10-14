@@ -36,15 +36,15 @@ export default function Settings({ navigation }) {
         )
     }
 
-    const Password=()=>{
-        return(
+    const Password = () => {
+        return (
             <View style={{ width: '100%', alignItems: 'center' }}>
-                <LoginInput text="Old Password" secureTextEntry={true}/>
-                <LoginInput text="New Password" secureTextEntry={true}/>
-                <LoginInput text="Confirm Password" secureTextEntry={true}/>
-                    <View style={{ width: '100%', alignItems: 'center', marginTop:"10%" }}>
-                        <Button1 Text="Save Changes" image={<Image source={require('../../assets/images/whiteTick.png')} style={{ height: 16, width: 16, marginLeft: 5 }} />} />
-                    </View>
+                <LoginInput text="Old Password" secureTextEntry={true} />
+                <LoginInput text="New Password" secureTextEntry={true} />
+                <LoginInput text="Confirm Password" secureTextEntry={true} />
+                <View style={{ width: '100%', alignItems: 'center', marginTop: "10%" }}>
+                    <Button1 Text="Save Changes" image={<Image source={require('../../assets/images/whiteTick.png')} style={{ height: 16, width: 16, marginLeft: 5 }} />} />
+                </View>
             </View>
         )
     }
@@ -52,7 +52,7 @@ export default function Settings({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={{ width: '100%', alignItems: 'center', backgroundColor: colors.blue, paddingBottom: '1%' }}>
-                <HeaderItem3 onPress={() => navigation.goBack()} onRightPress={()=> navigation.navigate('AddQuestion')} text="Settings" />
+                <HeaderItem3 onPress={() => navigation.goBack()} onRightPress={() => navigation.navigate('AddQuestion')} text="Settings" />
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginTop: '5%' }}>
                     <TouchableOpacity onPress={() => setSelect(1)} style={{ borderBottomWidth: select === 1 ? 3 : 0, borderColor: colors.white, width: '49%', alignItems: 'center' }}>
                         <Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0, }}>Personal Information</Text>
@@ -62,9 +62,9 @@ export default function Settings({ navigation }) {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView style={{width:'100%'}} contentContainerStyle={{alignItems:"center"}}>
+            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: "center" }}>
                 {select === 1 && <Info />}
-                {select === 2 && <Password/>}
+                {select === 2 && <Password />}
             </ScrollView>
         </View>
     )

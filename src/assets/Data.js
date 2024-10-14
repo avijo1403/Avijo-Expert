@@ -306,18 +306,22 @@ const profileOption=[
     },
     {
         id:3,
-        text:'0 Reveiw'
+        text:'Following',
     },
     {
         id:4,
-        text:'0 Followers'
+        text:'0 Reveiw'
     },
     {
         id:5,
-        text:'1 Spaces'
+        text:'0 Followers'
     },
     {
         id:6,
+        text:'1 Spaces'
+    },
+    {
+        id:7,
         text:'1 Post'
     }
 ]

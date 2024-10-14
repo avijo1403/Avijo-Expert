@@ -176,7 +176,7 @@ export default function DrProfile({ navigation }) {
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '2%', borderRadius: 6, borderWidth: 1, borderColor: colors.blue }}>
                                 <Image source={require('../../assets/images/addAccBlue.png')} style={{ height: 12, width: 10, marginRight: '2%' }} />
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingLeft: 5 }}>Follow</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity>z
                         </View>
                     </View>
                 </View>))}
@@ -321,6 +321,33 @@ export default function DrProfile({ navigation }) {
         )
     }
 
+    const Following = () => {
+        return (
+            <>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%', marginTop: '8%' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>16 Following</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Most Recent</Text>
+                        <Image source={require('../../assets/images/downGrey.png')} style={{ height: 16, width: 16 }} />
+                    </View>
+                </View>
+                {profileOption && profileOption.length > 0 && profileOption.map((item) => (<View style={[styles.container, { marginTop: '5%' }]}>
+                    <View style={{ width: '90%', alignItems: 'center', borderBottomWidth: 1, borderColor: colors.grey, borderRadius: 5, marginTop: '3%', padding: '3%', backgroundColor: colors.white }}>
+                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/available3.png')} style={{ height: 32, width: 32, borderRadius: 5 }} />
+                            <View style={{ width: '90%', alignItems: 'center', paddingLeft: '5%' }}>
+                                <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%", marginTop: '2%' }}>Assignment Forum</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, width: "100%", marginTop: '2%' }}>32K followers</Text>
+                                <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.grey, width: "100%", marginTop: '2%' }}>Questions and discussions regarding academia, assignments, homework, school, etc.</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>))}
+            </>
+        )
+    }
+
+
     return (
         <View style={styles.container}>
             <HeaderItem3 text="Profile" onPress={() => navigation.goBack()} />
@@ -362,10 +389,11 @@ export default function DrProfile({ navigation }) {
                 {select === 0 && <Profile />}
                 {select === 1 && <Answers />}
                 {select === 2 && <Questions />}
-                {select === 3 && <Review />}
-                {select === 4 && <Followers />}
-                {select === 5 && <Spaces />}
-                {select === 6 && <Posts />}
+                {select === 3 && <Following />}
+                {select === 4 && <Review />}
+                {select === 5 && <Followers />}
+                {select === 6 && <Spaces />}
+                {select === 7 && <Posts />}
             </ScrollView>
         </View>
     )

@@ -79,7 +79,7 @@ export default function Notification({ navigation }) {
     <View style={styles.container}>
       <HeaderItem3 onPress={() => navigation.goBack()} text="Notifications" right={<Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', width: 100, paddingRight: wp(10) }}>New Chat</Text>} />
       <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
-        {select === 2 && <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
+        {select === 1 && <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
           <SearchItem />
         </View>}
         <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginTop: '5%' }}>
@@ -90,7 +90,7 @@ export default function Notification({ navigation }) {
             <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', padding: 5, paddingTop: 0 }}>Notifications</Text>
           </TouchableOpacity>
         </View>
-        {select == 1 && <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
+        {select == 2 && <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
           <SearchItem />
         </View>}
         {select === 1 && <Chats />}

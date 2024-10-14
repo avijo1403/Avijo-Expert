@@ -32,16 +32,19 @@ const Chat = ({ navigation, route }) => {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('data:', doctorId, userId, name);
-    },[])
+    }, [])
 
     return (
         <View style={styles.Container}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%', width: '90%' }}>
-                <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: '3%', marginLeft: '5%', borderRadius: 8 }}>
-                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white }}>{name}</Text>
-                    <Image source={require('../../assets/images/star2.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} />
+                <View style={{ backgroundColor: colors.white, flexDirection: 'row', alignItems: 'center', marginLeft: '5%', borderRadius: 8 }}>
+                    <Image source={require('../../assets/images/blackLeft.png')} style={{ height: 16, width: 16 }} />
+                    <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: 10, marginLeft: '10%', borderRadius: 8 }}>
+                        <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white, paddingRight: '3%' }}>John Doe</Text>
+                        <Image source={require('../../assets/images/star2.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} />
+                    </View>
                 </View>
                 <TouchableOpacity>
                     <Image source={require('../../assets/images/dotBlue.png')} style={{ height: 20, width: 4.5 }} />
@@ -75,11 +78,19 @@ const Chat = ({ navigation, route }) => {
                     </View>
                 ))}
             </ScrollView>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', alignSelf: 'center',  marginBottom:'5%' }}>
+                <View style={{ width: '48%', padding: '5%', borderWidth: 1, borderRadius: 8, borderColor: colors.grey }}>
+                    <Text style={{ fontSize: 14, color: colors.grey, textAlign: 'center', fontFamily: 'Gilroy-SemiBold' }}>Create an image for my presentation</Text>
+                </View>
+                <View style={{ width: '48%', padding: '5%', borderWidth: 1, borderRadius: 8, borderColor: colors.grey }}>
+                    <Text style={{ fontSize: 14, color: colors.grey, textAlign: 'center', fontFamily: 'Gilroy-SemiBold' }}>Create an image for my presentation</Text>
+                </View>
+            </View>
             <View style={styles.inputContainer}>
                 <TouchableOpacity>
-                    <Image source={require('../../assets/images/add4.png')} style={{ height: 46, width: 46 }} />
+                    <Image source={require('../../assets/images/add4.png')} style={{ height: 40, width: 40 }} />
                 </TouchableOpacity>
-                <View style={{ width: '60%', backgroundColor: colors.blue, borderRadius: 100, flexDirection:'row', alignItems:'center', justifyContent:'space-between' }}>
+                <View style={{ width: '60%', backgroundColor: colors.grey, borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                     <TextInput
                         ref={textInputRef}
                         placeholder="Message"
@@ -93,7 +104,7 @@ const Chat = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={{ margin: 5 }} onPress={sendMessage}>
-                    <Image source={require('../../assets/images/stereo.png')} style={{ height: 32, width: 32 }} />
+                    <Image source={require('../../assets/images/send.png')} style={{ height: 32, width: 32 }} />
                 </TouchableOpacity>
             </View>
         </View>
