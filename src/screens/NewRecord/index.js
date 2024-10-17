@@ -12,20 +12,20 @@ import LoginInput from "../../components/LoginInput";
 import Button2 from "../../components/Button2";
 import Button1 from "../../components/Button1";
 
-export default function NewRecord({navigation}) {
+export default function NewRecord({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 onPress={()=>navigation.goBack()} text="New Medical Record" right={<Image source={require('../../assets/images/whiteSearch.png')} style={{ height: 24, width: 24, marginLeft: '50%' }} />} />
+            <HeaderItem3 onPress={() => navigation.goBack()} text="New Medical Record" right={<Image source={require('../../assets/images/whiteSearch.png')} style={{ height: 24, width: 24, marginLeft: '50%' }} />} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', marginTop: '10%' }}>
+                {/* <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', marginTop: '10%' }}>
                     <Image source={require('../../assets/images/profile4.png')} style={{ height: 100, width: 100, borderRadius: 100 }} />
                     <TouchableOpacity style={{ alignItems: 'center', marginLeft: '5%' }}>
                         <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: wp('80%'), textAlign: 'left', marginTop: '4%' }}>Micheal</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>example@gmail.com</Text>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: wp('80%'), textAlign: 'left', marginTop: '2%' }}>+1 459883886</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <Collapsible1 text="Hugo Loris" heading="Title" />
                 <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: "90%", marginTop: '5%' }}>Complains</Text>
                 <TextInput
@@ -122,21 +122,29 @@ export default function NewRecord({navigation}) {
                     </View>
                 </View>
                 <View style={{ width: '100%', alignItems: 'center', marginTop: '5%', marginBottom: '5%' }}>
-                    <Button2 onPress={()=>navigation.navigate("AddItem")} Text="Add Medicine" image={<Image source={require('../../assets/images/blueAdd.png')} style={{ height: 24, width: 24 }} />} />
+                    <Button2 onPress={() => navigation.navigate("AddItem")} Text="Add Medicine" image={<Image source={require('../../assets/images/blueAdd.png')} style={{ height: 24, width: 24 }} />} />
                 </View>
                 <Text style={{ fontFamily: 'Gilroy-SemiBold', color: colors.black, fontSize: 20 }}>PRESCRIPTION UPLOAD</Text>
-                <View style={{ marginTop: '5%', height: 125, width: 156 }}>
-                    <TouchableOpacity style={{ position: 'absolute', zIndex: 2, alignSelf: 'flex-end', marginRight: '2%', marginTop: '2%' }}>
-                        <Image source={require('../../assets/images/redCross.png')} style={{ height: 20, width: 20 }} />
-                    </TouchableOpacity>
-                    <Image source={require('../../assets/images/prescription2.png')} style={{ height: 125, width: 156 }} />
+                <View style={{width:'90%', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+                    <View style={{ marginTop: '5%', height: 125, width: 156 }}>
+                        <TouchableOpacity style={{ position: 'absolute', zIndex: 2, alignSelf: 'flex-end', marginRight: '2%', marginTop: '2%' }}>
+                            <Image source={require('../../assets/images/redCross.png')} style={{ height: 20, width: 20 }} />
+                        </TouchableOpacity>
+                        <Image source={require('../../assets/images/prescription2.png')} style={{ height: 125, width: 156 }} />
+                    </View>
+                    <View style={{ marginTop: '5%', height: 125, width: 156 }}>
+                        <TouchableOpacity style={{ position: 'absolute', zIndex: 2, alignSelf: 'flex-end', marginRight: '2%', marginTop: '2%' }}>
+                            <Image source={require('../../assets/images/redCross.png')} style={{ height: 20, width: 20 }} />
+                        </TouchableOpacity>
+                        <Image source={require('../../assets/images/prescription2.png')} style={{ height: 125, width: 156 }} />
+                    </View>
                 </View>
-                <View style={{width:"90%", height:1, backgroundColor:colors.grey, marginTop:"10%"}}/>
-                <Image source={require('../../assets/images/upload1.png')} style={{ height: 40, width: 40, marginTop:"5%" }} />
-                <Text style={{fontFamily:'Gilroy-SemiBold', color:colors.black, fontSize:18, marginTop:'3%'}}>Drag your image here</Text>
-                <Text style={{fontFamily:'Gilroy-Medium', color:colors.grey, fontSize:12, marginTop:'3%'}}>(Only *JPEG and *PNG images will be accepted)</Text>
-                <View style={{width:"100%", alignItems:'center', marginTop:"5%", marginBottom:"5%"}}>
-                    <Button1 Text="Save" image={<Image source={require('../../assets/images/whiteTick.png')} style={{height:16, width:16, marginLeft:"3%"}}/>}/>
+                <View style={{ width: "90%", height: 1, backgroundColor: colors.grey, marginTop: "10%" }} />
+                <Image source={require('../../assets/images/upload1.png')} style={{ height: 40, width: 40, marginTop: "5%" }} />
+                <Text style={{ fontFamily: 'Gilroy-SemiBold', color: colors.black, fontSize: 18, marginTop: '3%' }}>Drag your image here</Text>
+                <Text style={{ fontFamily: 'Gilroy-Medium', color: colors.grey, fontSize: 12, marginTop: '3%' }}>(Only *JPEG and *PNG images will be accepted)</Text>
+                <View style={{ width: "100%", alignItems: 'center', marginTop: "5%", marginBottom: "5%" }}>
+                    <Button1 Text="Save" image={<Image source={require('../../assets/images/whiteTick.png')} style={{ height: 16, width: 16, marginLeft: "3%" }} />} />
                 </View>
             </ScrollView>
         </View>

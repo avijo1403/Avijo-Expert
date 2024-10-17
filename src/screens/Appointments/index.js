@@ -6,6 +6,7 @@ import { BaseUrl2, dashboardData, formatDate, getTimeDifference } from "../../as
 import SearchItem from "../../components/SearchItem";
 import Button1 from "../../components/Button1";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FloatingAction } from "react-native-floating-action";
 
 export default function Appointments({ navigation }) {
 
@@ -45,7 +46,7 @@ export default function Appointments({ navigation }) {
 
         setTimeout(() => {
             setRefreshing(false);
-        }, 2000); 
+        }, 2000);
     };
 
 
@@ -84,10 +85,10 @@ export default function Appointments({ navigation }) {
                     />}
                 style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
-                    <SearchItem image={require('../../assets/images/filter.png')} />
+                    <SearchItem />
                 </View>
-                <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%', marginTop: '5%' }}>Today Appointments</Text>
-                <View style={{ width: "100%", alignItems: 'center' }}>
+                {/* <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%', marginTop: '5%' }}>Today Appointments</Text> */}
+                {/* <View style={{ width: "100%", alignItems: 'center' }}>
                     <FlatList
                         style={{ width: '100%' }}
                         contentContainerStyle={{ alignItems: 'center' }}
@@ -109,8 +110,8 @@ export default function Appointments({ navigation }) {
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, }}>{getTimeDifference(item?.createdAt)}</Text>
                             </TouchableOpacity>
                         )} />
-                </View>
-                <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%', marginTop: '5%' }}>Recent Appointments</Text>
+                </View> */}
+                {/* <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%', marginTop: '5%' }}>Recent Appointments</Text> */}
                 <View style={{ width: "100%", alignItems: 'center' }}>
                     <FlatList
                         style={{ width: '100%' }}
@@ -134,10 +135,17 @@ export default function Appointments({ navigation }) {
                             </TouchableOpacity>
                         )} />
                 </View>
-                <View style={{ width: '100%', alignItems: 'center', marginTop: '2%', marginBottom: "5%" }}>
+                {/* <View style={{ width: '100%', alignItems: 'center', marginTop: '2%', marginBottom: "5%" }}>
                     <Button1 Text="Add" onPress={() => navigation.navigate('AddAppointment')} image={<Image source={require('../../assets/images/plus.png')} style={{ height: 24, width: 24 }} />} />
-                </View>
+                </View> */}
             </ScrollView>
+            <FloatingAction
+                color={colors.blue}
+                onPressMain={() => {
+                    navigation.navigate('AddAppointment')
+                }}
+                overlayColor='rgba(0,0,0,0)'
+            />
         </View>
     )
 }

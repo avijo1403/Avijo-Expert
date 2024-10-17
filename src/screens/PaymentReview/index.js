@@ -11,11 +11,21 @@ export default function PaymentReview({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', width: '75%' }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
-                    </TouchableOpacity>
-                    <Text style={styles.headerText}>Preview Payment</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
+                        </TouchableOpacity>
+                        <Text style={styles.headerText}>Preview Payment</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('ShareWithPatient')}>
+                            <Image source={require('../../assets/images/share.png')} style={{ height: 30, width: 30 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image source={require('../../assets/images/download.png')} style={{ height: 30, width: 30, }} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 {/* <View style={{ flexDirection: 'row', width: "16%", justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity>
@@ -27,6 +37,9 @@ export default function PaymentReview({ navigation }) {
                 </View> */}
             </View>
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
+                <TouchableOpacity onPress={()=>navigation.navigate('EditPayment')} style={{alignSelf:'flex-end', marginRight:'5%', marginTop:'5%'}}>
+                    <Image source={require('../../assets/images/edit2.png')} style={{ height: 16, width: 16 }} />
+                </TouchableOpacity>
                 <Text style={{ width: '90%', textAlign: 'right', marginTop: "5%", fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Invoice ID: #897612</Text>
                 <Text style={{ width: '90%', textAlign: 'right', marginTop: "2%", fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.black }}>Date: <Text style={{ color: colors.darkGrey }}>08 May 2025</Text></Text>
                 <Text style={{ width: '90%', textAlign: 'right', marginTop: "2%", fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.black }}>Due Date: <Text style={{ color: colors.darkGrey }}>08 May 2025</Text></Text>

@@ -5,6 +5,7 @@ import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { BaseUrl2, dashboardData, wp } from "../../assets/Data";
 import Button1 from "../../components/Button1";
+import { FloatingAction } from "react-native-floating-action";
 
 export default function Invoices({ navigation }) {
 
@@ -38,7 +39,7 @@ export default function Invoices({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 onPress={() => navigation.goBack()} onRightPress={()=>navigation.navigate('CreateInvoice')} text="Invoices" showSearch={true} right={<Image source={require('../../assets/images/addAcc.png')} style={{ height: 26, width: 26 }} />} />
+            <HeaderItem3 onPress={() => navigation.goBack()} onRightPress={() => navigation.navigate('CreateInvoice')} text="Invoices" showSearch={false} right2={<Image source={require('../../assets/images/upload2.png')} style={{ height: 26, width: 26 }} />} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <FlatList
                     style={{ width: '100%' }}
@@ -48,9 +49,9 @@ export default function Invoices({ navigation }) {
                         const date1 = formatDate(item.createdDate);
                         const date2 = formatDate(item.dueDate);
                         return (
-                            <TouchableOpacity onPress={() => navigation.navigate('EditInvoice')} style={{ width: '90%', alignItems: 'center', borderWidth: 1, padding: 5, borderRadius: 8, borderColor: colors.lightgrey, backgroundColor: colors.white, elevation: 5, marginTop: '5%', }}>
+                            <TouchableOpacity onPress={() => navigation.navigate('PreviewInvoice')} style={{ width: '90%', alignItems: 'center', borderWidth: 1, padding: 5, borderRadius: 8, borderColor: colors.lightgrey, backgroundColor: colors.white, elevation: 5, marginTop: '5%', }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', width: '98%', marginLeft: '0%' }}>
-                                    <Text style={{ color: colors.black, fontSize: 12, fontFamily: 'Gilroy-Medium', padding: '2%', alignSelf: 'flex-start', width:"100%"}}>Invoice ID:  #{item.invoiceId}</Text>
+                                    <Text style={{ color: colors.black, fontSize: 12, fontFamily: 'Gilroy-Medium', padding: '2%', alignSelf: 'flex-start', width: "100%" }}>Invoice ID:  #{item.invoiceId}</Text>
                                     {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '25%', justifyContent: 'space-between', marginLeft:"35%" }}>
                                         <TouchableOpacity onPress={() => navigation.navigate('MedicalRecordView')}>
                                             <Image source={require('../../assets/images/blueEye.png')} style={{ height: 24, width: 24 }} />
@@ -92,10 +93,17 @@ export default function Invoices({ navigation }) {
                             </TouchableOpacity>
                         )
                     }} />
-                <View style={{ width: '100%', alignItems: 'center', marginTop: '5%', marginBottom: '5%' }}>
+                {/* <View style={{ width: '100%', alignItems: 'center', marginTop: '5%', marginBottom: '5%' }}>
                     <Button1 Text="Export" image={<Image source={require('../../assets/images/export.png')} style={{ height: 24, width: 24, marginLeft: '2%' }} />} />
-                </View>
+                </View> */}
             </ScrollView>
+            <FloatingAction
+                color={colors.blue}
+                onPressMain={() => {
+                    navigation.navigate('EditInvoice')
+                }}
+                overlayColor='rgba(0,0,0,0)'
+            />
         </View>
     )
 }

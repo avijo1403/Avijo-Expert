@@ -89,15 +89,15 @@ export default function Dashboard({ navigation }) {
                 <View style={{ width: '100%', alignItems: 'center', marginTop: '7%', marginBottom: '5%' }}>
                     <SearchItem image={require('../../assets/images/filter.png')} />
                 </View>
-                <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', justifyContent: 'space-between', marginTop: '10%' }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
+                <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%' }}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('Patients')} style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', paddingTop:'3%', paddingBottom:'3%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, }}>
                         <Image source={require('../../assets/images/total.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Total Patients</Text>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.totalPatients}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('Appointments')} style={{ flexDirection: 'row', alignItems: 'center', padding: '5%',paddingTop:'3%', paddingBottom:'3%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, }}>
                         <Image source={require('../../assets/images/appointment.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Appointments</Text>
@@ -106,17 +106,17 @@ export default function Dashboard({ navigation }) {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%' }}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionForm')} style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', paddingTop:'3%', paddingBottom:'3%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, }}>
                         <Image source={require('../../assets/images/prescription.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '100%' }}>Prescriptions</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Prescriptions</Text>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.prescriptions}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
+                    <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionForm')} style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', paddingTop:'3%', paddingBottom:'3%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8,  }}>
                         <Image source={require('../../assets/images/earning.png')} style={{ height: 40, width: 40 }} />
                         <View style={{ paddingLeft: "5%", width: '80%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '100%' }}>Total Earnings</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%' }}>Total Earnings</Text>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, marginTop: '3%' }}>{docData.totalEarnings}</Text>
                         </View>
                     </TouchableOpacity>

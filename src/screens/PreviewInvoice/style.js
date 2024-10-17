@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
    headerText: {
        fontSize: 20,
        fontFamily: 'Gilroy-SemiBold',
-       paddingLeft: '10%',
+       paddingLeft: '5%',
        color: colors.white,
    }
 })

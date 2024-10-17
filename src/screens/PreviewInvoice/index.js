@@ -12,11 +12,17 @@ export default function PreviewInvoice({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', width: '75%' }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent:'space-between' }}>
+                    <View style={{flexDirection:'row', alignItems:'center'}}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
+                        </TouchableOpacity>
+                        <Text style={styles.headerText}>Preview Invoice</Text>
+                    </View>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", borderWidth: 1, borderColor: colors.white, padding: 5, paddingLeft: 10, paddingRight: 10, borderRadius: 50 }}>
+                        <Text style={{ color: colors.white, fontSize: 12, fontFamily: 'Gilroy-Medium' }}>Generate to payment</Text>
+                        {/* <Image source={require('../../assets/images/update.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} /> */}
                     </TouchableOpacity>
-                    <Text style={styles.headerText}>Preview Invoice</Text>
                 </View>
                 {/* <View style={{ flexDirection: 'row', width: "16%", justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity>
@@ -53,7 +59,7 @@ export default function PreviewInvoice({ navigation }) {
                             <View style={{ width: '90%', alignItems: "center", marginTop: '5%', elevation: 5, backgroundColor: colors.white, padding: "3%", borderRadius: 8 }}>
                                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>{item.name}</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '27%', justifyContent: 'space-between' }}>
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '27%', justifyContent: 'space-between' }}>
                                         <TouchableOpacity onPress={() => navigation.navigate('MedicalRecordView')}>
                                             <Image source={require('../../assets/images/blueEye.png')} style={{ height: 24, width: 24 }} />
                                         </TouchableOpacity>
@@ -63,7 +69,7 @@ export default function PreviewInvoice({ navigation }) {
                                         <TouchableOpacity onPress={() => navigation.navigate('EditInvoice')}>
                                             <Image source={require('../../assets/images/blackEdit.png')} style={{ height: 24, width: 24 }} />
                                         </TouchableOpacity>
-                                    </View>
+                                    </View> */}
                                 </View>
                                 <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%", marginTop: '2%' }}>Item Price: <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>4000</Text></Text>
                                 <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%", marginTop: '2%' }}>Quantity: <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>02</Text></Text>

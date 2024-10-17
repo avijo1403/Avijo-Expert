@@ -11,10 +11,10 @@ export default function Payments({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 onPress={() => navigation.goBack()} text="Payments" showNoti={true} right={<Image source={require('../../assets/images/addAcc.png')} style={{ height: 25, width: 25 }} />} />
+            <HeaderItem3 onPress={() => navigation.goBack()} text="Payments" showNoti={false} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
-                    <SearchItem image={require('../../assets/images/filter.png')} />
+                    <SearchItem />
                 </View>
                 <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', justifyContent: 'space-between', marginTop: '10%' }}>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>

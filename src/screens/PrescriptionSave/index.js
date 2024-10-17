@@ -4,12 +4,12 @@ import styles from "./style";
 import HeaderItem2 from "../../components/HeaderItem2";
 import { colors } from "../../Theme/GlobalTheme";
 
-export default function PrescriptionSave() {
+export default function PrescriptionSave({navigation}) {
 
 
     const SaveItem = (props) => {
         return (
-            <TouchableOpacity style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: '5%', borderWidth: 1, borderColor: colors.grey, padding: 10, borderRadius: 12 }}>
+            <TouchableOpacity onPress={props.onPress} style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: '5%', borderWidth: 1, borderColor: colors.grey, padding: 10, borderRadius: 12 }}>
                 <Image source={props.image} style={{ height: 24, width: 24 }} />
                 <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.torquish, marginLeft: '5%' }}>{props.text}</Text>
             </TouchableOpacity>
@@ -25,7 +25,7 @@ export default function PrescriptionSave() {
                     <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '100%', marginTop: '2%' }}>+91 4759573857537</Text>
                 </View>
             </View>
-            <SaveItem image={require('../../assets/images/greenPin.png')} text="Send Attachment" />
+            <SaveItem image={require('../../assets/images/greenPin.png')} text="Send Attachment" onPress={()=>navigation.navigate('Images')} />
             <SaveItem image={require('../../assets/images/greenPrint.png')} text="Print" />
             <SaveItem image={require('../../assets/images/greenCloud.png')} text="Download" />
             <SaveItem image={require('../../assets/images/greenSend.png')} text="Send Via Own Whatsapp" />

@@ -9,7 +9,7 @@ import SearchItem from "../../components/SearchItem";
 import PrescriptionSearch from "../../components/PrescriptionSearch";
 import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 
-export default function PrescriptionForm({navigation}) {
+export default function PrescriptionForm({ navigation }) {
 
     const [article, setArticle] = useState("");
     const RichText = useRef();
@@ -50,12 +50,12 @@ export default function PrescriptionForm({navigation}) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem2 text="Prescription Pad" right={
+            <HeaderItem2 onPress={() => navigation.goBack()} text="Prescription Pad" right={
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', alignSelf: 'flex-end', }}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionSave')}>
+                    <TouchableOpacity onPress={() => navigation.navigate('PrescriptionSave')}>
                         <Image source={require('../../assets/images/pencil.png')} style={{ height: 23, width: 23 }} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionDetail')} style={{ marginLeft: '8%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('PrescriptionDetail')} style={{ marginLeft: '8%' }}>
                         <Image source={require('../../assets/images/movie.png')} style={{ height: 23, width: 23 }} />
                     </TouchableOpacity>
                 </View>

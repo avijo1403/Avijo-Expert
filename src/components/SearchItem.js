@@ -6,10 +6,10 @@ export default function SearchItem(props){
 
     return(
         <View style={styles.container}>
-            <Image source={require('../assets/images/Frame.png')} style={{height:24, width:24}}/>
+            <Image source={require('../assets/images/search1.png')} style={{height:24, width:24}}/>
             <TextInput
             placeholder="Search"
-            placeholderTextColor={colors.grey}
+            placeholderTextColor={colors.darkGrey}
             style={styles.search}
             />
             <Image source={props.image} style={{height:24, width:22}}/>
@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
         width:'90%',
         flexDirection:'row',
         alignItems:'center',
-        borderWidth:2,
-        borderRadius:12,
+        borderWidth:1,
+        borderRadius:100,
         paddingLeft:'5%',
-        borderColor:colors.lightgrey,
+        borderColor:colors.darkGrey,
         height:47,
         backgroundColor:colors.white,
-        elevation:2
+        elevation:2,
     },
     search:{
         width:'80%',

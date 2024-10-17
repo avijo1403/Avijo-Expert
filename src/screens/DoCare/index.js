@@ -11,12 +11,16 @@ export default function DoCare({ navigation }) {
         <View style={styles.container}>
             <View style={{ width: '100%', padding: '5%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.background, paddingTop: '10%' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'start' }}>
-                    <Image source={require('../../assets/images/appDoc.png')} style={{ height: 44, width: 44, borderRadius: 100 }} />
+                    {/* <Image source={require('../../assets/images/appDoc.png')} style={{ height: 44, width: 44, borderRadius: 100 }} /> */}
                     <Text style={{ fontSize: 28, fontWeight: '500', color: colors.black, paddingLeft: '5%', borderRadius: 50, marginLeft: '5%' }}>Docare</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'start' }}>
-                    <Image source={require('../../assets/images/blackSearch.png')} style={{ height: 24, width: 24, marginRight: 8 }} />
-                    <Image source={require('../../assets/images/blackAdd.png')} style={{ height: 24, width: 24 }} />
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/images/blackSearch.png')} style={{ height: 24, width: 24, marginRight: 8 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('AddQuestion')}>
+                        <Image source={require('../../assets/images/blackAdd.png')} style={{ height: 24, width: 24 }} />
+                    </TouchableOpacity>
                 </View>
             </View>
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
@@ -122,7 +126,7 @@ export default function DoCare({ navigation }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{width:'90%', alignSelf:'center', backgroundColor:colors.white, marginTop:'5%', borderRadius:8, marginBottom:'5%'}}>
+                    <View style={{ width: '90%', alignSelf: 'center', backgroundColor: colors.white, marginTop: '5%', borderRadius: 8, marginBottom: '5%' }}>
                         <View style={{ flexDirection: 'row', width: '100%', alignItems: 'center', marginTop: '5%', borderBottomWidth: 1, paddingBottom: '5%', borderColor: colors.grey }}>
                             <Image source={require('../../assets/images/question2.png')} style={{ height: 20, width: 20 }} />
                             <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginLeft: '5%' }}>Questions for you</Text>

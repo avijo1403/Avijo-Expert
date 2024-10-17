@@ -81,6 +81,7 @@ import ProfileSetting from './src/screens/ProfileSetting';
 import PrescriptionForm from './src/screens/PrescriptionForm';
 import PrescriptionSave from './src/screens/PrescriptionSave';
 import PrescriptionDetail from './src/screens/PrescriptionDetail.js';
+import BottomNav from './src/navigations/BottomNav.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -100,7 +101,7 @@ const App = () => {
         <Stack.Screen name='Reviews' component={Reviews} options={{headerShown:false}}/>
         <Stack.Screen name='Account' component={Account} options={{headerShown:false}}/>
         <Stack.Screen name='MyProfile' component={MyProfile} options={{headerShown:false}}/>
-        <Stack.Screen name='Dashboard' component={Dashboard} options={{headerShown:false}}/>
+        <Stack.Screen name='Dashboard' component={BottomNav} options={{headerShown:false}}/>
         <Stack.Screen name='Patients' component={Patients} options={{headerShown:false}}/>
         <Stack.Screen name='Receptions' component={Receptions} options={{headerShown:false}}/>
         <Stack.Screen name='Doctors' component={Doctors} options={{headerShown:false}}/>

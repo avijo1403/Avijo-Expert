@@ -87,7 +87,7 @@ const Chat = ({ navigation, route }) => {
                 </View>
             </View>
             <View style={styles.inputContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionForm')}>
                     <Image source={require('../../assets/images/add4.png')} style={{ height: 40, width: 40 }} />
                 </TouchableOpacity>
                 <View style={{ width: '60%', backgroundColor: colors.grey, borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

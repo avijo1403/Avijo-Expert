@@ -4,11 +4,11 @@ import styles from "./style";
 import HeaderItem2 from "../../components/HeaderItem2";
 import { colors } from "../../Theme/GlobalTheme";
 
-export default function PrescriptionDetail() {
+export default function PrescriptionDetail({navigation}) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem2 text="Prescription Pad" right={<Image source={require('../../assets/images/dots2.png')} style={{ height: 24, width: 24 }} />} />
+            <HeaderItem2 onPress={()=>navigation.goBack()} text="Prescription Pad" right={<Image source={require('../../assets/images/dots2.png')} style={{ height: 24, width: 24 }} />} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: colors.white, marginTop: '5%', padding: '5%' }}>
                     <Image source={require('../../assets/images/profile4.png')} style={{ height: 56, width: 56 }} />

@@ -6,25 +6,26 @@ import { colors } from "../../Theme/GlobalTheme";
 import { BaseUrl2, dashboardData, hp } from "../../assets/Data";
 import Card from "../../components/Card";
 import SearchItem from "../../components/SearchItem";
+import { FloatingAction } from "react-native-floating-action";
 
-export default function Patients({navigation}) {
+export default function Patients({ navigation }) {
 
     const [patientData, setPatientData] = useState([]);
     const [reportData, setReportData] = useState([]);
 
     const formatDate = (dateString) => {
         const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-    
+
         const date = new Date(dateString);
         const day = date.getUTCDate().toString().padStart(2, '0'); // Add leading zero if needed
         const month = months[date.getUTCMonth()];
         const year = date.getUTCFullYear().toString().replace(/^20/, ''); // Remove leading "20"
-    
+
         return `${day} ${month} ${year}`;
     };
 
-    const fetchData= async()=>{
-        try{
+    const fetchData = async () => {
+        try {
             const response = await fetch(`${BaseUrl2}/doctor/patientGetAll`);
             const response2 = await fetch(`${BaseUrl2}/doctor/patientReportGetAll`);
             const json = await response.json();
@@ -32,21 +33,21 @@ export default function Patients({navigation}) {
             setPatientData(json.data.statistics[0]);
             setReportData(json2.data);
             console.log('json:', json2.data);
-        }catch(e){
+        } catch (e) {
             console.log('error fetching...', e);
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchData();
-    },[]);
+    }, []);
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 onPress={()=>navigation.goBack()} text="Patients" showNoti={true} right={<Image source={require('../../assets/images/ham.png')} style={{ height:25, width: 25 }} />} />
+            <HeaderItem3 onPress={() => navigation.goBack()} text="Patients" right2={<Image source={require('../../assets/images/whiteAdd2.png')} style={{ height: 25, width: 25 }}/>} onRightPress2={()=>navigation.navigate('AddQuestion')} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
-                <View style={{width:'100%', alignItems:'center', marginTop:'5%'}}>
-                <SearchItem image={require('../../assets/images/filter.png')}/>
+                <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
+                    <SearchItem image={require('../../assets/images/filter.png')} />
                 </View>
                 <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%' }}>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '5%', width: '48%', backgroundColor: colors.white, elevation: 5, borderRadius: 8, height: hp(8) }}>
@@ -74,16 +75,24 @@ export default function Patients({navigation}) {
                 <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: '90%', marginTop: '5%' }}>Patients</Text>
                 <View style={{ width: '100%', alignItems: 'center' }}>
                     <FlatList
-                    style={{width:'100%'}}
-                    contentContainerStyle={{alignItems:'center', paddingBottom:'5%'}}
+                        style={{ width: '100%' }}
+                        contentContainerStyle={{ alignItems: 'center', paddingBottom: '5%' }}
                         data={reportData}
                         renderItem={({ item }) => {
-                                const date = formatDate(item.createdAt);
-                            return(
-                            <Card onPress={()=>navigation.navigate('PatientCategory')}  name={item.patient} gender={item.gender} bloodGroup={item.bloodGroup} age={item.age} date={date} phone={item?.phoneNumber} showGender={true} image={require('../../assets/images/dash1.png')}/>
-                        )}} />
+                            const date = formatDate(item.createdAt);
+                            return (
+                                <Card onPress={() => navigation.navigate('PatientCategory')} name={item.patient} gender={item.gender} bloodGroup={item.bloodGroup} age={item.age} date={date} phone={item?.phoneNumber} showGender={true} image={require('../../assets/images/dash1.png')} />
+                            )
+                        }} />
                 </View>
             </ScrollView>
+            <FloatingAction
+                color={colors.blue}
+                onPressMain={() => {
+                    navigation.navigate('PatientInfo')
+                }}
+                overlayColor='rgba(0,0,0,0)'
+            />
         </View>
     )
 }

@@ -157,7 +157,8 @@ export default function DrProfile({ navigation }) {
     const Followers = () => {
         return (
             <>
-                {profileOption && profileOption.length > 0 && profileOption.map((item) => (<View style={[styles.container, { marginTop: '5%' }]}>
+                {profileOption && profileOption.length > 0 && profileOption.map((item) => (
+                    <View style={[styles.container, { marginTop: '5%' }]}>
                     {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%', marginTop: '8%' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Profile</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -176,7 +177,7 @@ export default function DrProfile({ navigation }) {
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '2%', borderRadius: 6, borderWidth: 1, borderColor: colors.blue }}>
                                 <Image source={require('../../assets/images/addAccBlue.png')} style={{ height: 12, width: 10, marginRight: '2%' }} />
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingLeft: 5 }}>Follow</Text>
-                            </TouchableOpacity>z
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>))}
@@ -215,6 +216,13 @@ export default function DrProfile({ navigation }) {
 
         return (
             <View style={styles.container}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%', marginTop: '8%' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>2 Review</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Most Recent</Text>
+                        <Image source={require('../../assets/images/downGrey.png')} style={{ height: 16, width: 16 }} />
+                    </View>
+                </View>
                 <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
                     <FlatList
                         style={{ width: '100%' }}
@@ -227,7 +235,6 @@ export default function DrProfile({ navigation }) {
                                     <View style={{ marginLeft: '5%', width: '80%' }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                                             <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: 20, color: colors.black }}>Sebastian</Text>
-                                            <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 12, color: colors.darkGrey }}>{formatDate(item.createdAt)}</Text>
                                         </View>
                                         <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 14, color: colors.darkGrey, paddingTop: '3%' }}>Visited For <Text style={{ color: colors.black }}>Food Poisining</Text></Text>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '1%' }}>
@@ -242,6 +249,7 @@ export default function DrProfile({ navigation }) {
                                             />
                                             <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.black, marginLeft: '2%', marginTop: '2%' }}>(152)</Text>
                                         </View>
+                                        <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 12, color: colors.darkGrey, marginTop:'2%' }}>{formatDate(item.createdAt)}</Text>
                                     </View>
                                 </View>
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', width: wp(90), paddingTop: '1%' }}>{item.comment}</Text>
@@ -350,7 +358,7 @@ export default function DrProfile({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 text="Profile" onPress={() => navigation.goBack()} />
+            <HeaderItem3 text="Profile" onPress={() => navigation.goBack()} onRightPress={()=>navigation.navigate('AddQuestion')} onRightPress2={()=>navigation.navigate('SettingList')} right={<Image source={require('../../assets/images/whiteAdd2.png')} style={{height:24, width:24, marginRight:10}}/>} right2={<Image source={require('../../assets/images/whiteLine.png')} style={{height:24, width:24}}/>} />
             <ScrollView
                 style={{ width: '100%' }}
                 contentContainerStyle={{ alignItems: 'center' }}

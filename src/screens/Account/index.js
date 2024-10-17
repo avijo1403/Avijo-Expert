@@ -13,52 +13,52 @@ export default function Account({ navigation }) {
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center', paddingBottom: '5%' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'columns', width: '90%', marginTop: '5%', backgroundColor: colors.white, padding: 5, borderRadius: 3 }}>
                     <Image source={require('../../assets/images/profile3.png')} style={{ width: 56, height: 56, borderRadius: 200 }} />
-                    <View style={{ paddingLeft: '5%', marginTop: '5%', flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: colors.grey, paddingBottom: '5%' }}>
-                        <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black }}> Anthony Atkielski</Text>
-                        <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 16, width: 16 }} />
+                    <View style={{ paddingLeft: '0%', marginTop: '10%', flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: colors.grey, paddingBottom: '8%' }}>
+                        <Text style={{ fontSize: 22, fontFamily: 'Gilroy-SemiBold', color: colors.black }}> Anthony Atkielski</Text>
+                        <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 24, width: 24 }} />
                     </View>
                 </TouchableOpacity>
-                <View style={{ width: '90%', alignItems: 'flex-start', flexDirection: 'column', marginTop: '10%' }}>
+                <View style={{ width: '90%', alignItems: 'flex-start', flexDirection: 'column', marginTop: '8%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Notification')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white }}>
                         <Image source={require('../../assets/images/chat6.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Chats</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Chats</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/createAd.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Create Ad</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Create Ad</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/dollar.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Monetization</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Monetization</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/content.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Your content & stats</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Your content & stats</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('Bookmark')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Bookmark')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/bookmark.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Bookmarks</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Bookmarks</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/draft.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Drafts</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Drafts</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DoCare')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '5%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DoCare')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/doCare.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Try Docare +</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Try Docare +</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -78,7 +78,7 @@ export default function Account({ navigation }) {
                 <TouchableOpacity style={{ alignSelf: 'flex-start', marginLeft: '5%', marginTop: '3%' }}>
                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Logout</Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={{ alignSelf: 'flex-end', marginRight: '5%', marginTop: '5%' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('SettingList')} style={{ alignSelf: 'flex-end', marginRight: '5%', marginTop: '5%' }}>
                 <Image source={require('../../assets/images/setting1.png')} style={{height:32, width:32, }}/>
                 </TouchableOpacity>
             </ScrollView>

@@ -12,11 +12,17 @@ export default function EditPayment({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.headerContainer}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', width: '75%' }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
+                <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
+                        </TouchableOpacity>
+                        <Text style={styles.headerText}>Edit Payment</Text>
+                    </View>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent:"space-between", borderWidth:1, borderColor:colors.white, padding:5, paddingLeft:10, paddingRight:10, borderRadius:50}}>
+                        <Text style={{ color: colors.white, fontSize: 12, fontFamily: 'Gilroy-Medium'}}>Update</Text>
+                        <Image source={require('../../assets/images/update.png')} style={{ height: 14, width: 14, marginLeft:'2%' }} />
                     </TouchableOpacity>
-                    <Text style={styles.headerText}>Edit Payment</Text>
                 </View>
                 {/* <View style={{ flexDirection: 'row', width: "16%", justifyContent: 'space-between', alignItems: 'center' }}>
                     <TouchableOpacity>

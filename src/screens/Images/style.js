@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     number: {
-        fontSize: 6,
+        fontSize: 12,
         textAlign: 'center',
         fontFamily: 'Gilroy-Regular',
         color: colors.white,
-        paddingTop: 2,
-        paddingLeft: 2
+        // paddingTop: 2,
+        // paddingLeft: 2
     }
 });
 export default styles;

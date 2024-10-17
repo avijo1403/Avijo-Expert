@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
         paddingTop:'5%'
       },
       aboutText:{
-        fontSize:12,
-        fontFamily:'Gilroy-SemiBold',
-        color:colors.grey,
+        fontSize:14,
+        fontFamily:'Gilroy-Medium',
+        color:colors.darkGrey,
         width:'90%',
         paddingTop:'2%'
       },
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
       },
       generalMedicine:{
         fontSize:14,
-        fontFamily:'Gilroy-SemiBold',
-        color:colors.grey,
+        fontFamily:'Gilroy-Medium',
+        color:colors.darkGrey,
         width:'90%',
         marginTop:'5%'
       }

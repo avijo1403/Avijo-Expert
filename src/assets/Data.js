@@ -84,9 +84,9 @@ const appData = [
         to: 'Appointments',
     },
     {
-        id: 3,
+        id: 6,
         image: require('../assets/images/payment2.png'),
-        title: 'Payments',
+        title: 'Earnings',
         to: 'Payments',
     },
     {
@@ -96,11 +96,23 @@ const appData = [
         to: 'Invoices',
     },
     {
-        id: 5,
-        image: require('../assets/images/service2.png'),
-        title: 'Services',
-        to: 'Services',
+        id: 3,
+        image: require('../assets/images/pay.png'),
+        title: 'Payments',
+        to: 'Payments',
     },
+    {
+        id: 7,
+        image: require('../assets/images/chats.png'),
+        title: 'Chats',
+        to: 'Chat',
+    },
+    // {
+    //     id: 5,
+    //     image: require('../assets/images/service2.png'),
+    //     title: 'Services',
+    //     to: 'Services',
+    // },
     // {
     //     id: 6,
     //     image: require('../assets/images/medicine2.png'),
@@ -119,12 +131,12 @@ const appData = [
         title: 'doCare',
         to: 'DoCare',
     },
-    // {
-    //     id: 9,
-    //     image: require('../assets/images/setting3.png'),
-    //     title: 'Settings',
-    //     to: 'Settings',
-    // }
+    {
+        id: 9,
+        image: require('../assets/images/campaign2.png'),
+        title: 'Reach',
+        to: 'Campaigns',
+    }
 ]
 
 const docList = [
@@ -277,18 +289,18 @@ const PatientCategoryData = [
     //     name: 'Dental Chart',
     //     to: 'ChartInfo',
     // },
-    {
-        id: 6,
-        image: require('../assets/images/warn1.png'),
-        name: 'Patient Information',
-        to: 'PatientInfo',
-    },
-    {
-        id: 7,
-        image: require('../assets/images/warn2.png'),
-        name: 'Health Information',
-        to: 'HealthInfo',
-    }
+    // {
+    //     id: 6,
+    //     image: require('../assets/images/warn1.png'),
+    //     name: 'Patient Information',
+    //     to: 'PatientInfo',
+    // },
+    // {
+    //     id: 7,
+    //     image: require('../assets/images/warn2.png'),
+    //     name: 'Health Information',
+    //     to: 'HealthInfo',
+    // }
 ]
 
 const profileOption=[
@@ -401,6 +413,33 @@ const doCareList = [
         }
       };
 
+      const chatData = [
+        {
+            id:0,
+            name:'Dr. Jii',
+            image:require('../assets/images/appDoc.png'),
+            pin:true,
+        },
+        {
+            id:1,
+            name:'Alis Smith',
+            image:require('../assets/images/dash2.png'),
+            pin:false,
+        },
+        {
+            id:2,
+            name:'Roomi',
+            image:require('../assets/images/dash3.png'),
+            pin:false,
+        },
+        {
+            id:3,
+            name:'Roomi',
+            image:require('../assets/images/dash3.png'),
+            pin:false,
+        }
+      ]
+
     export  const formatDate = (timestamp) => {
         const date = new Date(timestamp);
       
@@ -435,4 +474,5 @@ export {
     emailList,
     activityList,
     doCareList,
+    chatData,
 };
