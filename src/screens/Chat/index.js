@@ -6,12 +6,15 @@ import HeaderItem3 from '../../components/HeaderItem3';
 import { hp, wp } from '../../assets/Data';
 import PrescriptionForm from '../PrescriptionForm';
 
+
 const Chat = ({ navigation, route }) => {
+
 
     const userId = route?.params?.userId;
     const name = route?.params?.name;
     const doctorId = route?.params?.doctorId;
     const [modalVisible, setModalVisible] = useState(false);
+
 
     const [messages, setMessages] = useState([
         // { id: 1, sender: 'You', text: 'Hello Emilli I hope you remember about your appoinment today with us.', time: '12:15 pm' },
@@ -85,7 +88,6 @@ const Chat = ({ navigation, route }) => {
                         <Text style={[styles.messageSender, { color: message.sender === 'You' ? colors.blue : colors.white }]}>{message.time}</Text>
                     </View>
                 ))}
-
                 <View
                     style={[
                         styles.message,
