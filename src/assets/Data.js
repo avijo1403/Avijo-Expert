@@ -1,4 +1,6 @@
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
 
 const offerData = [
@@ -62,80 +64,6 @@ const medicineData = [
         price: '240',
         measure: 'mm',
         stock: 1245,
-    }
-]
-
-const appData = [
-    // {
-    //     id: 0,
-    //     image: require('../assets/images/dashboard3.png'),
-    //     title: 'Dashboard'
-    // },
-    {
-        id: 1,
-        image: require('../assets/images/patient3.png'),
-        title: 'Patients',
-        to: 'Patients'
-    },
-    {
-        id: 2,
-        image: require('../assets/images/appointment3.png'),
-        title: 'Appointments',
-        to: 'Appointments',
-    },
-    {
-        id: 6,
-        image: require('../assets/images/payment2.png'),
-        title: 'Earnings',
-        to: 'Payments',
-    },
-    {
-        id: 4,
-        image: require('../assets/images/invoice2.png'),
-        title: 'Invoices',
-        to: 'Invoices',
-    },
-    {
-        id: 3,
-        image: require('../assets/images/pay.png'),
-        title: 'Payments',
-        to: 'Payments',
-    },
-    {
-        id: 7,
-        image: require('../assets/images/chats.png'),
-        title: 'Chats',
-        to: 'Chat',
-    },
-    // {
-    //     id: 5,
-    //     image: require('../assets/images/service2.png'),
-    //     title: 'Services',
-    //     to: 'Services',
-    // },
-    // {
-    //     id: 6,
-    //     image: require('../assets/images/medicine2.png'),
-    //     title: 'Medicines',
-    //     to: 'Medicines',
-    // },
-    // {
-    //     id: 7,
-    //     image: require('../assets/images/campaign2.png'),
-    //     title: 'Campaigns',
-    //     to: 'Campaigns'
-    // },
-    {
-        id: 8,
-        image: require('../assets/images/doCare.png'),
-        title: 'doCare',
-        to: 'DoCare',
-    },
-    {
-        id: 9,
-        image: require('../assets/images/campaign2.png'),
-        title: 'Reach',
-        to: 'Campaigns',
     }
 ]
 
@@ -257,7 +185,7 @@ const PatientCategoryData = [
         id: 0,
         image: require('../assets/images/clipboard.png'),
         name: 'Medical Records',
-        to: 'MedicalRecord',
+        to: 'Records',
     },
     {
         id: 1,
@@ -303,157 +231,237 @@ const PatientCategoryData = [
     // }
 ]
 
-const profileOption=[
+const profileOption = [
     {
-        id:0,
-        text:'Profile'
+        id: 0,
+        text: 'Profile'
     },
     {
-        id:1,
-        text:'0 Answers'
+        id: 1,
+        text: '0 Answers'
     },
     {
-        id:2,
-        text:'1 Questions'
+        id: 2,
+        text: '1 Questions'
     },
     {
-        id:3,
-        text:'Following',
+        id: 3,
+        text: 'Following',
     },
     {
-        id:4,
-        text:'0 Reveiw'
+        id: 4,
+        text: '0 Reveiw'
     },
     {
-        id:5,
-        text:'0 Followers'
+        id: 5,
+        text: '0 Followers'
     },
     {
-        id:6,
-        text:'1 Spaces'
+        id: 6,
+        text: '1 Spaces'
     },
     {
-        id:7,
-        text:'1 Post'
+        id: 7,
+        text: '1 Post'
     }
 ]
 
 
 const emailList = [
     {
-        id:0,
-        text:'General questions & answers',
+        id: 0,
+        text: 'General questions & answers',
     },
     {
-        id:1,
-        text:'Messages, comments & mentions',
+        id: 1,
+        text: 'Messages, comments & mentions',
     },
     {
-        id:2,
-        text:'Messages, comments & mentions',
+        id: 2,
+        text: 'Messages, comments & mentions',
     },
     {
-        id:3,
-        text:'You & your network',
+        id: 3,
+        text: 'You & your network',
     }
-    ]
+]
 
-    
+
 const activityList = [
     {
-        id:0,
-        text:'Upvotes',
+        id: 0,
+        text: 'Upvotes',
     },
     {
-        id:1,
-        text:'Shares',
+        id: 1,
+        text: 'Shares',
     },
     {
-        id:2,
-        text:'Moderation',
+        id: 2,
+        text: 'Moderation',
     }
-    ]
-    
+]
+
 const doCareList = [
     {
-        id:0,
-        text:'Docare Digest',
+        id: 0,
+        text: 'Docare Digest',
     },
     {
-        id:1,
-        text:'Things you might like',
+        id: 1,
+        text: 'Things you might like',
     }
-    ]
+]
 
-   export const getTimeDifference = (timestamp) => {
-        // Convert timestamp to a Date object
-        const date = new Date(timestamp);
-        
-        // Get the current date
-        const now = new Date();
-      
-        // Calculate the difference in milliseconds
-        const diff = now - date;
-      
-        // Calculate the difference in seconds, minutes, hours, and days
-        const diffInSeconds = Math.floor(diff / 1000);
-        const diffInMinutes = Math.floor(diffInSeconds / 60);
-        const diffInHours = Math.floor(diffInMinutes / 60);
-        const diffInDays = Math.floor(diffInHours / 24);
-      
-        // Return the appropriate time difference
-        if (diffInDays > 0) {
-          return `${diffInDays} days ago`;
-        } else if (diffInHours > 0) {
-          return `${diffInHours} hours ago`;
-        } else if (diffInMinutes > 0) {
-          return `${diffInMinutes} minutes ago`;
-        } else {
-          return `${diffInSeconds} seconds ago`;
+export const getTimeDifference = (timestamp) => {
+    // Convert timestamp to a Date object
+    const date = new Date(timestamp);
+
+    // Get the current date
+    const now = new Date();
+
+    // Calculate the difference in milliseconds
+    const diff = now - date;
+
+    // Calculate the difference in seconds, minutes, hours, and days
+    const diffInSeconds = Math.floor(diff / 1000);
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    // Return the appropriate time difference
+    if (diffInDays > 0) {
+        return `${diffInDays} days ago`;
+    } else if (diffInHours > 0) {
+        return `${diffInHours} hours ago`;
+    } else if (diffInMinutes > 0) {
+        return `${diffInMinutes} minutes ago`;
+    } else {
+        return `${diffInSeconds} seconds ago`;
+    }
+};
+
+const chatData = [
+    {
+        id: 0,
+        name: 'Dr. Jii (Ai PA)',
+        image: require('../assets/images/dr-ji.png'),
+        pin: true,
+    },
+    {
+        id: 1,
+        name: 'Alis Smith',
+        image: require('../assets/images/dash2.png'),
+        pin: false,
+    },
+    {
+        id: 2,
+        name: 'Roomi',
+        image: require('../assets/images/dash3.png'),
+        pin: false,
+    },
+    {
+        id: 3,
+        name: 'Roomi',
+        image: require('../assets/images/dash3.png'),
+        pin: false,
+    }
+]
+
+
+const recordData = [
+    {
+        id: 0,
+        image: require('../assets/images/record1.png'),
+        text: 'Medications',
+        to: 'MedicalRecordView',
+    },
+    {
+        id: 1,
+        image: require('../assets/images/record2.png'),
+        text: 'Lab Report'
+    }
+]
+
+const facilityData = [
+    {
+        id: 0,
+        image: require('../assets/images/facility1.png'),
+        name: 'avijo',
+        heading: 'Partnership',
+        subHeading: 'example@gmail.com',
+    },
+    {
+        id: 1,
+        image: require('../assets/images/facility2.png'),
+        name: 'Radiology',
+        heading: 'Ownership',
+        subHeading: 'example@abdm',
+    },
+    {
+        id: 2,
+        image: require('../assets/images/facility3.png'),
+        name: 'Clinics',
+        heading: 'Ownership',
+        subHeading: 'example@gmail.com',
+    },
+    {
+        id: 3,
+        image: require('../assets/images/facility3.png'),
+        name: 'Clinics',
+        heading: 'Ownership',
+        subHeading: 'example@gmail.com',
+    }
+]
+
+const detailOption = [
+    {
+        id: 0,
+        text: 'About'
+
+    },
+    {
+        id: 1,
+        text: 'Professional'
+    },
+    {
+        id: 2,
+        text: 'Services'
+    },
+    {
+        id: 3,
+        text: 'Department'
+    },
+    {
+        id: 4,
+        text: 'Address'
+    }
+]
+
+
+export const getData = async (key) => {
+    try {
+        const value = await AsyncStorage.getItem(key);
+        if (value !== null) {
+            return value;
         }
-      };
+    } catch (e) {
+        console.error('Failed to fetch the data from storage', e);
+    }
+};
 
-      const chatData = [
-        {
-            id:0,
-            name:'Dr. Jii',
-            image:require('../assets/images/appDoc.png'),
-            pin:true,
-        },
-        {
-            id:1,
-            name:'Alis Smith',
-            image:require('../assets/images/dash2.png'),
-            pin:false,
-        },
-        {
-            id:2,
-            name:'Roomi',
-            image:require('../assets/images/dash3.png'),
-            pin:false,
-        },
-        {
-            id:3,
-            name:'Roomi',
-            image:require('../assets/images/dash3.png'),
-            pin:false,
-        }
-      ]
+export const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
 
-    export  const formatDate = (timestamp) => {
-        const date = new Date(timestamp);
-      
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns 0-11
-        const year = date.getFullYear();
-      
-        return `${day}-${month}-${year}`;
-      };
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because getMonth() returns 0-11
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+};
 
 const BaseUrl1 = 'https://avijobackend-production.up.railway.app';
 const BaseUrl2 = "https://avijobackend-production.up.railway.app";
-
-
 
 
 export {
@@ -463,7 +471,6 @@ export {
     wp,
     offerData,
     dashboardData,
-    appData,
     medicineData,
     notiData,
     docList,
@@ -475,4 +482,7 @@ export {
     activityList,
     doCareList,
     chatData,
+    recordData,
+    facilityData,
+    detailOption,
 };

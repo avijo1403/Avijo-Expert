@@ -1,20 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Image } from 'react-native';
-import styles from './style';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Image, Modal, Pressable, StyleSheet } from 'react-native';
 import HeaderItem2 from '../../components/HeaderItem2';
 import { colors } from '../../Theme/GlobalTheme';
 import HeaderItem3 from '../../components/HeaderItem3';
 import { hp, wp } from '../../assets/Data';
+import PrescriptionForm from '../PrescriptionForm';
 
 const Chat = ({ navigation, route }) => {
 
     const userId = route?.params?.userId;
     const name = route?.params?.name;
     const doctorId = route?.params?.doctorId;
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [messages, setMessages] = useState([
-        { id: 1, sender: 'You', text: 'Hello Emilli I hope you remember about your appoinment today with us.', time: '12:15 pm' },
-        { id: 2, sender: 'Jane', text: 'Hello Doctor, Yes i remember. I will be there right on time', time: '12:15 pm' },
+        // { id: 1, sender: 'You', text: 'Hello Emilli I hope you remember about your appoinment today with us.', time: '12:15 pm' },
+        // { id: 2, sender: 'Jane', text: 'Hello Doctor, Yes i remember. I will be there right on time', time: '12:15 pm' },
     ]);
 
     const [newMessage, setNewMessage] = useState('');
@@ -38,17 +39,24 @@ const Chat = ({ navigation, route }) => {
 
     return (
         <View style={styles.Container}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '5%', width: '90%' }}>
-                <View style={{ backgroundColor: colors.white, flexDirection: 'row', alignItems: 'center', marginLeft: '5%', borderRadius: 8 }}>
-                    <Image source={require('../../assets/images/blackLeft.png')} style={{ height: 16, width: 16 }} />
-                    <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: 10, marginLeft: '10%', borderRadius: 8 }}>
-                        <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.white, paddingRight: '3%' }}>John Doe</Text>
-                        <Image source={require('../../assets/images/star2.png')} style={{ height: 14, width: 14, marginLeft: '2%' }} />
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: '5%', width: '100%', backgroundColor: colors.blue }}>
+                <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 16, width: 16 }} />
+                    </TouchableOpacity>
+                    <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: 10, borderRadius: 8 }}>
+                        <Image source={name === 'Dr. Jii (Ai PA)'?require('../../assets/images/dr-ji.png'):require('../../assets/images/profile3.png')} style={{ height: 50, width: 50, marginLeft: '2%', borderRadius:100 }} />
+                        <Text style={{ fontSize: 20, fontFamily: 'Gilroy-Medium', color: colors.white, paddingLeft: '3%' }}>{name}</Text>
                     </View>
                 </View>
-                <TouchableOpacity>
-                    <Image source={require('../../assets/images/dotBlue.png')} style={{ height: 20, width: 4.5 }} />
-                </TouchableOpacity>
+                <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', }}>
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/images/video.png')} style={{ height: 24, width: 24, marginRight: 5 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/images/phone.png')} style={{ height: 24, width: 24 }} />
+                    </TouchableOpacity>
+                </View>
             </View>
             <ScrollView
                 contentContainerStyle={styles.messageContainer}
@@ -77,17 +85,109 @@ const Chat = ({ navigation, route }) => {
                         <Text style={[styles.messageSender, { color: message.sender === 'You' ? colors.blue : colors.white }]}>{message.time}</Text>
                     </View>
                 ))}
+
+                <View
+                    style={[
+                        styles.message,
+                        styles.receivedMessage,
+                    ]}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 5, paddingBottom: 0 }}>
+                        <Image source={require('../../assets/images/tick2.png')} style={{ height: 24, width: 24 }} />
+                        <View style={{ flexDirection: 'column', paddingLeft: '5%', width: '90%' }}>
+                            <Text style={{ color: colors.black, fontSize: 14, fontFamily: 'Gilroy-SemiBold' }}>Appointment Confirmed</Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: '3%', width: '100%', marginTop: '4%' }}>
+                        <Image source={require('../../assets/images/calendar6.png')} style={{ height: 14, width: 14 }} />
+                        <Text style={{ color: colors.darkGrey, fontSize: 10, fontFamily: 'Gilroy-Medium', paddingLeft: '3%', paddingTop: '3%' }}>On May 20,2024</Text>
+                        <Image source={require('../../assets/images/clock4.png')} style={{ height: 14, width: 14, marginTop: '3%', marginLeft: '3%' }} />
+                        <Text style={{ color: colors.darkGrey, fontSize: 10, fontFamily: 'Gilroy-Medium', paddingLeft: '3%', paddingTop: '3%' }}>On May 20,2024</Text>
+                    </View>
+                    <Text style={{ color: colors.blue, fontSize: 10, fontFamily: 'Gilroy-SemiBold', paddingLeft: '3%', paddingTop: '3%' }}>Change date & time</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: '3%', width: '100%', marginTop: '4%' }}>
+                        <View style={{ borderWidth: 1, borderRadius: 100, borderColor: colors.blue }}>
+                            <Image source={require('../../assets/images/pp.png')} style={{ height: 60, width: 60, borderRadius: 100, }} />
+                        </View>
+                        <View style={{ width: "80%", }}>
+                            <Text style={{ color: colors.grey, fontSize: 16, fontFamily: 'Gilroy-SemiBold', paddingLeft: '3%', }}>Daniel</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={{ color: colors.grey, fontSize: 14, fontFamily: 'Gilroy-SemiBold', paddingLeft: '3%', }}>Type: </Text>
+                                <Text style={{ fontSize: 8, color: colors.blue, padding: 4, borderRadius: 4, paddingLeft: 8, paddingRight: 8, backgroundColor: '#E0F5FF' }}>Online</Text>
+                            </View>
+                            <Text style={{ color: colors.grey, fontSize: 12, fontFamily: 'Gilroy-SemiBold', paddingLeft: '3%', width: '95%', marginTop: '2%' }}>Consult To/For: <Text style={{ color: colors.blue }}>Dermatologist</Text> </Text>
+                            <Text style={{ color: colors.grey, fontSize: 12, fontFamily: 'Gilroy-SemiBold', paddingLeft: '3%', marginTop: '2%' }}>Status: <Text style={{ color: colors.torquish }}>Progress</Text> </Text>
+                        </View>
+                    </View>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-start' }}>
+                        <TouchableOpacity onPress={() => setModalVisible(true)} style={{ padding: 8, backgroundColor: colors.blue, borderRadius: 10, margin: 10 }}>
+                            <Text style={{ color: colors.white, alignSelf: 'flex-end', fontSize: 10 }}>Check Details</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View
+                    style={[
+                        styles.message,
+                        styles.sentMessage,
+                    ]}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', padding: 5, paddingBottom: 0 }}>
+                        <Image source={require('../../assets/images/video3.png')} style={{ height: 40, width: 40 }} />
+                        <View style={{ flexDirection: 'column', paddingLeft: '3%', width: '80%' }}>
+                            <Text style={{ color: colors.black, fontSize: 20, fontFamily: 'Gilroy-SemiBold' }}>Video consult</Text>
+                            <Text style={{ color: colors.black, fontSize: 14, fontFamily: 'Gilroy-Medium' }}>30 mins</Text>
+                        </View>
+                    </View>
+                    <View style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <Text style={[styles.messageSender, { color: colors.black, alignSelf: 'flex-end' }]}>2:00 pm</Text>
+                        <Image source={require('../../assets/images/doubleTick.png')} style={{ height: 15, width: 15 }} />
+                    </View>
+                </View>
+                <View style={{ backgroundColor: colors.white, width: '70%', borderRadius: 22, borderTopLeftRadius: 0, padding: '1%', paddingTop: '3%', alignItems: 'center', marginTop: '5%', alignSelf: 'flex-end' }}>
+                    <Image source={require('../../assets/images/checkup.png')} style={{ height: 150, width: '95%', borderTopLeftRadius: 12, borderTopRightRadius: 12 }} />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', borderRadius: 14, backgroundColor: colors.white, padding: '5%', paddingBottom: '2%', justifyContent: 'space-between', paddingLeft: '2%' }}>
+                        <View style={{ width: 100, marginLeft: '3%', flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/flask2.png')} style={{ height: 15, width: 15 }} />
+                            <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginLeft: '5%' }}>Prescription</Text>
+                        </View>
+                        <Image source={require('../../assets/images/dots2.png')} style={{ height: 15, width: 15 }} />
+                    </View>
+                    <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, width: '90%', paddingBottom: '3%', marginLeft: '2%' }}>Upload on 15Oct 2024</Text>
+                </View>
+                <View style={{ backgroundColor: "#D3F1FF", width: '70%', borderRadius: 22, borderTopRightRadius: 0, padding: '3%', alignItems: 'center', marginTop: '5%', alignSelf: 'flex-end' }}>
+                    <View style={{
+                        flexDirection
+                            : 'row', alignItems: 'center', width: '100%', borderRadius: 14, backgroundColor: colors.white, padding: '2%'
+                    }}>
+                        <Image source={require('../../assets/images/clipcall1.png')} style={{ height: 76, width: 76 }} />
+                        <View style={{ width: 100, marginLeft: '3%' }}>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Clipcal 500 Tablet 15</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>30mg </Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: colors.white, padding: '2%', borderRadius: 14, marginTop: '2%' }}>
+                        <Image source={require('../../assets/images/clipcall2.png')} style={{ height: 76, width: 76 }} />
+                        <View style={{ width: 100, marginLeft: '3%' }}>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Clipcal 500 Tablet 15</Text>
+                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>30mg </Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={{ padding: '2%' }}>
+                        <Text style={{ fontSize: 13, fontFamily: 'Gilroy-SemiBold', color: colors.blue }}>See more</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ height: 35, width: '90%', backgroundColor: colors.blue, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                        <Text style={{ fontSize: 15, fontFamily: 'Gilroy-SemiBold', color: colors.white }}>Order now</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
-            <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', alignSelf: 'center',  marginBottom:'5%' }}>
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', alignSelf: 'center', marginBottom: '5%' }}>
                 <View style={{ width: '48%', padding: '5%', borderWidth: 1, borderRadius: 8, borderColor: colors.grey }}>
                     <Text style={{ fontSize: 14, color: colors.grey, textAlign: 'center', fontFamily: 'Gilroy-SemiBold' }}>Create an image for my presentation</Text>
                 </View>
                 <View style={{ width: '48%', padding: '5%', borderWidth: 1, borderRadius: 8, borderColor: colors.grey }}>
                     <Text style={{ fontSize: 14, color: colors.grey, textAlign: 'center', fontFamily: 'Gilroy-SemiBold' }}>Create an image for my presentation</Text>
                 </View>
-            </View>
+            </View> */}
             <View style={styles.inputContainer}>
-                <TouchableOpacity onPress={()=>navigation.navigate('PrescriptionForm')}>
+                <TouchableOpacity onPress={() => navigation.navigate('PrescriptionForm')}>
                     <Image source={require('../../assets/images/add4.png')} style={{ height: 40, width: 40 }} />
                 </TouchableOpacity>
                 <View style={{ width: '60%', backgroundColor: colors.grey, borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -107,8 +207,116 @@ const Chat = ({ navigation, route }) => {
                     <Image source={require('../../assets/images/send.png')} style={{ height: 32, width: 32 }} />
                 </TouchableOpacity>
             </View>
+            <Modal
+                // animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}>
+                <Pressable onPress={() => setModalVisible(!modalVisible)} style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-end', backgroundColor: colors.blackTrasparent }}>
+                    <View style={{ width: '100%', borderTopRightRadius: 16, borderTopLeftRadius: 16, borderWidth: 1, borderColor: colors.white, backgroundColor: colors.white, height:'70%' }}>
+                        <PrescriptionForm/>
+                    </View>
+                </Pressable>
+            </Modal>
         </View>
     );
 };
 
 export default Chat;
+
+
+const styles = StyleSheet.create({
+    Container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        width:'100%'
+    },
+    messageContainer: {
+        paddingVertical: 10,
+        marginHorizontal: '2%',
+    },
+    message: {
+        maxWidth: '70%',
+        alignSelf: 'flex-start',
+        borderRadius: 8,
+        padding: 10,
+        marginVertical: 5,
+    },
+    sentMessage: {
+        alignSelf: 'flex-end',
+        backgroundColor: colors.white,
+        borderBottomRightRadius:0,
+        borderRadius:22
+    },
+    receivedMessage: {
+        backgroundColor: colors.white,
+        borderBottomLeftRadius:0,
+        borderRadius:22
+    },
+    messageText: {
+        fontSize: 14,
+        fontFamily:'Gilroy-Medium',
+        padding:10,
+        paddingBottom:0
+    },
+    messageSender: {
+        fontSize: 12,
+        marginTop: 5,
+        padding:10,
+        paddingTop:0
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent:'space-between',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginBottom: '5%'
+    },
+    input: {
+        flex: 1,
+        height: 40,
+        borderColor: '#ccc',
+        paddingHorizontal: 15,
+        marginRight: 10,
+        color: 'black',
+        fontSize:16,
+        fontFamily:'Gilroy-SemiBold'
+    },
+    sendButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    linkTitle:{
+        fontSize:12,
+        fontWeight:'bold',
+        color:'white',
+        width:150,
+        paddingRight:'5%'
+    },
+    linkDescription:{
+        fontSize:12,
+        color:'white',
+        width:150
+    },
+    linkImage:{
+        height:50,
+        width:50,
+        borderRadius:5,
+        marginLeft:'5%',
+
+    },
+    linkContainer:{
+        flexDirection:'row',
+        paddingRight:'10%',
+        alignItems:'center',
+        backgroundColor: 'darkblue',
+    },
+    descContainer:{
+        flexDirection:'column',
+        padding:'5%',
+    }
+});

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import LoginInput from "../../components/LoginInput";
 import { colors } from "../../Theme/GlobalTheme";
@@ -96,3 +95,12 @@ export default function AddAppointment({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

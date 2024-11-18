@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingLeft: '5%',
         borderColor: colors.lightgrey,
-        height: 36,
+        height: 40,
+
         backgroundColor: colors.white
     },
     search: {
@@ -35,6 +36,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Gilroy-Medium',
         color: colors.black,
         paddingLeft: 10,
-    
     }
 })

@@ -2,6 +2,14 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/akuina-bold-slanted.ttf",
+      "sha1": "79649656960648954274e463d40b8ac7a7d24d63"
+    },
+    {
+      "path": "src/assets/fonts/akuina-SemiBold.ttf",
+      "sha1": "2e8cfb4fb900594267aa374782319491ac34f2a1"
+    },
+    {
       "path": "src/assets/fonts/Gilroy-Bold.ttf",
       "sha1": "7fe4d8cf5325dd47363d0f80fefb40ac7df5d5a6"
     },
@@ -16,6 +24,10 @@
     {
       "path": "src/assets/fonts/Gilroy-SemiBold.ttf",
       "sha1": "8663a356eb9bc23b77696208f74376daf59687ea"
+    },
+    {
+      "path": "src/assets/fonts/Gilroy-SemiboldItalic.ttf",
+      "sha1": "ea610914add8b5d1d0460379f5a9ba13abacbca8"
     }
   ]
 }

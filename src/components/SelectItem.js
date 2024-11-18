@@ -10,8 +10,6 @@ const CircularCheckBox = ({ isChecked, onPress }) => (
 
 const SelectItem = (props) => {
 
-
-
     return (
         <Pressable onPress={props.handleCondition}>
             <View style={styles.container}>

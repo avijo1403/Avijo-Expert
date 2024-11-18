@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, Text, Touchable, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { FlatList, ScrollView, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { Image } from "react-native";
 import Button2 from "../../components/Button2";
 import { BaseUrl2, profileOption, wp } from "../../assets/Data";
 import { Rating } from "react-native-ratings";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function DrProfile({ navigation }) {
 
     const [select, setSelect] = useState(0);
     const [reviews, setReviews] = useState([]);
+    const [userData, setUserData] = useState({});
+    const [gender, setGender] = useState('');
 
 
     const formatDate = (isoString) => {
@@ -24,15 +26,30 @@ export default function DrProfile({ navigation }) {
     };
 
     const fetchReview = async () => {
+        const id = await AsyncStorage.getItem("id");
+        console.log("id:", id);
         const response = await fetch(`${BaseUrl2}/user/getAllReview`);
         const json = await response.json();
         setReviews(json.reviews);
         console.log(json);
     }
 
+    const fetchData = async () => {
+        const email = await AsyncStorage.getItem("email");
+        console.log("email:", email);
+        const response = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
+        const json = await response.json();
+        const myProfile = json.data?.find(item => item.emailId === email);
+        setGender(myProfile.gender);
+        setUserData(myProfile);
+        console.log('profile:', myProfile);
+    }
+
+
 
     useEffect(() => {
         fetchReview();
+        fetchData();
         // console.log('id:', id);
     }, []);
 
@@ -58,20 +75,20 @@ export default function DrProfile({ navigation }) {
                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '3%', paddingLeft: '2%' }}>Hlo</Text>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '2%', }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', padding: '2%' }}>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 7, borderWidth: 1, borderColor: colors.grey }}>
-                                <Image source={require('../../assets/images/blueUp.png')} style={{ height: 16, width: 16, marginRight: '5%' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.darkGrey }}>Upvote</Text>
-                                <Image source={require('../../assets/images/greyDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 4, borderWidth: 1, borderColor: colors.grey, justifyContent: 'center' }}>
+                                <Image source={require('../../assets/images/thumbUp.png')} style={{ height: 16, width: 16, marginRight: '5%' }} />
+                                <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.grey }}>400k</Text>
+                                <Image source={require('../../assets/images/thumbDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: "5%" }}>
-                                <Image source={require('../../assets/images/chat.png')} style={{ height: 20, width: 20, marginLeft: '5%' }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image source={require('../../assets/images/again.png')} style={{ height: 20, width: 20, marginLeft: '5%' }} />
+                            {/* <TouchableOpacity style={{ marginLeft: "3%" }}>
+                                <Image source={require('../../assets/images/chat8.png')} style={{ height: 24, width: 24, marginLeft: '5%' }} />
+                            </TouchableOpacity> */}
+                            <TouchableOpacity style={{ marginLeft: '5%' }}>
+                                <Image source={require('../../assets/images/send2.png')} style={{ height: 24, width: 24 }} />
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity>
-                            <Image source={require('../../assets/images/horizontalDots.png')} style={{ height: 24, width: 24 }} />
+                            <Image source={require('../../assets/images/favorite.png')} style={{ height: 24, width: 24 }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -106,31 +123,34 @@ export default function DrProfile({ navigation }) {
                     </View>
                 </View>
                 <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', elevation: 5, backgroundColor: colors.white }}>
-                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
-                        <Image source={require('../../assets/images/profileName.png')} style={{ height: 40, width: 40 }} />
-                        <View style={{ width: '80%', alignItems: 'center', paddingLeft: '5%' }}>
-                            <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%" }}>Stuff man have to deal with</Text>
-                            <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.blue, width: "100%" }}>Answered by Anthony 7h</Text>
+                    <View style={{ width: '100%', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%' }}>
+                            <Image source={require('../../assets/images/profileName.png')} style={{ height: 40, width: 40 }} />
+                            <View style={{ width: '80%', alignItems: 'center', paddingLeft: '5%' }}>
+                                <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%" }}>Stuff man have to deal with</Text>
+                                <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.blue, width: "100%" }}>Answered by Anthony 7h</Text>
+                            </View>
                         </View>
+                        <Image source={require('../../assets/images/dot3.png')} style={{ height: 18, width: 18 }} />
                     </View>
                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.black, width: "100%", marginTop: '3%', paddingLeft: '2%' }}>How do I care for my health without doing anything?</Text>
                     <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '3%', paddingLeft: '2%' }}>No answer yet . Last followed 14m</Text>
                     <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '2%', }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', padding: '2%' }}>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 7, borderWidth: 1, borderColor: colors.grey }}>
-                                <Image source={require('../../assets/images/blueUp.png')} style={{ height: 16, width: 16, marginRight: '5%' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.darkGrey }}>Upvote</Text>
-                                <Image source={require('../../assets/images/greyDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '3%', borderRadius: 4, borderWidth: 1, borderColor: colors.grey, justifyContent: 'center' }}>
+                                <Image source={require('../../assets/images/thumbUp.png')} style={{ height: 16, width: 16, marginRight: '5%' }} />
+                                <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.blue }}>400k</Text>
+                                <Image source={require('../../assets/images/thumbDown.png')} style={{ height: 16, width: 16, marginLeft: '5%' }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: "5%" }}>
-                                <Image source={require('../../assets/images/chat.png')} style={{ height: 20, width: 20, marginLeft: '5%' }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Image source={require('../../assets/images/again.png')} style={{ height: 20, width: 20, marginLeft: '5%' }} />
+                            {/* <TouchableOpacity style={{ marginLeft: "3%" }}>
+                                <Image source={require('../../assets/images/chat8.png')} style={{ height: 24, width: 24, marginLeft: '5%' }} />
+                            </TouchableOpacity> */}
+                            <TouchableOpacity style={{ marginLeft: '5%' }}>
+                                <Image source={require('../../assets/images/send2.png')} style={{ height: 24, width: 24 }} />
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity>
-                            <Image source={require('../../assets/images/horizontalDots.png')} style={{ height: 24, width: 24 }} />
+                            <Image source={require('../../assets/images/favorite.png')} style={{ height: 24, width: 24 }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -159,28 +179,28 @@ export default function DrProfile({ navigation }) {
             <>
                 {profileOption && profileOption.length > 0 && profileOption.map((item) => (
                     <View style={[styles.container, { marginTop: '5%' }]}>
-                    {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%', marginTop: '8%' }}>
+                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '90%', marginTop: '8%' }}>
                         <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Profile</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Text style={{ fontSize: 12, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>Most Recent</Text>
                             <Image source={require('../../assets/images/downGrey.png')} style={{ height: 16, width: 16 }} />
                         </View>
                     </View> */}
-                    <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', elevation: 5, backgroundColor: colors.white }}>
-                        <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ height: 40, width: 40 }} />
-                            <View style={{ width: '65%', alignItems: 'center', paddingLeft: '5%' }}>
-                                <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%", marginTop: '2%' }}>Nancy Johnson</Text>
-                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '2%' }}>studied at Cambridge (2012)</Text>
-                                <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.grey, width: "100%", marginTop: '2%' }}>6.3k views last week</Text>
+                        <View style={{ width: '90%', alignItems: 'center', borderWidth: 1, borderColor: colors.lightgrey, borderRadius: 5, marginTop: '3%', padding: '3%', elevation: 5, backgroundColor: colors.white }}>
+                            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center' }}>
+                                <Image source={require('../../assets/images/profile.png')} style={{ height: 40, width: 40 }} />
+                                <View style={{ width: '65%', alignItems: 'center', paddingLeft: '5%' }}>
+                                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "100%", marginTop: '2%' }}>Nancy Johnson</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.darkGrey, width: "100%", marginTop: '2%' }}>studied at Cambridge (2012)</Text>
+                                    <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.grey, width: "100%", marginTop: '2%' }}>6.3k views last week</Text>
+                                </View>
+                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '2%', borderRadius: 6, borderWidth: 1, borderColor: colors.blue }}>
+                                    <Image source={require('../../assets/images/addAccBlue.png')} style={{ height: 12, width: 10, marginRight: '2%' }} />
+                                    <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingLeft: 5 }}>Follow</Text>
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: '2%', borderRadius: 6, borderWidth: 1, borderColor: colors.blue }}>
-                                <Image source={require('../../assets/images/addAccBlue.png')} style={{ height: 12, width: 10, marginRight: '2%' }} />
-                                <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue, paddingLeft: 5 }}>Follow</Text>
-                            </TouchableOpacity>
                         </View>
-                    </View>
-                </View>))}
+                    </View>))}
             </>
         )
     }
@@ -249,7 +269,7 @@ export default function DrProfile({ navigation }) {
                                             />
                                             <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Medium', color: colors.black, marginLeft: '2%', marginTop: '2%' }}>(152)</Text>
                                         </View>
-                                        <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 12, color: colors.darkGrey, marginTop:'2%' }}>{formatDate(item.createdAt)}</Text>
+                                        <Text style={{ fontFamily: 'Gilroy-Medium', fontSize: 12, color: colors.darkGrey, marginTop: '2%' }}>{formatDate(item.createdAt)}</Text>
                                     </View>
                                 </View>
                                 <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', width: wp(90), paddingTop: '1%' }}>{item.comment}</Text>
@@ -358,18 +378,35 @@ export default function DrProfile({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem3 text="Profile" onPress={() => navigation.goBack()} onRightPress={()=>navigation.navigate('AddQuestion')} onRightPress2={()=>navigation.navigate('SettingList')} right={<Image source={require('../../assets/images/whiteAdd2.png')} style={{height:24, width:24, marginRight:10}}/>} right2={<Image source={require('../../assets/images/whiteLine.png')} style={{height:24, width:24}}/>} />
+            <HeaderItem3
+                text="Profile"
+                onPress={() => navigation.goBack()}
+                onRightPress={() => navigation.navigate('AddQuestion')}
+                onRightPress2={() => navigation.navigate('SettingList')}
+                right={<Image source={require('../../assets/images/whiteAdd2.png')} style={{ height: 24, width: 24, marginRight: 10 }} />}
+                right2={<Image source={require('../../assets/images/whiteLine.png')} style={{ height: 24, width: 24 }} />}
+            />
             <ScrollView
                 style={{ width: '100%' }}
                 contentContainerStyle={{ alignItems: 'center' }}
-                showsVerticalScrollIndicator={false}
-            >
-                <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: "10%", padding: '3%', borderWidth: 1, borderRadius: 8, borderColor: colors.lightgrey, elevation: 5, backgroundColor: colors.white }}>
-                    <Image source={require('../../assets/images/appDoc.png')} style={{ height: 84, width: 64 }} />
+                showsVerticalScrollIndicator={false}>
+                <View style={{
+                    width: '90%',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    marginTop: "10%",
+                    padding: '3%',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    borderColor: colors.lightgrey,
+                    elevation: 5,
+                    backgroundColor: colors.white
+                }}>
+                    <Image source={gender === 'Male' ? require('../../assets/images/profile2.png') : gender === 'Female' ? require('../../assets/images/profile1.png') : require('../../assets/images/profile2.png')} style={{ width: 62, height: 62, borderRadius: 200 }} />
                     <View style={{ paddingLeft: '5%' }}>
-                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>Dr. Sunil Puraswani</Text>
-                        <Text style={{ fontSize: 10, fontFamily: "Gilroy-Medium", color: colors.darkGrey, marginTop: '3%' }}>-070676-35032</Text>
-                        <Text style={{ fontSize: 10, fontFamily: "Gilroy-Medium", color: colors.darkGrey, marginTop: '3%' }}>Pediatrician</Text>
+                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>{userData?.fullName}</Text>
+                        {/* <Text style={{ fontSize: 10, fontFamily: "Gilroy-Medium", color: colors.darkGrey, marginTop: '3%' }}>-070676-35032</Text> */}
+                        <Text style={{ fontSize: 10, fontFamily: "Gilroy-Medium", color: colors.darkGrey, marginTop: '3%' }}>{userData?.specialization}</Text>
                     </View>
                 </View>
                 <View style={{ width: "90%", alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginLeft: "2%", marginTop: '5%' }}>
@@ -406,3 +443,12 @@ export default function DrProfile({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

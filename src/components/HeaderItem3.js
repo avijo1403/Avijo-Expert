@@ -6,28 +6,28 @@ export default function HeaderItem3(props) {
 
     return (
         <View style={styles.headerContainer}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
                 <TouchableOpacity onPress={props.onPress}>
                     <Image source={require('../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>{props.text}</Text>
             </View>
-            <View style={{flexDirection:'row', width:"17%", justifyContent:'space-between', alignItems:'center'}}>
-            {props.showSearch && <TouchableOpacity>
-                <Image source={require('../assets/images/whiteSearch.png')} style={{ height: 25, width: 25 }} />
-            </TouchableOpacity>}
-            {props.showNoti && <TouchableOpacity>
-                <View style={styles.numberContainer}>
-                    <Text style={styles.number}>7+</Text>
-                </View>
-                <Image source={require('../assets/images/whiteNoti.png')} style={{ height: 25, width: 25 }} />
-            </TouchableOpacity>}
-            <TouchableOpacity onPress={props.onRightPress}>
-                {props.right}
-            </TouchableOpacity>
-            <TouchableOpacity onPress={props.onRightPress2}>
-                {props.right2}
-            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', width: "20%", justifyContent: 'flex-end', alignItems: 'center' }}>
+                {props.showSearch && <TouchableOpacity>
+                    <Image source={require('../assets/images/whiteSearch.png')} style={{ height: 25, width: 25 }} />
+                </TouchableOpacity>}
+                {props.showNoti && <TouchableOpacity>
+                    <View style={styles.numberContainer}>
+                        <Text style={styles.number}>7+</Text>
+                    </View>
+                    <Image source={require('../assets/images/whiteNoti.png')} style={{ height: 25, width: 25 }} />
+                </TouchableOpacity>}
+                <TouchableOpacity onPress={props.onRightPress}>
+                    {props.right}
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.onRightPress2}>
+                    {props.right2}
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         flexDirection: 'row',
         width: '100%',
-        padding: '5%',
+        padding: 10,
         paddingTop: '10%',
         alignItems: 'center',
         justifyContent: 'space-between',

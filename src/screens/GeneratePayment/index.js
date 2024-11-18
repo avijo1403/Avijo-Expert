@@ -1,10 +1,11 @@
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import styles from "./style";
 import HeaderItem3 from "../../components/HeaderItem3";
 import Collapsible1 from "../../components/Collapsible";
 import Button1 from "../../components/Button1";
 import { Image } from "react-native";
+import { StyleSheet } from "react-native";
+import { colors } from "../../Theme/GlobalTheme";
 
 export default function GeneratePayment({navigation}) {
 
@@ -21,3 +22,12 @@ export default function GeneratePayment({navigation}) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

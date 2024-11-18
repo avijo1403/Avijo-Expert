@@ -1,6 +1,5 @@
 import React from "react";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { wp } from "../../assets/Data";
@@ -28,3 +27,31 @@ export default function ChartInfo({ navigation }) {
           </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    },
+    numberContainer: {
+        height: 12,
+        width: 12,
+        backgroundColor: colors.red,
+        color: colors.white,
+        borderRadius: 13,
+        position: 'absolute',
+        zIndex: 2,
+        marginLeft: 15,
+        alignItems: 'center'
+    },
+    number: {
+        fontSize: 6,
+        textAlign: 'center',
+        fontFamily: 'Gilroy-Regular',
+        color: colors.white,
+        paddingTop: 2,
+        paddingLeft: 2
+    }
+})

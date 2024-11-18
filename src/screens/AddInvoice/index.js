@@ -1,6 +1,5 @@
 import React from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
 import Button2 from "../../components/Button2";
 import Collapsible1 from "../../components/Collapsible";
@@ -49,3 +48,12 @@ export default function AddInvoice({navigation}) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, Text, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderItem2 from "../../components/HeaderItem2";
-import styles from "./style";
 import { BaseUrl22, wp } from "../../assets/Data";
 import { Rating } from "react-native-ratings";
 import { colors } from "../../Theme/GlobalTheme";
@@ -83,3 +82,13 @@ export default function Reviews({ navigation }) {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

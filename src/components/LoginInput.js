@@ -14,6 +14,7 @@ const LoginInput = (props) => {
           value={props.value}
           onChangeText={props.onChangeText}
           secureTextEntry={props.secureTextEntry}
+          keyboardType={props.keyboardType}
         />
       </View>
     </View>

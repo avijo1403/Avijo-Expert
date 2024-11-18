@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { BaseUrl2, dashboardData, wp } from "../../assets/Data";
@@ -38,3 +37,12 @@ export default function PaymentDoc({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

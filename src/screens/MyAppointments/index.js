@@ -1,7 +1,6 @@
 import React from "react";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
-import styles from "./style";
 import HeaderItem2 from "../../components/HeaderItem2";
 import SearchItem from "../../components/SearchItem";
 import { colors } from "../../Theme/GlobalTheme";
@@ -55,3 +54,12 @@ export default function MyAppointments({navigation}) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

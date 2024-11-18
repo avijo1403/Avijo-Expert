@@ -1,6 +1,5 @@
 import React from "react";
-import { FlatList, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { wp } from "../../assets/Data";
@@ -19,18 +18,18 @@ export default function PatientInfo({ navigation }) {
                 {/* <Image source={require('../../assets/images/upload1.png')} style={{ height: 40, width: 40, marginTop: "10%" }} />
                 <Text style={{ fontFamily: 'Gilroy-SemiBold', color: colors.black, fontSize: 18, marginTop: '3%' }}>Drag your image here</Text>
                 <Text style={{ fontFamily: 'Gilroy-Medium', color: colors.grey, fontSize: 12, marginTop: '3%' }}>(Only *JPEG and *PNG images will be accepted)</Text> */}
-                <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10%' }}>
-                    <Text style={{color:colors.darkGrey, fontSize:12, fontFamily:'Gilroy-SemiBold' }}>UHI ID</Text>
-                    <TouchableOpacity style={{padding:5, backgroundColor:colors.blue, borderRadius:50, paddingLeft:10, paddingRight:10}}>
-                        <Text style={{color:colors.white, fontSize:12, fontFamily:'Gilroy-Medium' }}>Generate</Text>
+                <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', marginTop: '10%' }}>
+                    <Text style={{ color: colors.darkGrey, fontSize: 12, fontFamily: 'Gilroy-SemiBold' }}>UHI ID</Text>
+                    <TouchableOpacity style={{ padding: 5, backgroundColor: colors.blue, borderRadius: 50, paddingLeft: 10, paddingRight: 10 }}>
+                        <Text style={{ color: colors.white, fontSize: 12, fontFamily: 'Gilroy-Medium' }}>Generate</Text>
                     </TouchableOpacity>
                 </View>
-                <View  style={{flexDirection:'row', width:'90%', alignItems:'center', borderWidth:1, marginTop:'3%', borderRadius:3, borderColor:colors.grey}}>
-                    <TextInput 
-                    placeholder="Enter Health Id"
-                    placeholderTextColor={colors.grey}
-                    style={{width:'80%', paddingLeft:10}}/>
-                    <Text style={{color:colors.blue, fontSize:16, fontFamily:'Gilroy-SemiBold', fontStyle:'italic', width:'20%', textAlign:"center" }}>Get</Text>
+                <View style={{ flexDirection: 'row', width: '90%', alignItems: 'center', borderWidth: 1, marginTop: '3%', borderRadius: 3, borderColor: colors.grey }}>
+                    <TextInput
+                        placeholder="Enter Health Id"
+                        placeholderTextColor={colors.grey}
+                        style={{ width: '80%', paddingLeft: 10 }} />
+                    <Text style={{ color: colors.blue, fontSize: 16, fontFamily: 'Gilroy-SemiBold', fontStyle: 'italic', width: '20%', textAlign: "center" }}>Get</Text>
                 </View>
                 <LoginInput text="Full Name" placeholder="Full Name" />
                 <LoginInput text="Phone Number" placeholder="Enter Phone Number" />
@@ -52,3 +51,32 @@ export default function PatientInfo({ navigation }) {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    },
+    numberContainer: {
+        height: 12,
+        width: 12,
+        backgroundColor: colors.red,
+        color: colors.white,
+        borderRadius: 13,
+        position: 'absolute',
+        zIndex: 2,
+        marginLeft: 15,
+        alignItems: 'center'
+    },
+    number: {
+        fontSize: 6,
+        textAlign: 'center',
+        fontFamily: 'Gilroy-Regular',
+        color: colors.white,
+        paddingTop: 2,
+        paddingLeft: 2
+    }
+})

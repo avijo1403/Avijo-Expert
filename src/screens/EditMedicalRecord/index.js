@@ -1,6 +1,5 @@
 import React from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { ScrollView } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
@@ -157,3 +156,12 @@ export default function EditMedicalRecord({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

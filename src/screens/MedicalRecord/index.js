@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, ScrollView, Text } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { Image } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
 import { BaseUrl1, medicineData, wp } from "../../assets/Data";
-import styles from "./style";
 import Button1 from "../../components/Button1";
 import { FloatingAction } from "react-native-floating-action";
 
@@ -111,3 +110,12 @@ export default function MedicalRecord({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

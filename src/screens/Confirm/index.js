@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Image, Text, View } from "react-native";
-import styles from "./style";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { colors } from "../../Theme/GlobalTheme";
 
 export default function Confirm({navigation}){
 
@@ -18,3 +18,28 @@ export default function Confirm({navigation}){
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+        flex:1,
+        justifyContent:'center'
+    },
+    thankYou:{
+        fontSize:20,
+        fontFamily:'Gilroy-Bold',
+        color:colors.black,
+        marginTop:'5%'
+    },
+    text:{
+        fontSize:12,
+        fontFamily:'Gilroy-Medium',
+        width:'90%',
+        textAlign:'center',
+        marginTop:'5%',
+        color:colors.darkGrey,
+    }
+})

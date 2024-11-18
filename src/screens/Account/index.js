@@ -1,20 +1,38 @@
-import React from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HeaderItem2 from "../../components/HeaderItem2";
 import { colors } from "../../Theme/GlobalTheme";
-import { hp, wp } from "../../assets/Data";
+import { BaseUrl2, hp, wp } from "../../assets/Data";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Account({ navigation }) {
+
+    const [userData, setUserData] = useState({});
+    const [gender, setGender] = useState('');
+
+    const fetchData = async () => {
+        const email = await AsyncStorage.getItem("email");
+        console.log("email:", email);
+        const response = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
+        const json = await response.json();
+        const myProfile = json.data?.find(item => item.emailId === email);
+        setGender(myProfile.gender);
+        setUserData(myProfile);
+        console.log('profile:', myProfile);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <View style={styles.container}>
             <HeaderItem2 text="Account" onPress={() => navigation.goBack()} />
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center', paddingBottom: '5%' }}>
-                <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'columns', width: '90%', marginTop: '5%', backgroundColor: colors.white, padding: 5, borderRadius: 3 }}>
-                    <Image source={require('../../assets/images/profile3.png')} style={{ width: 56, height: 56, borderRadius: 200 }} />
+                <TouchableOpacity onPress={() => navigation.navigate('BottomDrProfile')} style={{ flexDirection: 'columns', width: '90%', marginTop: '5%', backgroundColor: colors.white, padding: 5, borderRadius: 3 }}>
+                    <Image source={gender === 'Male'?require('../../assets/images/profile2.png'):gender === 'Female'?require('../../assets/images/profile1.png'):require('../../assets/images/profile2.png')} style={{ width: 56, height: 56, borderRadius: 200 }} />
                     <View style={{ paddingLeft: '0%', marginTop: '10%', flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottomWidth: 1, borderColor: colors.grey, paddingBottom: '8%' }}>
-                        <Text style={{ fontSize: 22, fontFamily: 'Gilroy-SemiBold', color: colors.black }}> Anthony Atkielski</Text>
+                        <Text style={{ fontSize: 22, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>{userData?.fullName}</Text>
                         <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 24, width: 24 }} />
                     </View>
                 </TouchableOpacity>
@@ -25,19 +43,25 @@ export default function Account({ navigation }) {
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Chats</Text>
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Facility')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white }}>
+                        <Image source={require('../../assets/images/facility.png')} style={{ height: 24, width: 24 }} />
+                        <View style={{ paddingLeft: wp(5) }}>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Facilities</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/createAd.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Create Ad</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Wallet')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/dollar.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
-                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Monetization</Text>
+                            <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Payments</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '0%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/content.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Your content & stats</Text>
@@ -49,18 +73,19 @@ export default function Account({ navigation }) {
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Bookmarks</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%',  backgroundColor: colors.white, marginTop: '0%' }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('DrProfile')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
                         <Image source={require('../../assets/images/draft.png')} style={{ height: 20, width: 20 }} />
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Drafts</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('DoCare')} style={{ flexDirection: 'row', alignItems: 'center', width: '90%', padding: '5%', backgroundColor: colors.white, marginTop: '0%' }}>
-                        <Image source={require('../../assets/images/doCare.png')} style={{ height: 20, width: 20 }} />
+                        <Text style={{ fontSize: 24, width: '10%', fontFamily: 'akuina-bold-slanted', color: '#3CA2A5' }}>D</Text>
                         <View style={{ paddingLeft: wp(5) }}>
                             <Text style={{ fontSize: 18, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Try Docare +</Text>
                         </View>
                     </TouchableOpacity>
+
                 </View>
                 {/* <View style={{ height: 2, width: '80%', backgroundColor: colors.grey, marginTop: '5%', alignSelf: 'flex-start', marginLeft: '5%' }} /> */}
                 {/* <TouchableOpacity onPress={() => navigation.navigate('DoCare')} style={{ alignSelf: 'flex-start', marginLeft: '5%', marginTop: '3%' }}>
@@ -79,9 +104,19 @@ export default function Account({ navigation }) {
                     <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey }}>Logout</Text>
                 </TouchableOpacity> */}
                 <TouchableOpacity onPress={() => navigation.navigate('SettingList')} style={{ alignSelf: 'flex-end', marginRight: '5%', marginTop: '5%' }}>
-                <Image source={require('../../assets/images/setting1.png')} style={{height:32, width:32, }}/>
+                    <Image source={require('../../assets/images/setting1.png')} style={{ height: 32, width: 32, }} />
                 </TouchableOpacity>
             </ScrollView>
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

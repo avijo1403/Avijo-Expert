@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { FlatList, Image, ScrollView, Text } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-import styles from "./style";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { chatData, notiData, wp } from "../../assets/Data";
@@ -39,7 +38,7 @@ export default function Notification({ navigation }) {
         contentContainerStyle={{ alignItems: 'center', marginTop: '5%' }}
         data={chatData}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('Chat')} style={{ width: '100%', alignItems: 'center', flexDirection: 'row', padding: '5%', backgroundColor: colors.background, borderBottomWidth: 1, borderColor: colors.lightgrey }}>
+          <TouchableOpacity onPress={() => navigation.navigate('Chat', {name: item.name})} style={{ width: '100%', alignItems: 'center', flexDirection: 'row', padding: '5%', backgroundColor: colors.background, borderBottomWidth: 1, borderColor: colors.lightgrey }}>
             <Image source={item.image} style={{ height: 46, width: 46, borderRadius: 100 }} />
             <View style={{ width: '85%', paddingLeft: '3%' }}>
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -84,7 +83,7 @@ export default function Notification({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderItem3 onPress={() => navigation.goBack()} text="Messages" right={<Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', width: 100, paddingRight: wp(10) }}>New Chat</Text>} />
+      <HeaderItem3 onPress={() => navigation.goBack()} text="Messages" right={<Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', width: '100%' }}>New Chat</Text>} />
       <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
         {/* {select === 1 && <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
           <SearchItem />
@@ -106,3 +105,25 @@ export default function Notification({ navigation }) {
     </View>
   )
 }
+
+
+
+const styles = StyleSheet.create({
+  container:{
+      flex:1,
+      width:'100%',
+      alignItems:'center',
+      backgroundColor: colors.white,
+  },
+  highlight: {
+    backgroundColor: 'yellow',
+    fontWeight: 'bold',
+  },
+  itemName: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  normal: {
+    color: colors.grey,
+  },
+})

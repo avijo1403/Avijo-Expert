@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, ScrollView, Text } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-import styles from "./style";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { BaseUrl2, dashboardData } from "../../assets/Data";
 import Card from "../../components/Card";
 import Button1 from "../../components/Button1";
+import { colors } from "../../Theme/GlobalTheme";
 
 export default function Receptions({navigation}){
 
@@ -47,3 +47,12 @@ export default function Receptions({navigation}){
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor:colors.white,
+    }
+})

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HeaderItem from "../../components/HeaderItem";
 import { colors } from "../../Theme/GlobalTheme";
 import { appData, hp, wp } from "../../assets/Data";
@@ -38,3 +37,12 @@ export default function Main({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

@@ -1,6 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
-import styles from "./style";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import SquareRadio from "../../components/SquareRadio";
@@ -33,3 +32,13 @@ export default function DisplaySetting({ navigation }) {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

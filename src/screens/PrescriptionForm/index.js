@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import HeaderItem2 from "../../components/HeaderItem2";
 import { colors } from "../../Theme/GlobalTheme";
@@ -8,6 +7,8 @@ import VitalInput from "../../components/VitalInput";
 import SearchItem from "../../components/SearchItem";
 import PrescriptionSearch from "../../components/PrescriptionSearch";
 import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import Collapsible3 from "../../components/Collapsible3";
+import Collapsible4 from "../../components/Collapsible4";
 
 export default function PrescriptionForm({ navigation }) {
 
@@ -50,7 +51,7 @@ export default function PrescriptionForm({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem2 onPress={() => navigation.goBack()} text="Prescription Pad" right={
+            {/* <HeaderItem2 onPress={() => navigation.goBack()} text="Prescription Pad" right={
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', alignSelf: 'flex-end', }}>
                     <TouchableOpacity onPress={() => navigation.navigate('PrescriptionSave')}>
                         <Image source={require('../../assets/images/pencil.png')} style={{ height: 23, width: 23 }} />
@@ -59,14 +60,25 @@ export default function PrescriptionForm({ navigation }) {
                         <Image source={require('../../assets/images/movie.png')} style={{ height: 23, width: 23 }} />
                     </TouchableOpacity>
                 </View>
-            } />
+            } /> */}
+            <View style={{ width: '100%', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', padding: '5%' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <TouchableOpacity>
+                        <Image source={require('../../assets/images/blackLeft.png')} style={{ height: 18, width: 18 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, paddingLeft: '5%' }}>Prescription Pad</Text>
+                </View>
+                <TouchableOpacity style={{ padding: 5, borderRadius: 50, borderWidth: 1, borderColor: colors.blue, alignSelf: 'flex-end' }}>
+                    <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.blue }}>Create</Text>
+                </TouchableOpacity>
+            </View>
             <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', backgroundColor: colors.white, marginTop: '5%', padding: '5%' }}>
                     <Image source={require('../../assets/images/profile4.png')} style={{ height: 56, width: 56 }} />
                     <View style={{ marginLeft: '5%' }}>
                         <Text style={{ fontSize: 20, color: colors.black, fontFamily: 'Gilroy-SemiBold' }}>Imtiyaz</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
-                            <Text style={{ fontSize: 14, color: colors.black, fontFamily: 'Gilroy-Medium' }}>eka101  .  6364766400</Text>
+                            <Text style={{ fontSize: 14, color: colors.black, fontFamily: 'Gilroy-Medium' }}> 6364766400</Text>
                             <Image source={require('../../assets/images/down-arrow.png')} style={{ height: 16, width: 16, marginLeft: '3%' }} />
                         </View>
                     </View>
@@ -131,6 +143,30 @@ export default function PrescriptionForm({ navigation }) {
                             <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.black, marginLeft: 5 }}>Check</Text>
                         </TouchableOpacity>
                     </View>
+                </View>
+                <View style={{ flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: colors.white, marginTop: '5%', padding: '5%' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/medication.png')} style={{ height: 24, width: 24 }} />
+                            <Text style={{ fontSize: 20, color: colors.black, fontFamily: 'Gilroy-SemiBold', marginLeft: '5%' }}>Order via</Text>
+                        </View>
+                        <Image source={require('../../assets/images/greenFile.png')} style={{ height: 16, width: 46 }} />
+                    </View>
+                    <View style={{ width: '50%', alignSelf: 'flex-start', marginLeft: '5%', marginTop: '5%' }}>
+                        {/* <PrescriptionSearch placeholder="Search symptoms" /> */}
+                        <Collapsible4 content={["avijo", "prakhar pharmacy", "Brothers laboratory"]} text="Select Facility"/>
+                    </View>
+                    {/* <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: '5%' }}>
+                        <Image source={require('../../assets/images/blackInfo.png')} style={{ height: 16, width: 16 }} />
+                        <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.black, marginLeft: '3%' }}>Delivery Pincode:</Text>
+                        <TouchableOpacity style={{ padding: 3, borderWidth: 1, borderRadius: 50, borderColor: colors.torquish, marginLeft: '3%', paddingLeft: '5%', paddingRight: '5%' }}>
+                            <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.torquish }}>Pincode</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{ padding: 3, borderWidth: 1, borderRadius: 50, borderColor: colors.black, marginLeft: '3%', paddingLeft: '5%', paddingRight: '5%', flexDirection: 'row', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/again.png')} style={{ height: 12, width: 12 }} />
+                            <Text style={{ fontSize: 10, fontFamily: 'Gilroy-Medium', color: colors.black, marginLeft: 5 }}>Check</Text>
+                        </TouchableOpacity>
+                    </View> */}
                 </View>
                 <View style={{ flexDirection: 'column', alignItems: 'center', width: '100%', backgroundColor: colors.white, marginTop: '5%', padding: '5%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between' }}>
@@ -241,3 +277,12 @@ export default function PrescriptionForm({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.background,
+    },
+})

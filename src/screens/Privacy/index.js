@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
-import styles from "./style";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { TouchableOpacity } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
@@ -47,3 +46,12 @@ export default function Privacy({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

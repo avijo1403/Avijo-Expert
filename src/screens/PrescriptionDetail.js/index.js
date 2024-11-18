@@ -1,6 +1,5 @@
 import React from "react";
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import styles from "./style";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import HeaderItem2 from "../../components/HeaderItem2";
 import { colors } from "../../Theme/GlobalTheme";
 
@@ -113,3 +112,12 @@ export default function PrescriptionDetail({navigation}) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.background,
+    },
+})

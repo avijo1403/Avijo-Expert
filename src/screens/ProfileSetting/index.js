@@ -1,6 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
-import styles from "./style";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import HeaderItem3 from "../../components/HeaderItem3";
 import SettingToggle from "../../components/SettingToggle";
 import { colors } from "../../Theme/GlobalTheme";
@@ -19,3 +18,12 @@ export default function ProfileSetting({navigation}){
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    }
+})

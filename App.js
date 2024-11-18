@@ -1,4 +1,4 @@
-import { StyleSheet} from 'react-native'
+import { StyleSheet } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -82,94 +82,111 @@ import PrescriptionForm from './src/screens/PrescriptionForm';
 import PrescriptionSave from './src/screens/PrescriptionSave';
 import PrescriptionDetail from './src/screens/PrescriptionDetail.js';
 import BottomNav from './src/navigations/BottomNav.js';
+import Records from './src/screens/Records/index.js';
+import ViewRecords from './src/screens/ViewRecords/index.js';
+import { MenuProvider } from 'react-native-popup-menu';
+import Facility from './src/screens/Facility/index.js';
+import AboutFacility from './src/screens/AboutFacility/index.js';
+import Wallet from './src/screens/Wallet/index.js';
+import Splash from './src/screens/Splash/index.js';
+import NavigateProfile from './src/screens/NavigateProfile/index.js';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
-        <Stack.Screen name='Main' component={Main} options={{headerShown:false}}/>
-        <Stack.Screen name='Verification' component={Verification} options={{headerShown:false}}/>
-        <Stack.Screen name='Register' component={Register} options={{headerShown:false}}/>
-        <Stack.Screen name='Profile' component={Profile} options={{headerShown:false}}/>
-        <Stack.Screen name='CreateProfile' component={CreateProfile} options={{headerShown:false}}/>
-        <Stack.Screen name='Confirm' component={Confirm} options={{headerShown:false}}/>
-        <Stack.Screen name='MyAppointments' component={MyAppointments} options={{headerShown:false}}/>
-        <Stack.Screen name='ConsultDetail' component={ConsultDetail} options={{headerShown:false}}/>
-        <Stack.Screen name='Reviews' component={Reviews} options={{headerShown:false}}/>
-        <Stack.Screen name='Account' component={Account} options={{headerShown:false}}/>
-        <Stack.Screen name='MyProfile' component={MyProfile} options={{headerShown:false}}/>
-        <Stack.Screen name='Dashboard' component={BottomNav} options={{headerShown:false}}/>
-        <Stack.Screen name='Patients' component={Patients} options={{headerShown:false}}/>
-        <Stack.Screen name='Receptions' component={Receptions} options={{headerShown:false}}/>
-        <Stack.Screen name='Doctors' component={Doctors} options={{headerShown:false}}/>
-        <Stack.Screen name='Appointments' component={Appointments} options={{headerShown:false}}/>
-        <Stack.Screen name='Payments' component={Payments} options={{headerShown:false}}/>
-        <Stack.Screen name='Invoices' component={Invoices} options={{headerShown:false}}/>
-        <Stack.Screen name='Services' component={Services} options={{headerShown:false}}/>
-        <Stack.Screen name='Medicines' component={Medicines} options={{headerShown:false}}/>
-        <Stack.Screen name='Campaigns' component={Campaigns} options={{headerShown:false}}/>
-        <Stack.Screen name='Settings' component={Settings} options={{headerShown:false}}/>
-        <Stack.Screen name='Notification' component={Notification} options={{headerShown:false}}/>
-        <Stack.Screen name='MedicalRecord' component={MedicalRecord} options={{headerShown:false}}/>
-        <Stack.Screen name='NewRecord' component={NewRecord} options={{headerShown:false}}/>
-        <Stack.Screen name='EditAppointment' component={EditAppointment} options={{headerShown:false}}/>
-        <Stack.Screen name='CreateCampaign' component={CreateCampaign} options={{headerShown:false}}/>
-        <Stack.Screen name='DoctorList' component={DoctorList} options={{headerShown:false}}/>
-        <Stack.Screen name='PersonnelInfoDoc' component={PersonnelInfoDoc} options={{headerShown:false}}/>
-        <Stack.Screen name='PatientDoc' component={PatientDoc} options={{headerShown:false}}/>
-        <Stack.Screen name='AppointmentDoc' component={AppointmentDoc} options={{headerShown:false}}/>
-        <Stack.Screen name='InvoiceDoc' component={InvoiceDoc} options={{headerShown:false}}/>
-        <Stack.Screen name='PaymentDoc' component={PaymentDoc} options={{headerShown:false}}/>
-        <Stack.Screen name='AccessControl' component={AccessControl} options={{headerShown:false}}/>
-        <Stack.Screen name='AddItem' component={AddItem} options={{headerShown:false}}/>
-        <Stack.Screen name='PaymentReview' component={PaymentReview} options={{headerShown:false}}/>
-        <Stack.Screen name='EditPayment' component={EditPayment} options={{headerShown:false}}/>
-        <Stack.Screen name='ShareWithPatient' component={ShareWithPatient} options={{headerShown:false}}/>
-        <Stack.Screen name='AddStuff' component={AddStuff} options={{headerShown:false}}/>
-        <Stack.Screen name='PreviewInvoice' component={PreviewInvoice} options={{headerShown:false}}/>
-        <Stack.Screen name='EditInvoice' component={EditInvoice} options={{headerShown:false}}/>
-        <Stack.Screen name='AddInvoice' component={AddInvoice} options={{headerShown:false}}/>
-        <Stack.Screen name='MedAndService' component={MedAndService} options={{headerShown:false}}/>
-        <Stack.Screen name='PatientDetail' component={PatientDetail} options={{headerShown:false}}/>
-        <Stack.Screen name='NewMedicine' component={NewMedicine} options={{headerShown:false}}/>
-        <Stack.Screen name='NewService' component={NewService} options={{headerShown:false}}/>
-        <Stack.Screen name='EditService' component={EditService} options={{headerShown:false}}/>
-        <Stack.Screen name='EditMedicine' component={EditMedicine} options={{headerShown:false}}/>
-        <Stack.Screen name='ViewCampaign' component={ViewCampaign} options={{headerShown:false}}/>
-        <Stack.Screen name='VideoChat' component={VideoChat} options={{headerShown:false}}/>
-        <Stack.Screen name='AddQuestion' component={AddQuestion} options={{headerShown:false}}/>
-        <Stack.Screen name='PatientCategory' component={PatientCategory} options={{headerShown:false}}/>
-        <Stack.Screen name='MedicalRecordView' component={MedicalRecordView} options={{headerShown:false}}/>
-        <Stack.Screen name='CreateInvoice' component={CreateInvoice} options={{headerShown:false}}/>
-        <Stack.Screen name='GeneratePayment' component={GeneratePayment} options={{headerShown:false}}/>
-        <Stack.Screen name='AddAppointment' component={AddAppointment} options={{headerShown:false}}/>
-        <Stack.Screen name='Images' component={Images} options={{headerShown:false}}/>
-        <Stack.Screen name='PatientInfo' component={PatientInfo} options={{headerShown:false}}/>
-        <Stack.Screen name='ChartInfo' component={ChartInfo} options={{headerShown:false}}/>
-        <Stack.Screen name='HealthInfo' component={HealthInfo} options={{headerShown:false}}/>
-        <Stack.Screen name='AppointmentDetail' component={AppointmentDetail} options={{headerShown:false}}/>
-        <Stack.Screen name='Chat' component={Chat} options={{headerShown:false}}/>
-        <Stack.Screen name='DrProfile' component={DrProfile} options={{headerShown:false}}/>
-        <Stack.Screen name='EditMedicalRecord' component={EditMedicalRecord} options={{headerShown:false}}/>
-        <Stack.Screen name='DoCare' component={DoCare} options={{headerShown:false}}/>
-        <Stack.Screen name='Support' component={Support} options={{headerShown:false}}/>
-        <Stack.Screen name='Language' component={Language} options={{headerShown:false}}/>
-        <Stack.Screen name='Bookmark' component={Bookmark} options={{headerShown:false}}/>
-        <Stack.Screen name='SettingList' component={SettingList} options={{headerShown:false}}/>
-        <Stack.Screen name='AccSetting' component={AccSetting} options={{headerShown:false}}/>
-        <Stack.Screen name='EmailAndNotiSettings' component={EmailAndNotiSettings} options={{headerShown:false}}/>
-        <Stack.Screen name='Subscription' component={Subscription} options={{headerShown:false}}/>
-        <Stack.Screen name='DisplaySetting' component={DisplaySetting} options={{headerShown:false}}/>
-        <Stack.Screen name='Privacy' component={Privacy} options={{headerShown:false}}/>
-        <Stack.Screen name='ProfileSetting' component={ProfileSetting} options={{headerShown:false}}/>
-        <Stack.Screen name='PrescriptionForm' component={PrescriptionForm} options={{headerShown:false}}/>
-        <Stack.Screen name='PrescriptionSave' component={PrescriptionSave} options={{headerShown:false}}/>
-        <Stack.Screen name='PrescriptionDetail' component={PrescriptionDetail} options={{headerShown:false}}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <MenuProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name='Splash' component={Splash} options={{ headerShown: false }} />
+          <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name='Main' component={Main} options={{ headerShown: false }} />
+          <Stack.Screen name='Verification' component={Verification} options={{ headerShown: false }} />
+          <Stack.Screen name='Register' component={Register} options={{ headerShown: false }} />
+          <Stack.Screen name='NavigateProfile' component={NavigateProfile} options={{ headerShown: false }} />
+          <Stack.Screen name='Profile' component={Profile} options={{ headerShown: false }} />
+          <Stack.Screen name='CreateProfile' component={CreateProfile} options={{ headerShown: false }} />
+          <Stack.Screen name='Confirm' component={Confirm} options={{ headerShown: false }} />
+          <Stack.Screen name='MyAppointments' component={MyAppointments} options={{ headerShown: false }} />
+          <Stack.Screen name='ConsultDetail' component={ConsultDetail} options={{ headerShown: false }} />
+          <Stack.Screen name='Reviews' component={Reviews} options={{ headerShown: false }} />
+          <Stack.Screen name='Account' component={Account} options={{ headerShown: false }} />
+          <Stack.Screen name='MyProfile' component={MyProfile} options={{ headerShown: false }} />
+          <Stack.Screen name='Dashboard' component={BottomNav} options={{ headerShown: false }} />
+          <Stack.Screen name='Patients' component={Patients} options={{ headerShown: false }} />
+          <Stack.Screen name='Receptions' component={Receptions} options={{ headerShown: false }} />
+          <Stack.Screen name='Doctors' component={Doctors} options={{ headerShown: false }} />
+          <Stack.Screen name='Appointments' component={Appointments} options={{ headerShown: false }} />
+          <Stack.Screen name='Payments' component={Payments} options={{ headerShown: false }} />
+          <Stack.Screen name='Invoices' component={Invoices} options={{ headerShown: false }} />
+          <Stack.Screen name='Services' component={Services} options={{ headerShown: false }} />
+          <Stack.Screen name='Medicines' component={Medicines} options={{ headerShown: false }} />
+          <Stack.Screen name='Campaigns' component={Campaigns} options={{ headerShown: false }} />
+          <Stack.Screen name='Settings' component={Settings} options={{ headerShown: false }} />
+          <Stack.Screen name='Notification' component={Notification} options={{ headerShown: false }} />
+          <Stack.Screen name='MedicalRecord' component={MedicalRecord} options={{ headerShown: false }} />
+          <Stack.Screen name='NewRecord' component={NewRecord} options={{ headerShown: false }} />
+          <Stack.Screen name='EditAppointment' component={EditAppointment} options={{ headerShown: false }} />
+          <Stack.Screen name='CreateCampaign' component={CreateCampaign} options={{ headerShown: false }} />
+          <Stack.Screen name='DoctorList' component={DoctorList} options={{ headerShown: false }} />
+          <Stack.Screen name='PersonnelInfoDoc' component={PersonnelInfoDoc} options={{ headerShown: false }} />
+          <Stack.Screen name='PatientDoc' component={PatientDoc} options={{ headerShown: false }} />
+          <Stack.Screen name='AppointmentDoc' component={AppointmentDoc} options={{ headerShown: false }} />
+          <Stack.Screen name='InvoiceDoc' component={InvoiceDoc} options={{ headerShown: false }} />
+          <Stack.Screen name='PaymentDoc' component={PaymentDoc} options={{ headerShown: false }} />
+          <Stack.Screen name='AccessControl' component={AccessControl} options={{ headerShown: false }} />
+          <Stack.Screen name='AddItem' component={AddItem} options={{ headerShown: false }} />
+          <Stack.Screen name='PaymentReview' component={PaymentReview} options={{ headerShown: false }} />
+          <Stack.Screen name='EditPayment' component={EditPayment} options={{ headerShown: false }} />
+          <Stack.Screen name='ShareWithPatient' component={ShareWithPatient} options={{ headerShown: false }} />
+          <Stack.Screen name='AddStuff' component={AddStuff} options={{ headerShown: false }} />
+          <Stack.Screen name='PreviewInvoice' component={PreviewInvoice} options={{ headerShown: false }} />
+          <Stack.Screen name='EditInvoice' component={EditInvoice} options={{ headerShown: false }} />
+          <Stack.Screen name='AddInvoice' component={AddInvoice} options={{ headerShown: false }} />
+          <Stack.Screen name='MedAndService' component={MedAndService} options={{ headerShown: false }} />
+          <Stack.Screen name='PatientDetail' component={PatientDetail} options={{ headerShown: false }} />
+          <Stack.Screen name='NewMedicine' component={NewMedicine} options={{ headerShown: false }} />
+          <Stack.Screen name='NewService' component={NewService} options={{ headerShown: false }} />
+          <Stack.Screen name='EditService' component={EditService} options={{ headerShown: false }} />
+          <Stack.Screen name='EditMedicine' component={EditMedicine} options={{ headerShown: false }} />
+          <Stack.Screen name='ViewCampaign' component={ViewCampaign} options={{ headerShown: false }} />
+          <Stack.Screen name='VideoChat' component={VideoChat} options={{ headerShown: false }} />
+          <Stack.Screen name='AddQuestion' component={AddQuestion} options={{ headerShown: false }} />
+          <Stack.Screen name='PatientCategory' component={PatientCategory} options={{ headerShown: false }} />
+          <Stack.Screen name='MedicalRecordView' component={MedicalRecordView} options={{ headerShown: false }} />
+          <Stack.Screen name='CreateInvoice' component={CreateInvoice} options={{ headerShown: false }} />
+          <Stack.Screen name='GeneratePayment' component={GeneratePayment} options={{ headerShown: false }} />
+          <Stack.Screen name='AddAppointment' component={AddAppointment} options={{ headerShown: false }} />
+          <Stack.Screen name='Images' component={Images} options={{ headerShown: false }} />
+          <Stack.Screen name='PatientInfo' component={PatientInfo} options={{ headerShown: false }} />
+          <Stack.Screen name='ChartInfo' component={ChartInfo} options={{ headerShown: false }} />
+          <Stack.Screen name='HealthInfo' component={HealthInfo} options={{ headerShown: false }} />
+          <Stack.Screen name='AppointmentDetail' component={AppointmentDetail} options={{ headerShown: false }} />
+          <Stack.Screen name='Chat' component={Chat} options={{ headerShown: false }} />
+          <Stack.Screen name='DrProfile' component={DrProfile} options={{ headerShown: false }} />
+          <Stack.Screen name='EditMedicalRecord' component={EditMedicalRecord} options={{ headerShown: false }} />
+          <Stack.Screen name='DoCare' component={DoCare} options={{ headerShown: false }} />
+          <Stack.Screen name='Support' component={Support} options={{ headerShown: false }} />
+          <Stack.Screen name='Language' component={Language} options={{ headerShown: false }} />
+          <Stack.Screen name='Bookmark' component={Bookmark} options={{ headerShown: false }} />
+          <Stack.Screen name='SettingList' component={SettingList} options={{ headerShown: false }} />
+          <Stack.Screen name='AccSetting' component={AccSetting} options={{ headerShown: false }} />
+          <Stack.Screen name='EmailAndNotiSettings' component={EmailAndNotiSettings} options={{ headerShown: false }} />
+          <Stack.Screen name='Subscription' component={Subscription} options={{ headerShown: false }} />
+          <Stack.Screen name='DisplaySetting' component={DisplaySetting} options={{ headerShown: false }} />
+          <Stack.Screen name='Privacy' component={Privacy} options={{ headerShown: false }} />
+          <Stack.Screen name='ProfileSetting' component={ProfileSetting} options={{ headerShown: false }} />
+          <Stack.Screen name='PrescriptionForm' component={PrescriptionForm} options={{ headerShown: false }} />
+          <Stack.Screen name='PrescriptionSave' component={PrescriptionSave} options={{ headerShown: false }} />
+          <Stack.Screen name='PrescriptionDetail' component={PrescriptionDetail} options={{ headerShown: false }} />
+          <Stack.Screen name='ViewRecords' component={ViewRecords} options={{ headerShown: false }} />
+          <Stack.Screen name='Records' component={Records} options={{ headerShown: false }} />
+          <Stack.Screen name='Facility' component={Facility} options={{ headerShown: false }} />
+          <Stack.Screen name='AboutFacility' component={AboutFacility} options={{ headerShown: false }} />
+          <Stack.Screen name='Wallet' component={Wallet} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </MenuProvider>
   )
 }
 

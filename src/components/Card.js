@@ -23,8 +23,9 @@ export default function Card(props) {
             <View style={{ marginLeft: '3%', width: '80%' }}>
                 <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
                     <View style={{ width: "70%" }}>
-                        <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', paddingLeft: '2%' }}>{props.name}</Text>
-                        <Text style={{ color: colors.darkGrey, fontSize: 14, fontFamily: 'Gilroy-Medium', paddingLeft: '2%' }}>{props.phone}</Text>
+                        <Text style={{ color: colors.black, fontSize: 18, fontFamily: 'Gilroy-SemiBold', paddingLeft: '2%' }}>{props?.name}</Text>
+                        <Text style={{ color: colors.darkGrey, fontSize: 14, fontFamily: 'Gilroy-Medium', paddingLeft: '2%' }}>{props?.phone}</Text>
+                        <Text style={{ color: colors.darkGrey, fontSize: 14, fontFamily: 'Gilroy-Medium', paddingLeft: '2%' }}>{props?.subHeading}</Text>
                     </View>
                     {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '30%', justifyContent: 'space-between' }}>
                         <TouchableOpacity onPress={props.eyePress}>

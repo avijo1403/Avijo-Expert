@@ -1,11 +1,11 @@
 import React from "react";
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import styles from "./style";
 import HeaderItem3 from "../../components/HeaderItem3";
 import { colors } from "../../Theme/GlobalTheme";
 import { previewPayment } from "../../assets/Data";
 import Button1 from "../../components/Button1";
 import Button2 from "../../components/Button2";
+import { StyleSheet } from "react-native";
 
 export default function PreviewInvoice({ navigation }) {
 
@@ -80,7 +80,9 @@ export default function PreviewInvoice({ navigation }) {
                 <View style={{ width: '100%', alignItems: 'center', backgroundColor: colors.white, elevation: 5, marginTop: '5%', paddingBottom: '5%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: "space-between", marginTop: '2%' }}>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, marginTop: '2%' }}>Currency</Text>
-                        <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginTop: '2%' }}>USD ($)</Text>
+                        <Text styl
+                        
+                        e={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.black, marginTop: '2%' }}>USD ($)</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: "space-between", marginTop: '2%' }}>
                         <Text style={{ fontSize: 14, fontFamily: 'Gilroy-SemiBold', color: colors.darkGrey, marginTop: '2%' }}>Sub Total:</Text>
@@ -118,3 +120,28 @@ export default function PreviewInvoice({ navigation }) {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        width:'100%',
+        alignItems:'center',
+        backgroundColor: colors.white,
+    },
+    headerContainer: {
+       flexDirection: 'row',
+       width: '100%',
+       padding: '5%',
+       paddingTop: '10%',
+       alignItems: 'center',
+       justifyContent: 'space-between',
+       backgroundColor: colors.blue,
+   },
+   headerText: {
+       fontSize: 20,
+       fontFamily: 'Gilroy-SemiBold',
+       paddingLeft: '5%',
+       color: colors.white,
+   }
+})
