@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View, Alert, ActivityIndicator, StyleSheet } from "react-native";
 import axios from "axios";
 import Collapsible1 from "../../components/Collapsible";
 import SelectItem from "../../components/SelectItem";
 import Button1 from "../../components/Button1";
 import LoginInput from "../../components/LoginInput";
-import { BaseUrl2 } from "../../assets/Data";
+import { BaseUrl2, specializations } from "../../assets/Data";
 import { colors } from "../../Theme/GlobalTheme";
 import { useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import messaging from '@react-native-firebase/messaging';
 
 export default function Profile({ navigation, route }) {
     // const route = useRoute();
@@ -17,6 +18,7 @@ export default function Profile({ navigation, route }) {
     const email = route?.params?.emailId;
 
     const [loading, setLoading] = useState(false);
+    const [token, setToken] = useState('');
 
     const [formData, setFormData] = useState({
         title: "Dr.",
@@ -25,6 +27,7 @@ export default function Profile({ navigation, route }) {
         specialization: "",
         gender: "",
         city: "",
+        firebaseToken: token,
     });
 
     const handleSelect = (field, item) => {
@@ -55,6 +58,21 @@ export default function Profile({ navigation, route }) {
             city: city,
         });
     };
+
+
+    const fetchFcmToken = async (id) => {
+        try {
+            const token = await messaging().getToken(); // Fetches the FCM token
+            console.log('Firebase Cloud Messaging Token:', token);
+            setToken(token);
+        } catch (error) {
+            console.error('Error fetching FCM Token:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchFcmToken();
+    }, [])
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -112,7 +130,7 @@ export default function Profile({ navigation, route }) {
             <Collapsible1
                 heading="Specialization"
                 text="Select Specialization"
-                content={["Physician", "Dermatologist", "Psychiatrist"]}
+                content={specializations}
                 onSelect={(value) => handleSelect("specialization", value)}
             />
             <Text style={styles.textHeading}>Gender</Text>
@@ -143,98 +161,98 @@ export default function Profile({ navigation, route }) {
 
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        width:'100%',
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'white',
+    container: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
     },
-    subHeading:{
-        fontSize:20,
-        fontFamily:'Gilroy-SemiBold',
-        width:'90%',
-        color:colors.blue,
-        marginTop:'10%'
+    subHeading: {
+        fontSize: 20,
+        fontFamily: 'Gilroy-SemiBold',
+        width: '90%',
+        color: colors.blue,
+        marginTop: '10%'
     },
-    text:{
-        color:colors.darkGrey,
-        width:'90%',
-        marginTop:'5%',
-        fontSize:14,
-        fontFamily:'Gilroy-Medium',
-        marginBottom:'5%'
-        },
-        nameContainer:{
-            borderWidth:1,
-            borderRadius:3,
-            width:'90%',
-            flexDirection:'row',
-            alignItems:'center',
-            justifyContent:'center',
-            borderColor:colors.grey,
-            height:48
-        },
-        gender:{
-            borderRightWidth:1, 
-            borderColor:colors.grey,
-            width:'30%',
-            height:40,
-            fontSize:12,
-            fontFamily:'Gilroy-Medium',
-            textAlign:'center',
-            color:colors.grey,
-        },
-        name:{
-            width:'70%',
-            height:40,
-            fontSize:12,
-            fontFamily:'Gilroy-Medium',
-            color:colors.grey,
-            paddingLeft:15,
-            color:colors.black
-        },
-        textHeading:{
-            width:'90%',
-            marginTop:'5%',
-            marginBottom:'2%',
-            color:colors.darkGrey,
-            fontSize:14,
-            fontFamily:'Gilroy-SemiBold',
-        },
-        arrow:{
-            height:20,
-            width:20
-        },
-        ButtonContainer:{
-            flexDirection:'row',
-            width:'90%',
-            justifyContent:'space-between',
-            alignItems:'center',
-            borderWidth:1,
-            borderRadius:3,
-            height:48,
-            padding:10,
-            backgroundColor:colors.white,
-            borderColor:colors.grey,
+    text: {
+        color: colors.darkGrey,
+        width: '90%',
+        marginTop: '5%',
+        fontSize: 14,
+        fontFamily: 'Gilroy-Medium',
+        marginBottom: '5%'
+    },
+    nameContainer: {
+        borderWidth: 1,
+        borderRadius: 3,
+        width: '90%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: colors.grey,
+        height: 48
+    },
+    gender: {
+        borderRightWidth: 1,
+        borderColor: colors.grey,
+        width: '30%',
+        height: 40,
+        fontSize: 12,
+        fontFamily: 'Gilroy-Medium',
+        textAlign: 'center',
+        color: colors.grey,
+    },
+    name: {
+        width: '70%',
+        height: 40,
+        fontSize: 12,
+        fontFamily: 'Gilroy-Medium',
+        color: colors.grey,
+        paddingLeft: 15,
+        color: colors.black
+    },
+    textHeading: {
+        width: '90%',
+        marginTop: '5%',
+        marginBottom: '2%',
+        color: colors.darkGrey,
+        fontSize: 14,
+        fontFamily: 'Gilroy-SemiBold',
+    },
+    arrow: {
+        height: 20,
+        width: 20
+    },
+    ButtonContainer: {
+        flexDirection: 'row',
+        width: '90%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 3,
+        height: 48,
+        padding: 10,
+        backgroundColor: colors.white,
+        borderColor: colors.grey,
 
-        },
-        content: {
-          padding: 10,
-          borderRadius: 5,
-          margin:10,
-          width:350,
-          backgroundColor:colors.white,
-        },
-        dropDownText:{
-            fontSize:12,
-            fontFamily:'Gilroy-Medium',
-            width:200,
-        },
-        bottomContainer:{
-            flexDirection:'row',
-            width:'90%',
-            alignItems:'center',
-            justifyContent:'space-between'
-        }
+    },
+    content: {
+        padding: 10,
+        borderRadius: 5,
+        margin: 10,
+        width: 350,
+        backgroundColor: colors.white,
+    },
+    dropDownText: {
+        fontSize: 12,
+        fontFamily: 'Gilroy-Medium',
+        width: 200,
+    },
+    bottomContainer: {
+        flexDirection: 'row',
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
 })

@@ -17,8 +17,9 @@ import App from '../../App';
 import { Image, View } from 'react-native';
 import { Text } from 'react-native';
 import { colors } from '../Theme/GlobalTheme';
+import { TouchableOpacity } from 'react-native';
 
-export const Menu2 = () => (
+export const Menu2 = (props) => (
     <View>
         <Menu>
             <MenuTrigger>
@@ -27,8 +28,8 @@ export const Menu2 = () => (
                 </View>
             </MenuTrigger>
             <MenuOptions>
-                <MenuOption >
-                    <Text style={{ color: colors.darkGrey, fontSize: 20, padding: '3%' }}>Save Draft</Text>
+                <MenuOption onSelect={props.draftPress}>
+                        <Text style={{ color: colors.darkGrey, fontSize: 20, padding: '3%' }}>Save Draft</Text>
                 </MenuOption>
             </MenuOptions>
         </Menu>

@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Image, Modal, Pressable, StyleSheet } from 'react-native';
 import HeaderItem2 from '../../components/HeaderItem2';
 import { colors } from '../../Theme/GlobalTheme';
 import HeaderItem3 from '../../components/HeaderItem3';
-import { hp, wp } from '../../assets/Data';
+import { BaseUrl2, hp, wp } from '../../assets/Data';
 import PrescriptionForm from '../PrescriptionForm';
+import { io } from 'socket.io-client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Chat = ({ navigation, route }) => {
@@ -14,6 +16,7 @@ const Chat = ({ navigation, route }) => {
     const name = route?.params?.name;
     const doctorId = route?.params?.doctorId;
     const [modalVisible, setModalVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     const [messages, setMessages] = useState([
@@ -22,17 +25,123 @@ const Chat = ({ navigation, route }) => {
     ]);
 
     const [newMessage, setNewMessage] = useState('');
+    const [id, setId] = useState('');
 
     const textInputRef = useRef(null);
 
-    const sendMessage = () => {
-        if (newMessage.trim() !== '') {
-            setMessages(prevMessages => [
-                ...prevMessages,
-                { id: prevMessages.length + 1, sender: 'You', text: newMessage },
-            ]);
+    const socket = io('https://apichat-production.up.railway.app', {
+        transports: ['websocket'],
+    });
 
+    useEffect(() => {
+        fetchMessages();
+    }, [])
+
+
+    const fetchMessages = async () => {
+        const getId = await AsyncStorage.getItem("profileId");
+        console.log('ids:', getId, userId);
+        const payload = {
+            senderId: getId,
+        };
+
+        try {
+            setLoading(true);
+            const response = await fetch(`${BaseUrl2}/user/all/${userId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Message fetch successfully:", data.messages);
+                setMessages(data.messages);
+            } else {
+                console.error("Failed to fetch message:", response.status, response.statusText);
+            }
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            console.error("Error fetch message:", error);
+        }
+    };
+
+    useEffect(() => {
+
+        const initializeSocket = async () => {
+            const getId = await AsyncStorage.getItem("profileId");
+            console.log("getId:", getId);
+            setId(getId);
+
+            // Register the user
+            socket.emit("registerUser", getId);
+
+            // Listen for incoming messages
+            socket.on("receiveMessage", (data) => {
+                setMessages((prevMessages) => [...prevMessages, data]);
+            });
+        };
+
+        initializeSocket();
+
+        // Cleanup function
+        return () => {
+            socket.disconnect(); // Close the connection
+            socket.off("receiveMessage"); // Remove event listener
+        };
+    }, []);
+
+
+
+    const sendBackendMessage = async () => {
+        const getId = await AsyncStorage.getItem("profileId");
+        console.log('ids:', getId, userId);
+        const payload = {
+            senderId: getId,
+            message: newMessage,
+        };
+
+        try {
+            setLoading(true);
+            const response = await fetch(`${BaseUrl2}/user/send/${userId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Message sent successfully:", data);
+            } else {
+                console.error("Failed to send message:", response.status, response.statusText);
+            }
+            setLoading(false)
+        } catch (error) {
+            setLoading(false);
+            console.error("Error sending message:", error);
+        }
+    };
+
+    const sendMessage = async () => {
+        const getId = await AsyncStorage.getItem("profileId");
+        await sendBackendMessage();
+        if (newMessage.trim()) {
+            const content = {
+                senderId: getId,
+                receiverId: userId,
+                message: newMessage,
+            };
+            // Emit the message to the server
+            socket.emit('sendMessage', content);
+
+            // Add the message locally
+            setMessages((prevMessages) => [...prevMessages, { senderId: getId, message: newMessage }]);
             setNewMessage('');
+            console.log('messages:', messages);
         }
     };
 
@@ -48,8 +157,8 @@ const Chat = ({ navigation, route }) => {
                         <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 16, width: 16 }} />
                     </TouchableOpacity>
                     <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', padding: 10, borderRadius: 8 }}>
-                        <Image source={name === 'Dr. Jii (Ai PA)'?require('../../assets/images/dr-ji.png'):require('../../assets/images/profile3.png')} style={{ height: 50, width: 50, marginLeft: '2%', borderRadius:100 }} />
-                        <Text style={{ fontSize: 20, fontFamily: 'Gilroy-Medium', color: colors.white, paddingLeft: '3%' }}>{name}</Text>
+                        <Image source={name === 'Dr. Jii (Ai health assistance)' ? require('../../assets/images/dr-ji.png') : require('../../assets/images/profile3.png')} style={{ height: 50, width: 50, marginLeft: '2%', borderRadius: 100 }} />
+                        <Text style={{ fontSize: 20, fontFamily: 'Gilroy-Medium', color: colors.white, paddingLeft: '3%', width: '60%' }}>{name}</Text>
                     </View>
                 </View>
                 <View style={{ backgroundColor: colors.blue, flexDirection: 'row', alignItems: 'center', }}>
@@ -76,18 +185,6 @@ const Chat = ({ navigation, route }) => {
                 </View>
                 
                 */}
-                {messages.map(message => (
-                    <View
-                        key={message.id}
-                        style={[
-                            styles.message,
-                            message.sender === 'You' ? styles.sentMessage : styles.receivedMessage,
-                        ]}
-                    >
-                        <Text style={[styles.messageText, { color: message.sender === 'You' ? colors.black : colors.white }]}>{message.text}</Text>
-                        <Text style={[styles.messageSender, { color: message.sender === 'You' ? colors.blue : colors.white }]}>{message.time}</Text>
-                    </View>
-                ))}
                 <View
                     style={[
                         styles.message,
@@ -179,6 +276,18 @@ const Chat = ({ navigation, route }) => {
                         <Text style={{ fontSize: 15, fontFamily: 'Gilroy-SemiBold', color: colors.white }}>Order now</Text>
                     </TouchableOpacity>
                 </View>
+                {messages.map(message => (
+                    <View
+                        key={message.id}
+                        style={[
+                            styles.message,
+                            message.senderId === '672de8e8937b405faf6f61f6' ? styles.sentMessage : styles.receivedMessage,
+                        ]}
+                    >
+                        <Text style={[styles.messageText, { color: message.senderId === '672de8e8937b405faf6f61f6' ? colors.black : colors.black }]}>{message.message}</Text>
+                        {/* <Text style={[styles.messageSender, { color: message.senderId === '672de8e8937b405faf6f61f6' ? colors.blue : colors.white }]}>{message.time}</Text> */}
+                    </View>
+                ))}
             </ScrollView>
             {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', alignSelf: 'center', marginBottom: '5%' }}>
                 <View style={{ width: '48%', padding: '5%', borderWidth: 1, borderRadius: 8, borderColor: colors.grey }}>
@@ -217,8 +326,8 @@ const Chat = ({ navigation, route }) => {
                     setModalVisible(!modalVisible);
                 }}>
                 <Pressable onPress={() => setModalVisible(!modalVisible)} style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-end', backgroundColor: colors.blackTrasparent }}>
-                    <View style={{ width: '100%', borderTopRightRadius: 16, borderTopLeftRadius: 16, borderWidth: 1, borderColor: colors.white, backgroundColor: colors.white, height:'70%' }}>
-                        <PrescriptionForm/>
+                    <View style={{ width: '100%', borderTopRightRadius: 16, borderTopLeftRadius: 16, borderWidth: 1, borderColor: colors.white, backgroundColor: colors.white, height: '70%' }}>
+                        <PrescriptionForm />
                     </View>
                 </Pressable>
             </Modal>
@@ -233,7 +342,7 @@ const styles = StyleSheet.create({
     Container: {
         flex: 1,
         backgroundColor: colors.background,
-        width:'100%'
+        width: '100%'
     },
     messageContainer: {
         paddingVertical: 10,
@@ -249,30 +358,30 @@ const styles = StyleSheet.create({
     sentMessage: {
         alignSelf: 'flex-end',
         backgroundColor: colors.white,
-        borderBottomRightRadius:0,
-        borderRadius:22
+        borderBottomRightRadius: 0,
+        borderRadius: 22
     },
     receivedMessage: {
         backgroundColor: colors.white,
-        borderBottomLeftRadius:0,
-        borderRadius:22
+        borderBottomLeftRadius: 0,
+        borderRadius: 22
     },
     messageText: {
         fontSize: 14,
-        fontFamily:'Gilroy-Medium',
-        padding:10,
-        paddingBottom:0
+        fontFamily: 'Gilroy-Medium',
+        padding: 10,
+        paddingBottom: 0
     },
     messageSender: {
         fontSize: 12,
         marginTop: 5,
-        padding:10,
-        paddingTop:0
+        padding: 10,
+        paddingTop: 0
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
         paddingVertical: 5,
         marginBottom: '5%'
@@ -284,41 +393,41 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginRight: 10,
         color: 'black',
-        fontSize:16,
-        fontFamily:'Gilroy-SemiBold'
+        fontSize: 16,
+        fontFamily: 'Gilroy-SemiBold'
     },
     sendButtonText: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
-    linkTitle:{
-        fontSize:12,
-        fontWeight:'bold',
-        color:'white',
-        width:150,
-        paddingRight:'5%'
+    linkTitle: {
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: 'white',
+        width: 150,
+        paddingRight: '5%'
     },
-    linkDescription:{
-        fontSize:12,
-        color:'white',
-        width:150
+    linkDescription: {
+        fontSize: 12,
+        color: 'white',
+        width: 150
     },
-    linkImage:{
-        height:50,
-        width:50,
-        borderRadius:5,
-        marginLeft:'5%',
+    linkImage: {
+        height: 50,
+        width: 50,
+        borderRadius: 5,
+        marginLeft: '5%',
 
     },
-    linkContainer:{
-        flexDirection:'row',
-        paddingRight:'10%',
-        alignItems:'center',
+    linkContainer: {
+        flexDirection: 'row',
+        paddingRight: '10%',
+        alignItems: 'center',
         backgroundColor: 'darkblue',
     },
-    descContainer:{
-        flexDirection:'column',
-        padding:'5%',
+    descContainer: {
+        flexDirection: 'column',
+        padding: '5%',
     }
 });

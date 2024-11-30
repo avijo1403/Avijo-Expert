@@ -33,26 +33,42 @@ export default function Notification({ navigation }) {
 
   const Chats = () => {
     return (
-      <FlatList
-        style={{ width: '100%' }}
-        contentContainerStyle={{ alignItems: 'center', marginTop: '5%' }}
-        data={chatData}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('Chat', {name: item.name})} style={{ width: '100%', alignItems: 'center', flexDirection: 'row', padding: '5%', backgroundColor: colors.background, borderBottomWidth: 1, borderColor: colors.lightgrey }}>
-            <Image source={item.image} style={{ height: 46, width: 46, borderRadius: 100 }} />
-            <View style={{ width: '85%', paddingLeft: '3%' }}>
+      <>
+        <TouchableOpacity onPress={() => navigation.navigate('Chat', { name: 'Dr. Jii (Ai health assistance)' })} style={{ width: '100%', alignItems: 'center', flexDirection: 'row', padding: '5%', backgroundColor: '#FBFBFB', borderBottomWidth: 1, borderColor: colors.lightgrey }}>
+          <Image source={require('../../assets/images/dr-ji.png')} style={{ height: 46, width: 46, borderRadius: 100 }} />
+          <View style={{ width: '85%', paddingLeft: '3%', flexDirection: 'column' }}>
+            <View style={{ width: '100%', paddingLeft: '3%', flexDirection: 'column' }}>
               <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black }}>{item.name}</Text>
-                {item?.pin ? <Image source={require('../../assets/images/blackPin.png')} style={{ height: 20, width: 20 }} />
-                  : <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.grey, paddingRight: '2%' }}>Sat</Text>
-                    <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 16, width: 16 }} />
-                  </View>}
+                <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black, width: "70%" }}>Dr. Jii (Ai health assistance)</Text>
+                <Image source={require('../../assets/images/blackPin.png')} style={{ height: 20, width: 20 }} />
+                {/* <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.grey, paddingRight: '2%' }}>Sat</Text> */}
+                {/* <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 16, width: 16 }} /> */}
               </View>
-              <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Regular', color: colors.darkGrey, paddingRight: '2%', marginTop: '2%' }}>Emilli, Congratulations on creating your new Space! Your Space is the place for you to share answers,...</Text>
             </View>
-          </TouchableOpacity>
-        )} />
+            <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Regular', color: colors.darkGrey, paddingRight: '2%', marginTop: '2%' }}>Emilli, Congratulations on creating your new Space! Your Space is the place for you to share answers,...</Text>
+          </View>
+        </TouchableOpacity>
+        <FlatList
+          style={{ width: '100%' }}
+          contentContainerStyle={{ alignItems: 'center', marginTop: '5%' }}
+          data={chatData}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => navigation.navigate('Chat', { name: item.name, userId: item.id })} style={{ width: '100%', alignItems: 'center', flexDirection: 'row', padding: '5%', backgroundColor: colors.background, borderBottomWidth: 1, borderColor: colors.lightgrey }}>
+              <Image source={item.image} style={{ height: 46, width: 46, borderRadius: 100 }} />
+              <View style={{ width: '85%', paddingLeft: '3%' }}>
+                <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Text style={{ fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.black }} numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
+                  {item?.pin ? <Image source={require('../../assets/images/blackPin.png')} style={{ height: 20, width: 20 }} />
+                    : <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Medium', color: colors.grey, paddingRight: '2%' }}>Sat</Text>
+                      <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 16, width: 16 }} />
+                    </View>}
+                </View>
+                <Text style={{ fontSize: 14, fontFamily: 'Gilroy-Regular', color: colors.darkGrey, paddingRight: '2%', marginTop: '2%' }} numberOfLines={2} ellipsizeMode="tail">Emilli, Congratulations on creating your new Space! Your Space is the place for you to share answers,...</Text>
+              </View>
+            </TouchableOpacity>
+          )} />
+      </>
     )
   }
 
@@ -109,11 +125,11 @@ export default function Notification({ navigation }) {
 
 
 const styles = StyleSheet.create({
-  container:{
-      flex:1,
-      width:'100%',
-      alignItems:'center',
-      backgroundColor: colors.white,
+  container: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: colors.white,
   },
   highlight: {
     backgroundColor: 'yellow',

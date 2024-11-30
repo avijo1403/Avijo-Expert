@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import React from 'react'
+import { AppRegistry, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/screens/Login';
@@ -90,10 +90,41 @@ import AboutFacility from './src/screens/AboutFacility/index.js';
 import Wallet from './src/screens/Wallet/index.js';
 import Splash from './src/screens/Splash/index.js';
 import NavigateProfile from './src/screens/NavigateProfile/index.js';
+import messaging from '@react-native-firebase/messaging';
+
 
 const Stack = createNativeStackNavigator();
 
+
 const App = () => {
+
+    // Request Notification Permissions
+    async function requestUserPermission() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  
+      if (enabled) {
+        console.log('Notification permissions granted:', authStatus);
+      } else {
+        console.log('Notification permissions denied');
+      }
+    }
+  
+    useEffect(() => {
+      // console.log('persmission');
+      requestUserPermission();
+  
+      // Handle foreground notifications
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        Alert.alert('New FCM message!', JSON.stringify(remoteMessage.notification));
+        console.log('Foreground message:', remoteMessage);
+      });
+  
+      return () => unsubscribe();
+    }, []);
+
   return (
     <MenuProvider>
       <NavigationContainer>
@@ -189,6 +220,13 @@ const App = () => {
     </MenuProvider>
   )
 }
+
+messaging().setBackgroundMessageHandler(async remoteMessage => {
+  console.log('Message handled in the background:', remoteMessage);
+});
+
+// Register the App Component
+AppRegistry.registerComponent('app', () => App);
 
 export default App;
 

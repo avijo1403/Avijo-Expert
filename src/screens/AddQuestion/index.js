@@ -1,30 +1,43 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AppState, Image, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { ActivityIndicator, AppState, Dimensions, Image, Keyboard, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, ToastAndroid, TouchableOpacity } from "react-native";
 import { View } from "react-native";
+import styles from "./style";
 import { colors } from "../../Theme/GlobalTheme";
-import Collapsible3 from "../../components/Collapsible3";
-import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
-import HTMLView from "react-native-htmlview";
-import { debounce } from "lodash";
+import Collapsible2 from "../../components/Collapsible2";
+import Collapsible7 from "../../components/Collapsible7";
 import { launchImageLibrary } from "react-native-image-picker";
+import { actions, defaultActions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import { debounce, get } from "lodash";
+import RNFS from 'react-native-fs';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BaseUrl2 } from "../../assets/Data";
 
 
+const { height, width } = Dimensions.get("window");
 
 export default function AddQuestion({ navigation }) {
 
+    const timestamp = new Date().getTime();
+    const imageName = `image-${timestamp}.jpg`;
+
     const [select, setSelect] = useState(1);
     const RichText = useRef();
+    const textInputRef = useRef(null);
+
+
     const [article, setArticle] = useState("");
     const [appState, setAppState] = useState(AppState.currentState);
     const [showEditor, setShowEditor] = useState(false);
+    const [image, setImage] = useState('');
+    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [question, setQuestion] = useState('');
+    const [update, setUpdate] = useState(false);
 
 
-    // useEffect(() => {
-    //     const subscription = AppState.addEventListener("change", handleAppStateChange);
-    //     return () => {
-    //         subscription.remove();
-    //     };
-    // }, []);
+    const handleSelect = (no) => {
+        setSelect(no);
+    }
 
     const debouncedSetArticle = useCallback(
         debounce((text) => {
@@ -37,27 +50,11 @@ export default function AddQuestion({ navigation }) {
         debouncedSetArticle(text);
     };
 
-    const handleAppStateChange = (nextAppState) => {
-        if (appState.match(/inactive|background/) && nextAppState === "active") {
-            console.log("App has come to the foreground!");
-            // Restore the editor's content if needed
-            RichText.current?.setContentHTML(article);
-        }
-        setAppState(nextAppState);
-    };
 
-
-    function editorInitializedCallback() {
-        RichText.current?.registerToolbar(function (items) {
-            console.log("Toolbar click, selected items:", items);
-        });
+    const onChangeText = (text) => {
+        setText(text);
     }
 
-
-    // Callback after height change
-    function handleHeightChange(height) {
-        // console.log("editor height change:", height);
-    }
 
     function onPressAddImage() {
         const options = {
@@ -77,7 +74,10 @@ export default function AddQuestion({ navigation }) {
                     .then(base64Data => {
                         const imageBase64 = `data:image/jpeg;base64,${base64Data}`;
 
+                        setImage(imageUri);
+
                         // Insert base64 image into the RichEditor
+                        console.log('imageUri:', imageUri);
                         const imageHtml = `<img src="${imageBase64}" style="width: 90%; height: 150px;" />`;
                         RichText.current?.insertHTML(imageHtml);
                     })
@@ -88,49 +88,235 @@ export default function AddQuestion({ navigation }) {
         });
     }
 
-    function insertVideo() {
-        // you can easily add videos from your gallery
-        RichText.current?.insertVideo(
-            "https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4"
-        );
+
+    // const submitQuestion = async () => {
+
+    //     setLoading(true);
+    //     const id = await AsyncStorage.getItem("profileId");
+    //     if (!update) {
+    //         ToastAndroid.show("text field is mendatory...", ToastAndroid.SHORT);
+    //         setLoading(false);
+    //         return;
+    //     }
+    //     if (!question) {
+    //         ToastAndroid.show("text field is mendatory...", ToastAndroid.SHORT);
+    //         setLoading(false);
+    //         return;
+    //     }
+
+    //     const data = {
+    //         senderId: id,
+    //         question: question,
+    //     }
+
+    //     console.log('id:', data);
+    //     try {
+    //         const response = await fetch(`${BaseUrl2}/user/questions`, {
+    //             method: 'POST',
+
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(data),
+    //         });
+
+    //         const jsonResponse = await response.json();
+    //         console.log('Upload Response:', jsonResponse);
+    //         setQuestion('');
+    //         setLoading(false);
+    //         setUpdate(false);
+    //     } catch (error) {
+    //         setLoading(false);
+    //         setUpdate(false);
+    //         console.error('Error uploading image:', error);
+    //     }
+    // };
+
+    const submitQuestion = async () => {
+        setLoading(true);
+        const id = await AsyncStorage.getItem("profileId");
+
+        if (!update) {
+            ToastAndroid.show("text field is mendatory...", ToastAndroid.SHORT);
+            setLoading(false);
+            return;
+        }
+
+        const formData = new FormData();
+
+        formData.append('senderId', id);
+        formData.append('receiverId', id);
+        formData.append('type', 'question');
+        formData.append('question', question);
+
+        console.log('id:', formData);
+        try {
+            const response = await fetch(`${BaseUrl2}/doctor/createdoCare`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const jsonResponse = await response.json();
+            console.log('Upload Response:', jsonResponse);
+            setQuestion('');
+            setLoading(false);
+            setUpdate(false);
+        } catch (error) {
+            setLoading(false);
+            setUpdate(false);
+            console.error('Error uploading image:', error);
+        }
+    };
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        const id = await AsyncStorage.getItem("profileId");
+        if (!update) {
+            ToastAndroid.show("text field is mendatory...", ToastAndroid.SHORT);
+            setLoading(false);
+            return;
+        }
+
+        if (!text || !image) {
+            ToastAndroid.show("image is mendatory...", ToastAndroid.SHORT);
+            setLoading(false);
+            return;
+        }
+
+        const formData = new FormData();
+
+        formData.append('image', {
+            uri: image,
+            type: 'image/jpeg',
+            name: imageName
+        });
+        formData.append('senderId', id);
+        formData.append('text', text);
+        formData.append('type', 'post');
+
+        console.log('id:', formData);
+        try {
+            const response = await fetch(`${BaseUrl2}/doctor/createdoCare`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            const jsonResponse = await response.json();
+            console.log('Upload Response:', jsonResponse);
+            setText('');
+            setImage('');
+            setLoading(false);
+            setUpdate(false);
+        } catch (error) {
+            setLoading(false);
+            setUpdate(false);
+            console.error('Error uploading image:', error);
+        }
+    };
+
+
+    const handleAddPost = () => {
+        console.log(select, update);
+        if (select === 1 && update) {
+            submitQuestion();
+        } else if (select === 2 && update) {
+            handleSubmit();
+            console.log('handle submit');
+        }
     }
 
+
+    useEffect(() => {
+        const getid = async () => {
+            const id = await AsyncStorage.getItem("profileId");
+            console.log('id:', id);
+        }
+        getid();
+    })
+
     const QuestionData = () => {
+
+        const [n2, setN2] = useState(question);
+
+        const handleChangeText = (text) => {
+            setN2(text);
+        }
+
+        useEffect(() => {
+            const intervalId = setInterval(() => {
+                setQuestion(n2);
+                setUpdate(true);
+            }, 500);
+
+            return () => clearInterval(intervalId);
+        }, [n2]); // Runs whenever `n` changes
+
         return (
             <View style={styles.container}>
                 <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: "10%" }}>
-                    <Image source={require('../../assets/images/appDoc.png')} style={{ height: 84, width: 64 }} />
+                    <Image source={require('../../assets/images/profile.png')} style={{ height: 70, width: 71, borderRadius: 100 }} />
                     <View style={{ paddingLeft: '5%' }}>
-                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>Dr. Sunil Puraswani</Text>
-                        <Collapsible3 text="Public" />
+                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>Alicia Johns</Text>
+                        <Collapsible7 text="Everyone" />
                     </View>
                 </View>
+                {/* <Text>{question}</Text> */}
                 <TextInput
                     style={{ fontSize: 18, fontFamily: "Gilroy-Regular", color: colors.black, width: '90%', marginTop: '5%', width: 330 }}
-                    placeholder="Start your Question from here........"
+                    placeholder="Ask anything health related..."
                     verticalAlign="top"
+                    value={n2}
+                    onChangeText={val => handleChangeText(val)}
                     placeholderTextColor={colors.grey}
                     multiline={true}
+                    onEndEditing={() => Keyboard.dismiss()}
+                    keyboardShouldPersistTaps={false}
                 />
             </View>
         )
     }
 
+    const Post = (props) => {
 
-    const CreateData = () => {
+        const [n, setN] = useState(text);
+
+        const handleChangeText = (text) => {
+            setN(text);
+        }
+
+        useEffect(() => {
+            const intervalId = setInterval(() => {
+                setText(n);
+                setUpdate(true);
+            }, 500);
+
+            return () => clearInterval(intervalId);
+        }, [n]); // Runs whenever `n` changes
+
+
         return (
-            <View style={styles.container}>
+            <View style={{ height: height * 0.8, width: '100%', alignItems: 'center', }}>
                 <View style={{ width: '90%', alignItems: 'center', flexDirection: 'row', marginTop: "10%" }}>
-                    <Image source={require('../../assets/images/appDoc.png')} style={{ height: 84, width: 64 }} />
+                    <Image source={require('../../assets/images/profile.png')} style={{ height: 70, width: 71, borderRadius: 100 }} />
                     <View style={{ paddingLeft: '5%' }}>
-                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>Dr. Sunil Puraswani</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth: 1, justifyContent: 'space-between', paddingTop: '2%', paddingBottom: '2%', borderRadius: 30, borderColor: colors.lightgrey, marginTop: '5%' }}>
-                            <Text style={{ fontSize: 12, fontFamily: 'Gilroy-Medium', color: colors.grey, paddingLeft: "5%" }}>Choose Credentials</Text>
-                            <Image source={require('../../assets/images/rightBlack.png')} style={{ height: 12, width: 12, marginRight: "5%" }} />
-                        </View>
+                        <Text style={{ fontSize: 18, fontFamily: "Gilroy-SemiBold", color: colors.black }}>Alicia Johns</Text>
+                        <Collapsible7 text="Everyone" />
                     </View>
                 </View>
-                {/* <HTMLView value={article} stylesheet={styles.htmlView} />  */}
+                {image && <Image source={{ uri: image }} style={{ height: 180, width: width * 0.9, marginTop: '5%', borderRadius: 3 }} resizeMode="cover" />}
+                {/* <Text>{text}</Text> */}
+                {props.input && !showEditor && <TextInput
+                    ref={textInputRef}
+                    style={{ fontSize: 18, fontFamily: "Gilroy-Regular", color: colors.black, width: '90%', marginTop: '5%', width: 330 }}
+                    placeholder="Share anything health related"
+                    verticalAlign="top"
+                    value={n}
+                    onChangeText={val => handleChangeText(val)}
+                    placeholderTextColor={colors.grey}
+                    multiline={true}
+                    onEndEditing={() => Keyboard.dismiss()}
+                    keyboardShouldPersistTaps={false}
+                />}
                 {showEditor && <KeyboardAvoidingView style={{ justifyContent: 'space-between', width: '100%', alignItems: 'center', flex: 1, marginTop: '5%' }}>
                     <RichEditor
                         ref={RichText}
@@ -161,14 +347,18 @@ export default function AddQuestion({ navigation }) {
                         style={{ marginTop: '40%' }}
                     />
                 </KeyboardAvoidingView>}
-                {!showEditor && <TouchableOpacity onPress={() => setShowEditor(!showEditor)} style={{ marginTop: '100%', width: '90%', }}>
-                    <Image source={require('../../assets/images/text.png')} style={{ height: 24, width: 80 }} />
-                </TouchableOpacity>}
+                {!showEditor &&
+                    <View style={{ flexDirection: 'row', alignItems: 'center', top: '90%', width: '90%', position: 'absolute', zIndex: 2 }}>
+                        <TouchableOpacity onPress={() => setShowEditor(!showEditor)} style={{ marginRight: '5%' }}>
+                            <Image source={require('../../assets/images/Aa.png')} style={{ height: 18, width: 29 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => onPressAddImage()}>
+                            <Image source={require('../../assets/images/text.png')} style={{ height: 24, width: 24 }} />
+                        </TouchableOpacity>
+                    </View>}
             </View>
-        );
-    };
-
-
+        )
+    }
 
 
     return (
@@ -177,134 +367,31 @@ export default function AddQuestion({ navigation }) {
                 <View style={styles.headerContainer}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Image source={require('../../assets/images/leftWhite.png')} style={{ height: 14, width: 15 }} />
-                        </TouchableOpacity>
-                        {select === 1 && <Text style={styles.headerText}>Add Question</Text>}
-                        {select === 2 && <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '75%' }}>
-                            <Image source={require('../../assets/images/globe.png')} style={{ height: 20, width: 20 }} />
-                            <Text style={styles.headerText2}>Add Question</Text>
-                            <Image source={require('../../assets/images/whiteDown.png')} style={{ height: 24, width: 24, marginTop: '2%' }} />
-                        </View>}
-                    </View>
-                    <View style={{ flexDirection: 'row', width: "17%", justifyContent: 'space-between', alignItems: 'flex-end' }}>
-                        <TouchableOpacity>
-                            <Image source={select === 1 ? require('../../assets/images/add1.png') : require('../../assets/images/post.png')} style={{ height: 26, width: 60 }} />
+                            <Image source={require('../../assets/images/cross1.png')} style={{ height: 24, width: 24 }} />
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginTop: '5%' }}>
-                    <TouchableOpacity onPress={() => setSelect(1)} style={{ borderBottomWidth: select === 1 ? 3 : 0, borderColor: colors.white, width: '49%', alignItems: 'center' }}>
-                        <Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0, }}>Add Question</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setSelect(2)} style={{ borderBottomWidth: select === 2 ? 3 : 0, borderColor: colors.white, width: '49%', alignItems: 'center' }}>
-                        <Text style={{ color: colors.white, fontSize: 14, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0 }}>Create Post</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', width: "17%", justifyContent: 'space-between', alignItems: 'flex-end', marginRight: '5%' }}>
+                        {!loading && <TouchableOpacity onPress={handleAddPost} style={{ height: 26, width: 70, backgroundColor: colors.white, borderRadius: 50, alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 12, color: colors.blue, fontFamily: 'Gilroy-SemiBold' }}>Add Post</Text>
+                        </TouchableOpacity>}
+                    </View>
                 </View>
             </View>
-            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center' }}>
+            <View horizontal={true} style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between', borderBottomWidth: 0, backgroundColor: colors.blue }}>
+                <TouchableOpacity onPress={() => handleSelect(1)} style={[styles.tabContainer, { borderBottomWidth: select === 1 ? 3 : 0, marginLeft: '5%' }]}>
+                    <Text style={{
+                        fontFamily: 'Gilroy-SemiBold', fontSize: 18, color: colors.white, textAlign: 'center'
+                    }}>Add Query</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleSelect(2)} style={[styles.tabContainer, { borderBottomWidth: select === 2 ? 3 : 0 }]}>
+                    <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: 18, color: colors.white, textAlign: 'center' }}>Share</Text>
+                </TouchableOpacity>
+            </View>
+            <ScrollView style={{ width: '100%' }} contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}>
+                {loading && <ActivityIndicator size={'large'} color={colors.blue} style={{ marginTop: '5%' }} />}
                 {select === 1 && <QuestionData />}
-                {select === 2 && <CreateData />}
+                {select === 2 && <Post input={true} />}
             </ScrollView>
         </View>
     )
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'center',
-        backgroundColor: colors.white,
-    },
-    headerContainer: {
-        flexDirection: 'row',
-        width: '100%',
-        padding: '5%',
-        paddingTop: '10%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: colors.blue,
-    },
-    headerText: {
-        fontSize: 20,
-        fontFamily: 'Gilroy-SemiBold',
-        paddingLeft: '5%',
-        color: colors.white,
-    },
-    numberContainer: {
-        height: 12,
-        width: 12,
-        backgroundColor: colors.red,
-        color: colors.white,
-        borderRadius: 13,
-        position: 'absolute',
-        zIndex: 2,
-        marginLeft: 15,
-        alignItems: 'center'
-    },
-    number: {
-        fontSize: 6,
-        textAlign: 'center',
-        fontFamily: 'Gilroy-Regular',
-        color: colors.white,
-        paddingTop: 2,
-        paddingLeft: 2
-    },
-    headerText2: {
-        fontSize: 20,
-        fontFamily: 'Gilroy-SemiBold',
-        paddingLeft: '2%',
-        color: colors.white,
-    },
-    editor: {
-        backgroundColor: '#f2f2f2',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        padding: 10,
-    },
-    rich: {
-        fontSize: 18,
-        color: '#333',
-        marginBottom: 15,
-    },
-    editor: {
-        backgroundColor: "white",
-        // borderColor: "black",
-        // borderWidth: 1,
-        // width:wp(90), 
-        // flex:1,
-    },
-    rich: {
-        width:'95%',
-        // flex: 1,
-    },
-    richBar: {
-        height: 50,
-        backgroundColor: "#F5FCFF",
-        width:'100%',
-        alignSelf:'center'
-    },
-    text: {
-        fontWeight: "bold",
-        fontSize: 20,
-        width:'100%',
-        marginTop:'5%'
-    },
-    tib: {
-        textAlign: "center",
-        color: "#515156",
-    },
-    htmlView:{
-        a: {
-            fontWeight: "bold",
-            color: "purple",
-          },
-          div: {
-            fontFamily: "monospace",
-          },
-          p: {
-            fontSize: 30,
-          },
-    }
-})

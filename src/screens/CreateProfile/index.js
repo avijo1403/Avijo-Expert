@@ -5,7 +5,7 @@ import LoginInput from "../../components/LoginInput";
 import Collapsible from "../../components/Collapsible";
 import { colors } from "../../Theme/GlobalTheme";
 import axios from "axios";
-import { BaseUrl2 } from "../../assets/Data";
+import { BaseUrl2, formatDate, specializations } from "../../assets/Data";
 import uuid from 'react-native-uuid';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Menu2 } from "../../components/Menu2";
@@ -17,6 +17,7 @@ export default function CreateProfile({ navigation, route }) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [dateOfBirth, setDateOfBirth] = useState("");
     const [loading, setLoading] = useState(false);
+    const [draft, setDraft] = useState('');
     const [profileId, setProfileId] = useState('');
     const [email, setEmail] = useState('');
 
@@ -25,6 +26,8 @@ export default function CreateProfile({ navigation, route }) {
     const handleChangeText = (text) => {
         // Validate and format the input
         const formattedDate = formatInputDate(text);
+        console.log('dob:', dateOfBirth);
+        handleChange('dateOfBirth', formattedDate);
         setDateOfBirth(formattedDate);
     };
 
@@ -34,6 +37,7 @@ export default function CreateProfile({ navigation, route }) {
             const emailId = await AsyncStorage.getItem("email");
             console.log('emailId', emailId);
             setEmail(emailId);
+            handleChange('emailId', emailId);
             const getProfileId = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
             const profileJson = await getProfileId.json();
             const profile = await profileJson?.data?.find((item) => item?.emailId === emailId);
@@ -51,41 +55,37 @@ export default function CreateProfile({ navigation, route }) {
 
         // Format to YYYY-MM-DD (assuming the user types digits only)
         if (cleanedInput.length > 6) {
-            return `${cleanedInput.slice(0, 4)}-${cleanedInput.slice(4, 6)}-${cleanedInput.slice(6, 8)}`;
+            return `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2, 4)}-${cleanedInput.slice(4, 8)}`;
         } else if (cleanedInput.length > 4) {
-            return `${cleanedInput.slice(0, 4)}-${cleanedInput.slice(4, 6)}`;
+            return `${cleanedInput.slice(0, 2)}-${cleanedInput.slice(2, 4)}`;
         } else {
             return cleanedInput;
         }
     };
 
-
-    useEffect(() => {
-        fetchProfileId();
-    }, []);
-
     const [formData, setFormData] = useState({
         doctorId: uniqueId,
-        fullName: initialFormData?.name || "",
-        title: initialFormData?.title || "",
-        emailId: email || "",
-        specialization: initialFormData?.specialization || "",
-        experience: initialFormData?.experience || "",
-        gender: initialFormData?.gender || "",
-        dateOfBirth: initialFormData?.dateOfBirth || "",
-        degree: initialFormData?.degree || "",
-        collegeUniversity: initialFormData?.college || "",
-        year: initialFormData?.year || "",
-        city: initialFormData?.city || "",
-        colonyStreetLocality: initialFormData?.locality || "",
-        country: initialFormData?.country || "",
-        pinCode: initialFormData?.pinCode || "",
-        state: initialFormData?.state || "",
-        registrationNumber: initialFormData?.registrationNumber || "",
-        registrationCouncil: initialFormData?.registrationCouncil || "",
-        registrationYear: initialFormData?.registrationYear || "",
-        identityProof: initialFormData?.identityProof || "",
-        documentToUpload: initialFormData?.documentToUpload || "",
+        doctorImage: selectedImage,
+        fullName: initialFormData?.name || draft?.fullName || "",
+        title: initialFormData?.title || draft?.title || "",
+        emailId: email || draft?.emailId || "",
+        specialization: initialFormData?.specialization || draft?.specialization || "",
+        experience: initialFormData?.experience || draft?.experience || "",
+        gender: initialFormData?.gender || draft?.gender || "",
+        dateOfBirth: dateOfBirth || draft?.dateOfBirth || "",
+        degree: initialFormData?.degree || draft?.degree || "",
+        collegeUniversity: initialFormData?.college || draft?.collegeUniversity || "",
+        year: initialFormData?.year || draft?.year || "",
+        city: initialFormData?.city || draft?.city || "",
+        colonyStreetLocality: initialFormData?.locality || draft?.colonyStreetLocality || "",
+        country: initialFormData?.country || draft?.country || "",
+        pinCode: initialFormData?.pinCode || draft?.pinCode || "",
+        state: initialFormData?.state || draft?.state || "",
+        registrationNumber: initialFormData?.registrationNumber || draft?.registrationNumber || "",
+        registrationCouncil: initialFormData?.registrationCouncil || draft?.registrationCouncil || "",
+        registrationYear: initialFormData?.registrationYear || draft?.registrationYear || "",
+        identityProof: initialFormData?.identityProof || draft?.identityProof || "",
+        documentToUpload: initialFormData?.documentToUpload || draft?.documentToUpload || "",
     });
 
     const openImagePicker = () => {
@@ -105,6 +105,7 @@ export default function CreateProfile({ navigation, route }) {
                 const imageUri = response.assets?.[0]?.uri;
                 if (imageUri) {
                     setSelectedImage(imageUri);
+                    console.log('Selected image URI: ', imageUri);
                 } else {
                     console.log('Image URI is undefined');
                 }
@@ -112,30 +113,97 @@ export default function CreateProfile({ navigation, route }) {
         });
     };
 
+    const fetchDraft = async () => {
+        try {
+            const draftData = await AsyncStorage.getItem('draft');
+            const parsedDraft = draftData ? JSON.parse(draftData) : null;
+            setFormData(parsedDraft);
+            setSelectedImage(parsedDraft?.doctorImage);
+            console.log("parsedDraft:", parsedDraft);
+            
+        } catch (e) { 
+            console.log('Error fetching draft...', e);
+        }
+    };
+
+    const saveDraft = async () => {
+        try {
+            const updatedFormData = {
+                ...formData,
+                doctorImage: selectedImage,
+            };
+            await AsyncStorage.setItem('draft', JSON.stringify(updatedFormData));
+            ToastAndroid.show("Saved as draft", ToastAndroid.SHORT);
+            console.log('Draft saved:', updatedFormData);
+        } catch (e) {
+            console.log('Error saving draft...', e);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchProfileId();
+        fetchDraft();
+    }, []);
+
+
+
     const handleChange = (field, value) => {
         setFormData({
             ...formData,
             [field]: value,
         });
+        // console.log(field, value);
     };
 
 
     const handleSubmit = async () => {
-        console.log('profileId', profileId);
+        console.log('profileId', profileId, dateOfBirth);
+        await handleChange('emailId', email);
+        await handleChange('dateOfBirth', dateOfBirth);
         setLoading(true);
-        if (!email || !formData.fullName || !formData.collegeUniversity || !formData.dateOfBirth || !formData.pinCode || !formData.registrationNumber) {
-            ToastAndroid.show("All fields are medatory", ToastAndroid.SHORT);
+
+        if (!email || !selectedImage || !formData?.fullName || !formData?.title ||
+            !formData?.specialization || !formData?.experience ||
+            !formData?.gender || !formData?.degree || !formData?.year ||
+            !formData?.city || !formData?.country || !formData?.state ||
+            !formData?.registrationCouncil || !formData?.registrationYear || !formData?.collegeUniversity ||
+            !formData?.dateOfBirth || !formData?.pinCode ||
+            !formData?.registrationNumber) {
+            console.log('formdata:', formData, formData?.dateOfBirth);
+            await AsyncStorage.setItem('draft', JSON.stringify(formData));
+            fetchDraft();
+            ToastAndroid.show("All fields are mandatory || saved as draft", ToastAndroid.SHORT);
             setLoading(false);
             return;
         }
+
         try {
+            // Construct FormData
+            const data = new FormData();
+            data.append('doctorImage', {
+                uri: selectedImage,
+                type: 'image/jpeg', // Adjust type based on your image format
+                name: 'doctor_profile.jpg',
+            });
+            Object.keys(formData).forEach((key) => {
+                data.append(key, formData[key]);
+            });
+
             const response = await axios.put(
                 `${BaseUrl2}/doctor/doctorProfile/update/${profileId}`,
-                formData
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
             );
+
             console.log('Response:', response);
             if (response.status === 200) {
                 Alert.alert("Profile Created", "Your profile has been created successfully!");
+                await AsyncStorage.removeItem('draft');
                 navigation.navigate("Confirm");
             } else {
                 console.log('Non-200 response:', response);
@@ -161,13 +229,9 @@ export default function CreateProfile({ navigation, route }) {
 
 
 
-    useEffect(() => {
-        console.log('data:', initialFormData);
-    }, []);
-
     return (
         <View style={styles.container}>
-            <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: '3%', paddingBottom:'3%' }}>
+            <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: '3%', paddingBottom: '3%' }}>
                 <TouchableOpacity style={{ marginTop: '5%', alignSelf: 'flex-start', }} onPress={() => { navigation.goBack() }}>
                     <Image source={require('../../assets/images/left.png')} style={{ height: 32, width: 32, }} />
                 </TouchableOpacity>
@@ -175,7 +239,7 @@ export default function CreateProfile({ navigation, route }) {
                     <TouchableOpacity onPress={handleSubmit}>
                         <Text style={{ fontSize: 16, fontFamily: 'Gilroy-Bold', color: colors.blue, marginRight: 20 }}>Submit</Text>
                     </TouchableOpacity>
-                    <Menu2/>
+                    <Menu2 draftPress={saveDraft} />
                     {/* <TouchableOpacity>
                         <Image source={require('../../assets/images/dots2.png')} style={{ height: 20, width: 20 }} />
                     </TouchableOpacity> */}
@@ -195,59 +259,45 @@ export default function CreateProfile({ navigation, route }) {
                     </TouchableOpacity>
                 </ImageBackground>
                 <Text style={styles.subHeading}>Basic Details</Text>
-                <LoginInput text="Full Name" placeholder="Full Name" value={formData.fullName} onChangeText={(value) => handleChange('fullName', value)} />
-                <LoginInput text="Title" placeholder="Enter your title" value={formData.title} onChangeText={(value) => handleChange('title', value)} />
-                <Collapsible heading="Specialization" text={formData.specialization} content={["MBBS", "Gynaecologist"]} onSelect={(value) => handleChange('specialization', value)} />
-                <LoginInput text="Experience" placeholder="Enter your experience" keyboardType="numeric" value={formData.experience} onChangeText={(value) => handleChange('experience', value)} />
-                {/* <Collapsible heading="Experience" text="Enter years of experience" content={['1', '2']} onSelect={(value) => handleChange('experience', value)} /> */}
-                <Collapsible heading="Gender" text={formData.gender} content={["Male", "Female", "Other"]} onSelect={(value) => handleChange('gender', value)} />
+                {/* <Text style={styles.text}>{email}</Text> */}
+                <LoginInput text="Full Name" placeholder="Full Name" value={formData?.fullName} onChangeText={(value) => handleChange('fullName', value)} />
+                <LoginInput text="Title" placeholder="Enter your title" value={formData?.title} onChangeText={(value) => handleChange('title', value)} />
+                <Collapsible heading="Specialization" text={formData?.specialization} content={specializations} onSelect={(value) => handleChange('specialization', value)} />
+                <LoginInput text="Experience" placeholder="Enter your experience" keyboardType="numeric" value={formData?.experience} onChangeText={(value) => handleChange('experience', value)} />
+                <Collapsible heading="Gender" text={formData?.gender} content={["Male", "Female", "Other"]} onSelect={(value) => handleChange('gender', value)} />
                 <Text style={styles.text}>Date of Birth</Text>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="YYYY-MM-DD"
-                        value={dateOfBirth}
+                        placeholder="DD-MM-YYYY"
+                        value={dateOfBirth || formData?.dateOfBirth}
                         onChangeText={handleChangeText}
                         keyboardType="numeric"
-                        maxLength={10} // Limit the input to 10 characters (YYYY-MM-DD format)
+                        maxLength={10}
                     />
                 </View>
-                {/* <LoginInput text="Date of Birth" placeholder="Select your Date" value={formData.dateOfBirth} onChangeText={(value)=>handleChange('dateOfBirth',value)}/> */}
-                {/* <Collapsible heading="Date of Birth" text="Select your Date" onSelect={(value)=>handleChange('dateOfBirth',value)}/> */}
                 <Text style={styles.subHeading}>Education Details</Text>
-                <LoginInput text="Degree" placeholder="your Degree" value={formData.degree} onChangeText={(value) => handleChange('degree', value)} />
-                <LoginInput text="College / University" placeholder="your university" value={formData.collegeUniversity} onChangeText={(value) => handleChange('collegeUniversity', value)} />
-                <LoginInput text="Year" placeholder="your Year" value={formData.year} onChangeText={(value) => handleChange('year', value)} />
+                <LoginInput text="Degree" placeholder="your Degree" value={formData?.degree} onChangeText={(value) => handleChange('degree', value)} />
+                <LoginInput text="College / University" placeholder="your university" value={formData?.collegeUniversity} onChangeText={(value) => handleChange('collegeUniversity', value)} />
+                <LoginInput text="Year" placeholder="your Year" keyboardType="numeric" value={formData?.year} onChangeText={(value) => handleChange('year', value)} />
                 <Text style={styles.subHeading}>Address</Text>
                 <View style={{ width: "90%", alignItems: 'center', justifyContent: "space-between", flexDirection: 'row' }}>
                     <View style={{ width: '25%' }}>
-                        <LoginInput text="Pin Code" placeholder="0101" keyboardType="numeric" value={formData.pinCode} onChangeText={(value) => handleChange('pinCode', value)} />
+                        <LoginInput text="Pin Code" placeholder="0101" keyboardType="numeric" value={formData?.pinCode} onChangeText={(value) => handleChange('pinCode', value)} />
                     </View>
                     <TouchableOpacity style={{ width: '72%', flexDirection: 'row', alignItems: 'center', height: 48, borderWidth: 1, borderRadius: 3, borderColor: colors.blue, alignSelf: 'flex-end', alignItems: "center", justifyContent: 'center' }}>
                         <Image source={require('../../assets/images/map-marker.png')} style={{ height: 20, width: 20 }} />
                         <Text style={{ fontSize: 16, fontFamily: 'Gilroy-SemiBold', color: colors.blue, paddingLeft: '3%' }}>Use current location</Text>
                     </TouchableOpacity>
                 </View>
-                <LoginInput text="City" placeholder="Enter your city" value={formData.city} onChangeText={(value) => handleChange('city', value)} />
-                {/* <Collapsible heading="City" text="Select your City" content={["New York"]} onSelect={(value) => handleChange('city', value)} /> */}
-                <LoginInput text="Colony / Street / Locality" placeholder="Enter your Colony/Street/Locality" value={formData.colonyStreetLocality} onChangeText={(value) => handleChange('colonyStreetLocality', value)} />
-                {/* <Collapsible heading="Colony / Street / Locality" text="Select your Option" content={["123 Main St"]} onSelect={(value) => handleChange('colonyStreetLocality', value)} /> */}
-                <LoginInput text="Country" placeholder="Enter your Country" value={formData.country} onChangeText={(value) => handleChange('country', value)} />
-                {/* <Collapsible heading="Country" text="India" content={["USA"]} onSelect={(value) => handleChange('country', value)} /> */}
-                {/* <Collapsible heading="Pin Code" text="Select your Option" content={["10001"]} onSelect={(value) => handleChange('pinCode', value)} /> */}
-                <LoginInput text="State" placeholder="Enter your state" value={formData.state} onChangeText={(value) => handleChange('state', value)} />
-                {/* <Collapsible heading="State" text="Select your Option" content={["NY"]} onSelect={(value) => handleChange('state', value)} /> */}
+                <LoginInput text="City" placeholder="Enter your city" value={formData?.city} onChangeText={(value) => handleChange('city', value)} />
+                <LoginInput text="Colony / Street / Locality" placeholder="Enter your Colony/Street/Locality" value={formData?.colonyStreetLocality} onChangeText={(value) => handleChange('colonyStreetLocality', value)} />
+                <LoginInput text="Country" placeholder="Enter your Country" value={formData?.country} onChangeText={(value) => handleChange('country', value)} />
+                <LoginInput text="State" placeholder="Enter your state" value={formData?.state} onChangeText={(value) => handleChange('state', value)} />
                 <Text style={styles.subHeading}>Registration Details</Text>
-                <LoginInput text="Registration Number" placeholder="Enter Registration Number" onChangeText={(value) => handleChange('registrationNumber', value)} />
-                <LoginInput text="Registration Council" placeholder="Registration Council" value={formData.registrationCouncil} onChangeText={(value) => handleChange('registrationCouncil', value)} />
-                {/* <Collapsible heading="Registration Council" text="Select your Option" content={["Medical Council of New York"]} onSelect={(value) => handleChange('registrationCouncil', value)} /> */}
-                <LoginInput text="Registration Year" placeholder="Registration Year" value={formData.registrationYear} onChangeText={(value) => handleChange('registrationYear', value)} />
-                {/* <Collapsible heading="Registration Year" text="Select your Option" content={[2005]} onSelect={(value) => handleChange('registrationYear', value)} /> */}
-                {/* <Text style={styles.subHeading}>Identity Proof</Text>
-                <LoginInput text="Registration Number" placeholder="Enter Registration Number" onChangeText={(value) => handleChange('degree', value)}/>
-                <Collapsible heading="Registration Council" text="Select your Option" onSelect={(value) => handleChange('degree', value)}/>
-                <Collapsible heading="Registration Year" text="Select your Option" onSelect={(value) => handleChange('degree', value)}/>
-                <Collapsible text="Document to be uploaded" content={["Aadhar Card", "Pan Card", "Voter Card", "Passport"]} onSelect={(value) => handleChange('degree', value)}/> */}
+                <LoginInput text="Registration Number" placeholder="Enter Registration Number" keyboardType="numeric" value={formData?.registrationNumber} onChangeText={(value) => handleChange('registrationNumber', value)} />
+                <LoginInput text="Registration Council" placeholder="Registration Council" value={formData?.registrationCouncil} onChangeText={(value) => handleChange('registrationCouncil', value)} />
+                <LoginInput text="Registration Year" placeholder="Registration Year" keyboardType="numeric" value={formData?.registrationYear} onChangeText={(value) => handleChange('registrationYear', value)} />
                 <Text style={{ alignSelf: 'center', marginTop: '5%', fontSize: 20, fontFamily: 'Gilroy-SemiBold', color: colors.grey }}>Upload here</Text>
                 {loading ? <ActivityIndicator color={colors.blue} /> : <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <Image source={require('../../assets/images/upload.png')} style={{ height: 27, width: 30, alignSelf: 'center' }} />

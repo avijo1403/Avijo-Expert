@@ -37,15 +37,6 @@ export default function Login({ navigation }) {
     try {
       const response = await axios.post(`${BaseUrl2}/doctor/doctorlogin`, payload);
       console.log('Response:', response);
-
-      // const json = await response.json();
-
-      //   if (!response.ok) {
-      //     throw new Error(`HTTP error! status: ${response.status}`);
-      // }
-
-      // console.log('json:',response.data.token, response.data._id);
-
       if (response.status === 200) {
         // Alert.alert("Success", "You have logged in successfully!");
 
@@ -63,10 +54,6 @@ export default function Login({ navigation }) {
       if (error.response.data.message === 'User not found') {
         navigation.navigate("Register");
       }
-      // Alert.alert(
-      //   "Login Failed",
-      //   error.response?.data?.message || "An error occurred while logging in. Please try again."
-      // );
     } finally {
       setLoading(false);
     }
@@ -123,6 +110,7 @@ export default function Login({ navigation }) {
       </View>
     </View>
   );
+  y
 
 }
 

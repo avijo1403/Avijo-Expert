@@ -4,13 +4,14 @@ import { View } from "react-native";
 import HeaderItem from "../../components/HeaderItem";
 import { Image } from "react-native";
 import { colors } from "../../Theme/GlobalTheme";
-import { BaseUrl2, getTimeDifference, hp, wp } from "../../assets/Data";
+import { BaseUrl2, fetchFcmToken, getTimeDifference, hp, wp } from "../../assets/Data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchItem from "../../components/SearchItem";
 import VideoNotification from "../../components/VideoNotification";
 import uuid from 'react-native-uuid';
 import { loadOptions } from "@babel/core";
 import NavigateProfile from "../NavigateProfile";
+import messaging from '@react-native-firebase/messaging';
 
 export default function Dashboard({ navigation }) {
 
@@ -24,32 +25,31 @@ export default function Dashboard({ navigation }) {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [exist, setExist] = useState(false);
-    const [gender, setGender ] = useState('');
+    const [gender, setGender] = useState('');
 
 
     const fetchData2 = async () => {
-        const email = await AsyncStorage.getItem("email");
-        console.log("email:", email);
-        const response = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
-        const json = await response.json();
-        const myGender = json?.data?.find(item => item.emailId === email);
-        const myProfile = json?.data?.find(item => item.emailId === email && item.registrationNumber);
-        console.log('profile:', myProfile, myGender.gender);
-        setGender(myGender.gender);
-        if (myProfile) {
-            setExist(true);
-        } else {
-            setExist(false);
+        try {
+            const email = await AsyncStorage.getItem("email");
+            console.log("email:", email);
+            const response = await fetch(`${BaseUrl2}/doctor/getAllDoctorProfile`);
+            const json = await response.json();
+            const myGender = json?.data?.find(item => item.emailId === email);
+            const myProfile = json?.data?.find(item => item.emailId === email && item.registrationNumber);
+            console.log('profile:', myProfile, myGender.gender);
+            setGender(myGender.gender);
+            if (myProfile) {
+                setExist(true);
+            } else {
+                setExist(false);
+            }
+        } catch (e) {
+            console.log('error fetching...', e);
         }
     }
 
     const appData = [
 
-        // {
-        //     id: 0,
-        //     image: require('../assets/images/dashboard3.png'),
-        //     title: 'Dashboard'
-        // },
         {
             id: 1,
             image: require('../../assets/images/patient3.png'),
@@ -86,24 +86,6 @@ export default function Dashboard({ navigation }) {
             title: 'Chats',
             to: 'Notification',
         },
-        // {
-        //     id: 5,
-        //     image: require('../assets/images/service2.png'),
-        //     title: 'Services',
-        //     to: 'Services',
-        // },
-        // {
-        //     id: 6,
-        //     image: require('../assets/images/medicine2.png'),
-        //     title: 'Medicines',
-        //     to: 'Medicines',
-        // },
-        // {
-        //     id: 7,
-        //     image: require('../assets/images/campaign2.png'),
-        //     title: 'Campaigns',
-        //     to: 'Campaigns'
-        // },
         {
             id: 8,
             image: require('../../assets/images/doCare.png'),
@@ -117,6 +99,21 @@ export default function Dashboard({ navigation }) {
             to: exist ? 'Campaigns' : 'NavigateProfile',
         }
     ]
+
+    const fetchFcmToken2 = async () => {
+        try {
+            const token = await messaging().getToken(); // Fetches the FCM token
+
+            console.log('Firebase Cloud Messaging Token1:', token);
+            // setToken(token); 
+        } catch (error) {
+            console.error('Error fetching FCM Token:', error);
+        }
+    };
+
+    useEffect(() => {
+        // fetchFcmToken2();
+    }, []);
 
 
 
@@ -142,6 +139,9 @@ export default function Dashboard({ navigation }) {
             const profileJson = await getProfileId.json();
             const profileId = await profileJson?.data?.find((item) => item?.emailId === email);
             console.log('profileId:', profileId);
+
+            await AsyncStorage.setItem("profileId", profileId._id);
+            // await fetchFcmToken(profileId._id);
 
             const response = await fetch(`${BaseUrl2}/doctor/doctorAppointment`);
             const response1 = await fetch(`${BaseUrl2}/user/appointments`);
@@ -270,7 +270,7 @@ export default function Dashboard({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <HeaderItem notiPress={() => navigation.navigate('Notification')} text="avijo" onRightPress={() => navigation.navigate('Account')} image={<Image source={gender === 'Male'?require('../../assets/images/profile2.png'): gender === 'Female'?require('../../assets/images/profile1.png'):require('../../assets/images/profile2.png')} style={{ height: 36, width: 36 }} showSearch={true} />} />
+            <HeaderItem notiPress={() => navigation.navigate('Notification')} text="avijo" onRightPress={() => navigation.navigate('Account')} image={<Image source={gender === 'Male' ? require('../../assets/images/profile2.png') : gender === 'Female' ? require('../../assets/images/profile1.png') : require('../../assets/images/profile2.png')} style={{ height: 36, width: 36 }} showSearch={true} />} />
             <View style={{ flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-between', marginTop: '5%' }}>
                 <TouchableOpacity onPress={() => setSelect(1)} style={{ borderBottomWidth: select === 1 ? 3 : 0, borderColor: colors.black, width: '49%', alignItems: 'center' }}>
                     <Text style={{ color: colors.black, fontSize: 20, fontFamily: 'Gilroy-SemiBold', padding: '5%', paddingTop: 0 }}>Apps</Text>
@@ -283,14 +283,14 @@ export default function Dashboard({ navigation }) {
                 style={{ width: '100%' }}
                 contentContainerStyle={{ alignItems: 'center' }}
                 showsVerticalScrollIndicator={false}
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={refreshing}
-                //         onRefresh={onRefresh}
-                //         colors={[colors.blue]}
-                //         tintColor={colors.blue}
-                //     />}
-                    >
+            // refreshControl={
+            //     <RefreshControl
+            //         refreshing={refreshing}
+            //         onRefresh={onRefresh}
+            //         colors={[colors.blue]}
+            //         tintColor={colors.blue}
+            //     />}
+            >
                 {select === 1 && <Apps />}
                 {select === 2 && exist ? <Dashboard /> : select === 2 && <NavigateProfile removeHeader={true} />}
             </ScrollView>
@@ -300,10 +300,10 @@ export default function Dashboard({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        width:'100%',
-        alignItems:'center',
+    container: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
         backgroundColor: colors.white,
     }
 })

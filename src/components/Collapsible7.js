@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import Collapsible from "react-native-collapsible";
 import { colors } from "../Theme/GlobalTheme";
-import { wp } from "../assets/Data";
-
-export default function Collapsible1(props) {
+export default function Collapsible7(props) {
     const { heading, text, content, onSelect } = props;
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [selected, setSelected] = useState('');
@@ -22,22 +20,21 @@ export default function Collapsible1(props) {
     };
 
     return (
-        <View style={{ width: '100%', alignItems: 'center' }}>
+        <View style={{ width: '100%', alignItems: 'flex-start' }}>
             <Text style={styles.textHeading}>{heading}</Text>
             <TouchableOpacity onPress={toggleCollapsed} style={styles.ButtonContainer}>
+                <Image source={require('../assets/images/globe.png')} style={{ height: 16, width: 16 }} />
                 <Text style={styles.dropDownText}>{selected !== '' ? selected : text}</Text>
                 {isCollapsed ? <Image style={styles.arrow} source={require('../assets/images/down-arrow.png')} /> :
                     <Image style={styles.arrow} source={require('../assets/images/top-arrow.png')} />}
             </TouchableOpacity>
             <Collapsible collapsed={isCollapsed}>
                 <View style={styles.content}>
-                    <ScrollView style={{ flex: 1, width: '100%' }} nestedScrollEnabled={true}>
-                        {content?.map((item, index) => (
-                            <TouchableOpacity onPress={() => { setIsCollapsed(true); handleSelect(item); }}>
-                                <Text key={index} style={styles.itemText}>{item}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                    {content?.map((item, index) => (
+                        <TouchableOpacity onPress={() => { setIsCollapsed(true); handleSelect(item); }}>
+                            <Text key={index} style={styles.itemText}>{item}</Text>
+                        </TouchableOpacity>
+                    ))}
                 </View>
             </Collapsible>
         </View>
@@ -46,30 +43,27 @@ export default function Collapsible1(props) {
 
 const styles = StyleSheet.create({
     textHeading: {
-        width: '90%',
+        width: 71,
         fontSize: 12,
         fontFamily: 'Gilroy-SemiBold',
-        padding: '1%',
-        paddingLeft: 0,
         color: colors.darkGrey,
-        marginBottom: 5,
-        marginTop: '5%'
     },
     arrow: {
-        height: 20,
-        width: 20
+        height: 10,
+        width: 10,
+        marginTop: 5
     },
     ButtonContainer: {
         flexDirection: 'row',
-        width: '90%',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 3,
-        height: 48,
-        padding: 10,
+        // borderWidth:1,
+        borderRadius: 30,
         backgroundColor: colors.white,
-        borderColor: colors.grey,
+        borderColor: colors.lightgrey,
+        padding: '2%',
+        paddingLeft: '5%',
+        paddingRight: '5%'
     },
     content: {
         padding: 10,
@@ -77,22 +71,23 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: colors.white,
         elevation: 5,
-        width: wp("90%"),
-        height: 200
+        width: 60
     },
     dropDownText: {
         fontSize: 14,
-        fontFamily: 'Gilroy-Medium',
-        width: '75%',
-        paddingLeft: '3%',
+        fontFamily: 'Gilroy-SemiBold',
         color: colors.grey,
+        // height:15, 
+        marginRight: "5%",
+        // marginTop:'2%',
+        paddingLeft: '2%',
+        paddingRight: "1%"
     },
     itemText: {
-        fontSize: 14,
+        fontSize: 10,
         fontFamily: 'Gilroy-Regular',
         color: colors.darkGrey,
         marginBottom: 5,
         padding: 5,
-        width: wp(80)
     }
 });

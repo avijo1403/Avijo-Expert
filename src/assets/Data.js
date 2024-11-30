@@ -2,6 +2,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
+import messaging from '@react-native-firebase/messaging';
 
 const offerData = [
     require('../assets/images/dr6.png'),
@@ -438,6 +439,59 @@ const detailOption = [
     }
 ]
 
+const specializations = [
+    "General Medicine",
+    "General Surgery",
+    "Otorhinolaryngology",
+    "Internal Medicine",
+    "Immunology",
+    "Critical Care Medicine",
+    "Infectious Diseases",
+    "Clinical Pharmocology",
+    "Anaesthesiology",
+    "Radiology",
+    "Sonology",
+    "Biochemistry",
+    "Virology",
+    "Bacteriology",
+    "Oncology",
+    "Teratology",
+    "Geriatric medicine",
+    "Epidemiology",
+    "Communicative Diseases",
+    "Dermatology",
+    "Trichology",
+    "Psychiatry",
+    "Neurology",
+    "Otolaryngology (ENT)",
+    "Otology",
+    "Rhinology",
+    "Ophthalmology",
+    "Cardiology",
+    "Pulmonology",
+    "Angiology",
+    "Haematology",
+    "Endocrinology",
+    "Gastroenterology",
+    "Hepatology",
+    "Diabetology",
+    "Pediatrics",
+    "Obstetrics",
+    "Sexology/Venereology",
+    "Gynecology",
+    "Andrology",
+    "Nephrology",
+    "Urology",
+    "Osteopathy/Orthopedy",
+    "Rheumatology",
+    "Anthrology",
+    "Syndesmology",
+    "Myology/Sarcology",
+    "Sports Medicine",
+    "Dentistry",
+    "Odontology",
+    "Veterinary science",
+]
 
 export const getData = async (key) => {
     try {
@@ -459,6 +513,67 @@ export const formatDate = (timestamp) => {
 
     return `${day}-${month}-${year}`;
 };
+
+export const formatDateMonth = (timestamp) => {
+    const date = new Date(timestamp);
+
+    const day = date.getDate().toString().padStart(2, '0');
+    const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ];
+    const month = monthNames[date.getMonth()]; // Get month name
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+};
+
+
+export const fetchFcmToken = async (id) => {
+    try {
+        const token = await messaging().getToken(); // Fetches the FCM token
+        console.log('Firebase Cloud Messaging Token:', token);
+        updateFcmToken(token, id);
+    } catch (error) {
+        console.error('Error fetching FCM Token:', error);
+    }
+};
+
+
+const updateFcmToken = async (token, id) => {
+    try {
+        const data = {
+            firebaseToken: token
+        };
+
+        const response = await fetch(`${BaseUrl2}/doctor/doctorProfile/update/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Set the content type
+            },
+            body: JSON.stringify(data), // Convert the data object to a JSON string
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json(); // Parse the JSON response
+        console.log('Success:', result);
+    } catch (e) {
+        console.log('error updating FCM Token...', e);
+    }
+}
+
+export const formatNumber = (num) => {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+    } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toString();
+};
+
 
 const BaseUrl1 = 'https://avijobackend-production.up.railway.app';
 const BaseUrl2 = "https://avijobackend-production.up.railway.app";
@@ -485,4 +600,5 @@ export {
     recordData,
     facilityData,
     detailOption,
+    specializations,
 };

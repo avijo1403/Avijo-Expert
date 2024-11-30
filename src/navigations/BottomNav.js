@@ -112,6 +112,7 @@ const BottomNav = () => {
                   color: focused ? colors.blue : colors.grey,
                   width: 60,
                   textAlign: 'center',
+
                 }}
               >
                 Patient
@@ -120,8 +121,7 @@ const BottomNav = () => {
           ),
         }}
         name="Patient"
-        component={exist ? Patients : NavigateProfile}
-
+        component={!exist ? Patients : NavigateProfile}
       />
       {/* <Tab.Screen
         options={{
